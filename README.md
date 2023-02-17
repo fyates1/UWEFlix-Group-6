@@ -1,3 +1,8 @@
 # UWEFlix-Group-6
 
-Testing
+Shuaib: Account Manager
+Haroun: Club Rep
+Lewis: Club Rep
+Greg: Customer
+Finlay: Cinema Manager
+Katie: back-end database models, login, base html layout, docker
