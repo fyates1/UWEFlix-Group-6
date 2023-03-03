@@ -1,0 +1,41 @@
+{% extends "kms/base.html" %}
+{% block title %}
+  Register
+{% endblock %}
+{% block content %}
+  <h1>New User Registration</h1>
+    <form  method="post">
+        {% csrf_token %}
+        <label for="username">Username</label>
+          {{ form.username }}
+        <label for="email">Email</label>
+          {{ form.email}}
+        <label for="password">Password</label>
+          {{ form.password1 }}
+        <label for="password">confirm Password</label>
+          {{ form.password2 }}
+      {% if user.is_superuser == True %}
+        <label class="control control--checkbox mb-0"><span class="caption">Account Manager</span>
+            {{ form.is_accountManager }}
+          <div class="control__indicator"></div>
+        </label>
+        <label class="control control--checkbox mb-0"><span class="caption">Club Representative</span>
+            {{ form.is_clubRepresentative }}
+          <div class="control__indicator"></div>
+        </label>
+        <label class="control control--checkbox mb-0"><span class="caption">Customer</span>
+            {{ form.is_customer }}
+          <div class="control__indicator"></div>
+        </label>
+        <label class="control control--checkbox mb-0"><span class="caption">Cinema Manager</span>
+            {{ form.is_cinemaManager }}
+          <div class="control__indicator"></div>
+        </label>
+      {% endif %}
+        <span class="text-error">{{ form.errors }}</span>
+      <input type="submit"  value="Register" class="btn btn-pill text-white btn-block btn-primary">
+    </form>
+    <div class="text-center">
+      <button onclick="history.back()">Go Back</button>
+    </div>
+{% endblock %}
