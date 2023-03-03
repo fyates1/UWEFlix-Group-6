@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
+</head>
+
+<body>
+    {% if user.is_superuser == True %}
+        <div class="side-nav">                  
+            <a href="{% url 'superuser' %}">Home</a>
+            <a href="{% url 'login' %}">Logout</a>
+        </div>
+    {% endif %}
+
+    {% if user.is_accountManager == True %}
+        <div class="side-nav">                  
+            <a href="{% url 'accountManager' %}">Home</a>
+            <a href="{% url 'login' %}">Logout</a>
+        </div>
+    {% endif %}
+
+    {% if user.is_clubRepresentative == True %}
+        <div class="side-nav">                  
+            <a href="{% url 'clubRepresentative' %}">Home</a>
+            <a href="{% url 'login' %}">Logout</a>
+        </div>
+    {% endif %}
+
+    {% if user.is_customer == True %}
+        <div class="side-nav">                  
+            <a href="{% url 'customer' %}">Home</a>
+            <a href="{% url 'login' %}">Logout</a>
+        </div>
+    {% endif %}
+
+    {% if user.is_cinemaManager == True %}
+        <div class="side-nav">                  
+            <a href="{% url 'cinemaManager' %}">Home</a>
+            <a href="{% url 'login' %}">Logout</a>
+        </div>
+    {% endif %}
+    <div class="main">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
