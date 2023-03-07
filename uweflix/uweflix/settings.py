@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'uwe.apps.UweConfig'
+    'uwe.apps.UweConfig',
+    'accounts.app.AccountsConfig'
 ]
 
 MIDDLEWARE = [
