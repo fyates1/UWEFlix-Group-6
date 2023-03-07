@@ -11,3 +11,5 @@ Greg: Customer
 Finlay: Cinema Manager
 
 Katie: back-end database models, login, base html layout, docker
+
+All planning information can be found on ClickUp
