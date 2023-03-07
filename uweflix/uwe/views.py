@@ -16,7 +16,7 @@ def register(request):
         form = RegisterForm()
     return render(request, 'uwe/register.html', {'form': form})
 #LOGIN
-def login(request):
+def loginView(request):
     form=LoginForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
