@@ -1,4 +1,4 @@
-{% extends "kms/base.html" %}
+{% extends "uwe/base.html" %}
 {% block title %}
   Register
 {% endblock %}
@@ -14,11 +14,7 @@
           {{ form.password1 }}
         <label for="password">confirm Password</label>
           {{ form.password2 }}
-      {% if user.is_superuser == True %}
-        <label class="control control--checkbox mb-0"><span class="caption">Account Manager</span>
-            {{ form.is_accountManager }}
-          <div class="control__indicator"></div>
-        </label>
+
         <label class="control control--checkbox mb-0"><span class="caption">Club Representative</span>
             {{ form.is_clubRepresentative }}
           <div class="control__indicator"></div>
@@ -31,7 +27,10 @@
             {{ form.is_cinemaManager }}
           <div class="control__indicator"></div>
         </label>
-      {% endif %}
+        <label class="control control--checkbox mb-0"><span class="caption">Account Manager</span>
+          {{ form.is_accountManager }}
+        <div class="control__indicator"></div>
+        </label>
         <span class="text-error">{{ form.errors }}</span>
       <input type="submit"  value="Register" class="btn btn-pill text-white btn-block btn-primary">
     </form>
@@ -39,3 +38,4 @@
       <button onclick="history.back()">Go Back</button>
     </div>
 {% endblock %}
+
