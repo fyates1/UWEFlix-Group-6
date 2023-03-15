@@ -1,0 +1,29 @@
+<title>Accounts Index</title>
+
+<h1>Accounts Index</h1>
+
+{% if message %}
+<div class="alert">{{ message }}</div>
+{% endif %}
+
+
+
+<h3><strong>All Users</strong></h3>
+
+<ul>
+    <li class="create"><a href="">Create new User</a></li>
+
+    {% if userList %}
+
+        {% for user in userList %}
+            <li>
+                <a href="">
+                    {{ user.username }} ({{ user.firstName }} {{ user.lastName }})
+                </a>
+            </li>
+        {% endfor %}
+
+    {% else %}
+        <p>There are no users</p>
+    {% endif %}
+</ul>
