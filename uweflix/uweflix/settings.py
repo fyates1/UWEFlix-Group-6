@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cinema.apps.CinemaConfig',
     'clubRep.apps.ClubrepConfig',
     'customer.apps.CustomerConfig',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [

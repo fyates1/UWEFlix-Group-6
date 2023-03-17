@@ -1,0 +1,31 @@
+{% extends "hello/base.html" %}
+
+{% block title %}
+
+view Club
+
+{%endblock%}
+
+<br/>
+{% block content %}
+
+
+<ul> 
+    <strong><h1>{{ rep }}</h1></strong><br/>
+    <li><strong>First Name: </strong>{{ rep.clubName }}</li> <br/>
+    <li><strong>Last Name: </strong>{{ rep.memberCount }}</li><br/>
+    <li><strong>Club Name: </strong>{{ rep.email }}</li><br/>
+    <li><strong>Card Type: </strong>{{ rep.landlineNo }}</li><br/>
+    <li><strong>Card Number:</strong> {{ rep.mobileNo }}</li><br/>
+    <li><strong>Expiry Date: </strong>{{ rep.discount }}</li><br/>
+    <li><strong>Card Number:</strong> {{ rep.streetNo }}</li><br/>
+    <li><strong>Expiry Date: </strong>{{ rep.street }}</li><br/>
+    <li><strong>Card Number:</strong> {{ rep.city }}</li><br/>
+    <li><strong>Expiry Date: </strong>{{ rep.postcode }}</li><br/>
+
+  </ul>
+
+<h3>Please <a href = "/">Login</a> First to be able to register </h3>
+
+
+{%endblock%}

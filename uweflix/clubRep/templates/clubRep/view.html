@@ -1,0 +1,28 @@
+{% extends "uwe/base.html" %}
+
+{% block title %}
+
+view
+
+{%endblock%}
+
+
+{% block content %}
+
+    <h2>UWEFLIX clubs:</h2>
+    <table>
+    {% for td in clubs_view %}
+        <tr>
+        <td><br/><strong>Club: <a href="{% url 'showClub' td.id %}">{{td.clubName}}</a></strong></td>
+        <td align="right"><br/><strong><a href="{% url 'deleteClub' td.id%}">Delete </a></strong></td>
+
+        
+    </tr>
+    
+    {% endfor %}
+
+
+    <h3>Please <a href = "/">Login</a> First to be able to register </h3>
+
+
+{%endblock%}

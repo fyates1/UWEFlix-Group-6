@@ -2,6 +2,9 @@ from django import forms
 from .models import Club
 from django.forms import ModelForm
 
+DISCOUNT_RATE = [('15', '15')]
+
+
 
 class clubRegister(ModelForm):
     #First_Name = forms.CharField(max_length=50)
@@ -9,18 +12,22 @@ class clubRegister(ModelForm):
     #club= forms.CharField(max_length=50)
     class Meta:
         model = Club
-        fields = ('clubName', 'memberCount','discount', 'streetNo', 'street','city', 'postcode','landlineNo', 'mobileNo', 'email')
+        fields = ('clubName', 'memberCount', 'email','landlineNo', 'mobileNo','discount', 'streetNo', 'street','city', 'postcode')
         labels = {
             'clubName': 'Club Name',
             'memberCount': 'Members',
+            'email': 'Email',
+            'landlineNo': 'Landline Number',
+            'mobileNo': 'Mobile Number',
             'discount': 'Discount',
             'streetNo': 'Street Number',
             'street': 'Street',
             'city': 'City',
             'postcode': 'Post Code',
-            'landlineNo': 'Landline Number',
-            'mobileNo': 'Mobile Number',
-            'email': 'Email',
+        }
+        widgets = {
+
+            'discount':forms.Select(choices=DISCOUNT_RATE,attrs={'class':'form-control','placeholder':'Discount Rate'}),
         }
     # def save(self, commit=True):
     #     user = super(RegisterFrom, self).save(commit=False)
