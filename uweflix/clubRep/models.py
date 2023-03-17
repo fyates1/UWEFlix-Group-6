@@ -11,23 +11,9 @@ from django.db import models
 from django import forms
 import uuid, re, datetime
 from datetime import date, timedelta
+from accounts.models import isLandlineNumber, isMobileNumber
+
 # Create your models here.
-
-# Used to store information about clubs
-def isMobileNumber(value):
-    # This is mainly for UK numbers just to simplify things but later on i might want to make this work for more numbers
-    mobileRegex = re.compile(r'^\d{11}$')
-
-    if not mobileRegex.match(value):
-        raise forms.ValidationError("Invalid Mobile Number (Make sure it's a UK number)")
-
-# Check validity of landline number
-def isLandlineNumber(value):
-    # Once again this is mainly for UK numbers
-    landlineRegex = re.compile(r'^\d{5}\d{6}$')
-
-    if not landlineRegex.match(value):
-        raise forms.ValidationError("Invalid Landline Number (Make sure it's a UK number)")
 
 class Club(models.Model):
     # Identifiers
