@@ -15,6 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from clubRep import views
+
+app_name = "clubRep"
 
 urlpatterns = [
+    path('create/',views.addClub, name="create"),
 ]
