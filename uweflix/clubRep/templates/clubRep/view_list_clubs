@@ -1,0 +1,35 @@
+{% extends "hello/base.html" %}
+
+{% block title %}
+
+View Clubs
+
+{%endblock%}
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <h2>UWEFLIX clubs:</h2>
+    <table class="table table-striped table-hover table-bordered">
+    {% for td in club_list %}
+        <tr>
+            <td>
+                <br/>
+                <strong>Club Rep: <a href="{% url 'showRep' td.id %}">{{td}}</a> - Update</strong>
+            </td>
+            
+            <td align="right"><br/><strong><a href="{% url 'updateRep' td.id%}">Update</a</strong></td>
+                <td align="right"><br/><strong><a href="{% url 'deleteRep' td.id%}">Delete</a</strong></td>
+
+            
+
+        </ul>   
+        </tr>
+    {% endfor %}
+    </table>
+
+    {% else %}
+    <h3>Please <a href = "/">Login</a> First to be able to register </h3>
+    {% endif %}
+    
+{%endblock%}

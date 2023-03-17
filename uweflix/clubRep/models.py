@@ -8,7 +8,7 @@
 
 from django.utils.translation import gettext_lazy as _
 from django.db import models
-from django import forms
+
 import uuid, re, datetime
 from datetime import date, timedelta
 from accounts.models import isLandlineNumber, isMobileNumber
@@ -22,7 +22,6 @@ class Club(models.Model):
     email = models.CharField(max_length=20)
     landlineNo = models.CharField(max_length=255, validators=[isLandlineNumber], null=True)
     mobileNo = models.CharField(max_length=20, validators=[isMobileNumber], null=True)
-
     discount = models.IntegerField(default=2)
 
     # Location Details
@@ -31,7 +30,7 @@ class Club(models.Model):
     city = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
 
-    # Contact Details
+    
 
     def __str__(self):
         return self.clubName

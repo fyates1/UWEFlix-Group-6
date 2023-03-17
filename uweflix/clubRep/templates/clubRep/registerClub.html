@@ -1,18 +1,27 @@
 {%extends "uwe/base.html"%}
 
-{%block title%} Create new account {%endblock%}
+{%block title%} Create new Club {%endblock%}
+
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-    <h2> Register an Account</h2>
-    <form method="POST" class="form-group">
-        {%csrf_token%}
+    <h2> Register a Club</h2>
+    
+        <br/>
+        {% if submitted %}
+            Your account was succesfully submitted
+        {% else %}
+        <form action="" method="POST" class="form-group">
+            {%csrf_token%}
 
-        <button type="submit">Register</button>
+            {{form|crispy}}
+
+            <button type="submit">Register</button>
 
 
-    </form>
-
+        </form>
+        {% endif %}
 
     <h3>Please <a href = "/">Login</a> First to be able to register </h3>
 
