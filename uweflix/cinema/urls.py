@@ -32,4 +32,9 @@ urlpatterns = [
 
     path("add_seat",views.add_seat,name='add_seat'),
 
+    path("add_film",views.add_film,name='add_film'),
+    path("list_films",views.list_films,name='list_films'),
+    path("show_film/<film_id>",views.show_film,name='show_film'),
+    path("update_film/<film_id>",views.update_film,name='update_film'),
+    path("delete_film/<film_id>",views.delete_film,name="delete_film"),
 ]

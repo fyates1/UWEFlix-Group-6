@@ -22,7 +22,9 @@ def loginView(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
+            print(username,password)
             user = authenticate(username=username, password=password)
+            print(user)
             if user is not None and user.is_superuser:
                 login(request, user)
                 return redirect('superuser')
@@ -39,9 +41,9 @@ def loginView(request):
                 login(request, user)
                 return redirect('cinemaManager')
             else:
-                return redirect('login')
+                return redirect('loginView')
         else:
-            return redirect('login')
+            return redirect('loginView')
     return render(request, 'uwe/login.html', {'form': form})
     
 

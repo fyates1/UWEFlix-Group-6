@@ -1,0 +1,15 @@
+{%extends "uwe/base.html"%}
+
+
+{%block content%}
+    <center>
+        <h1>List of films in cinema</h1>
+        <br>
+        {%for film in film_list%}
+            <a href="{% url 'show_film' film.id %}">{{film.title}}</a><br>
+            <a href="{% url 'update_film' film.id %}">Update</a>
+            <a href="{% url 'delete_film' film.id %}">Delete</a><br>
+        {%endfor%}
+    </center>
+
+{%endblock%}

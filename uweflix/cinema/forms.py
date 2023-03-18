@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import screen,row,seat
+from .models import screen,row,seat,film
 
 #Screen Forms
 class ScreenForm(ModelForm):
@@ -16,4 +16,8 @@ class RowForm(ModelForm):
 class SeatForm(ModelForm):
     class Meta:
         model = seat
+        fields = "__all__"
+class FilmForm(ModelForm):
+    class Meta:
+        model = film
         fields = "__all__"

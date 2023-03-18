@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .forms import ScreenForm,RowForm,SeatForm
-from .models import screen,row
+from .forms import ScreenForm,RowForm,SeatForm,FilmForm
+from .models import screen,row,film
 from django.http import HttpResponseRedirect
 class CinemaManager():
     def get_screenList():
@@ -13,6 +13,9 @@ class CinemaManager():
         return List
     def get_row(id):
         return row.objects.get(pk=id)
+    def get_film(id):
+        return film.objects.get(pk=id)
+
     def add_screen(request):
         submitted = False
         if request.method == "POST":
@@ -52,6 +55,19 @@ class CinemaManager():
                 submitted = True
         return render(request,"cinema/add_seat.html",{"form":form ,"submitted":submitted})
 
+    def add_film(request):
+        submitted = False
+        if request.method == "POST":
+            form = FilmForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect("/cinema/add_film?submitted=True")
+        else:
+            form = FilmForm
+            if "submitted" in request.GET:
+                submitted = True
+        return render(request,"cinema/add_film.html",{"form":form ,"submitted":submitted})
+
 def add_screen(request):
     return CinemaManager.add_screen(request)
 
@@ -73,6 +89,7 @@ def show_screen(request,screen_id):
 def show_row(request,row_id):
     Row = CinemaManager.get_row(row_id)
     return render(request,"cinema/show_row.html",{"row":Row})
+
 def update_screen(request, screen_id):
     Screen = CinemaManager.get_screen(screen_id)
     form = ScreenForm(request.POST or None,instance=Screen)
@@ -101,3 +118,27 @@ def delete_row(request,row_id):
 
 def add_seat(request):
     return CinemaManager.add_seat(request)
+
+def add_film(request):
+    return CinemaManager.add_film(request)
+
+def list_films(request):
+    film_list = film.objects.all()
+    return render(request,"cinema/films.html",{"film_list":film_list})
+
+def show_film(request,film_id):
+    film = CinemaManager.get_film(film_id)
+    return render(request,"cinema/show_film.html",{"film":film})
+
+def update_film(request, film_id):
+    Film = CinemaManager.get_film(film_id)
+    form = FilmForm(request.POST or None,instance=Film)
+    if form.is_valid():
+            form.save()
+            return redirect('list_films')
+    return render(request,"cinema/update_film.html",{"film":Film, "form":form})
+
+def delete_film(request,film_id):
+    Film = CinemaManager.get_film(film_id)
+    Film.delete()
+    return redirect("list_films")
