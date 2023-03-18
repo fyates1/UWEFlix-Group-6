@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('uwe.urls')),
     path('accounts/', include('accounts.urls')),
     path('clubRep/', include('clubRep.urls')),
+    path('cinema/', include('cinema.urls')),
 ]

@@ -15,6 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-
+from . import views
 urlpatterns = [
+    
+    path("add_screen",views.add_screen,name='add_screen'),
+    path("list_screens",views.list_screens,name='list_screens'),
+    path("show_screen/<screen_id>",views.show_screen,name="show_screen"),
+    path("update_screen/<screen_id>",views.update_screen,name="update_screen"),
+    path("delete_screen/<screen_id>",views.delete_screen,name="delete_screen"),
+
+    path("add_row",views.add_row,name='add_row'),
+    path("list_rows",views.list_rows,name='list_rows'),
+    path("show_row/<row_id>",views.show_row,name="show_row"),
+    path("update_row/<row_id>",views.update_row,name="update_row"),
+    path("delete_row/<row_id>",views.delete_row,name="delete_row"),
+
+    path("add_seat",views.add_seat,name='add_seat'),
+
 ]
