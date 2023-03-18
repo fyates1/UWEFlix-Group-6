@@ -1,0 +1,16 @@
+{%extends "uwe/base.html"%}
+
+
+{%block content%}
+    <center>
+        <h1>Update<h1>
+        <form action="" method=POST>
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Update" class="btn btn-success">
+        </form>
+        
+
+    </center>
+
+{%endblock%}
