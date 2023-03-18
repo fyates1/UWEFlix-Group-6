@@ -1,0 +1,15 @@
+{%extends "uwe/base.html"%}
+
+
+{%block content%}
+    <center>
+        <h1>List Screens In Cinema</h1>
+        <br>
+        {%for screen in screen_list%}
+            <a href="{% url 'show_screen' screen.id %}">{{screen}}</a><br>
+            <a href="{% url 'update_screen' screen.id %}">Update</a>
+            <a href="{% url 'delete_screen' screen.id %}">Delete</a><br>
+        {%endfor%}
+    </center>
+
+{%endblock%}

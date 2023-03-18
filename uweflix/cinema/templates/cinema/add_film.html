@@ -1,0 +1,22 @@
+{%extends "uwe/base.html"%}
+{%block title%}
+Add Film
+{%endblock%}
+
+{%block content%}S
+    <center>
+        <h1>Add Film</h1>
+        <br/>
+        {%if submitted %}
+            Your Film Was Added
+        {%else%}
+
+        {% endif %}
+        <form action="" method="POST">
+            {%csrf_token%}
+            {{ form.as_p }}
+            <input type="submit" value="Submit" class="btn btn-success">
+        </form>
+    </center>
+
+{%endblock%}
