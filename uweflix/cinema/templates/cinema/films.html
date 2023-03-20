@@ -6,9 +6,10 @@
         <h1>List of films in cinema</h1>
         <br>
         {%for film in film_list%}
-            <a href="{% url 'show_film' film.id %}">{{film.title}}</a><br>
-            <a href="{% url 'update_film' film.id %}">Update</a>
-            <a href="{% url 'delete_film' film.id %}">Delete</a><br>
+            <a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a><br>
+            <img src="{{ film.filmImage.url }}">
+            <a href="{% url 'cinema:update_film' film.id %}">Update</a>
+            <a href="{% url 'cinema:delete_film' film.id %}">Delete</a><br>
         {%endfor%}
     </center>
 
