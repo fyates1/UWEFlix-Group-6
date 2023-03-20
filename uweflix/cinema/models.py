@@ -24,6 +24,7 @@ class film(models.Model):
     title = models.CharField(max_length=256)
     ageRating=models.CharField(max_length=256)
     description = models.TextField(max_length=256)
+    filmImage = models.ImageField(upload_to='images/')
     duration = models.IntegerField()
     def str(self):
         return self.title

@@ -58,7 +58,7 @@ class CinemaManager():
     def add_film(request):
         submitted = False
         if request.method == "POST":
-            form = FilmForm(request.POST)
+            form = FilmForm(request.POST,request.FILES)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect("/cinema/add_film?submitted=True")
@@ -141,4 +141,4 @@ def update_film(request, film_id):
 def delete_film(request,film_id):
     Film = CinemaManager.get_film(film_id)
     Film.delete()
-    return redirect("list_films")
+    return redirect("cinema:list_films")
