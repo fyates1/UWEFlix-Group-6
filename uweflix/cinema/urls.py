@@ -41,6 +41,10 @@ urlpatterns = [
     path("show_film/<film_id>",views.show_film,name='show_film'),
     path("update_film/<film_id>",views.update_film,name='update_film'),
     path("delete_film/<film_id>",views.delete_film,name="delete_film"),
+    
+    path("add_showing",views.add_showing,name="add_showing"),
+    path("list_showings",views.list_showings,name="list_showings"),
+
 ]
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

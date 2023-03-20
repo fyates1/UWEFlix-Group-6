@@ -1,0 +1,26 @@
+{%extends "uwe/base.html"%}
+
+
+{%block content%}
+    <center>
+        <h1>List of showings in cinema</h1>
+        <br>
+        <div class="row">
+        {%for showing in showing_list%}
+    
+            <div class ="col-md-2">
+                <div class="card" >
+                    <img class="card-img-top" src="{{ showing.film.filmImage.url }}" alt="Card image cap">
+                    <div class="card-body">
+                    <h1 class="card-title">{{showing.film.title}}</h1>
+                    <h2 class="card-text">Screen {{showing.screen.name }},{{showing.date}},{{showing.startTime}}</h2>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        {%endfor%}
+    </div>
+    </center>
+
+{%endblock%}
+

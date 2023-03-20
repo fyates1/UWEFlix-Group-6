@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
-from .models import screen,row,seat,film
+from .models import screen,row,seat,film,showing
+from django.contrib.admin.widgets import AdminSplitDateTime,AdminDateWidget,AdminTimeWidget
 
 #Screen Forms
 class ScreenForm(ModelForm):
@@ -21,3 +22,9 @@ class FilmForm(ModelForm):
     class Meta:
         model = film
         fields = "__all__"
+class ShowingForm(ModelForm):
+   
+    class Meta:
+        model = showing
+        fields = ("date","startTime","film","screen")
+    
