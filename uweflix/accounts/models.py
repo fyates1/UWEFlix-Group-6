@@ -4,6 +4,8 @@ from django.db import models
 from django import forms
 import uuid, re, datetime
 from datetime import date, timedelta
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 # ----------------- Validators -----------------
 #region
@@ -69,7 +71,7 @@ def validate_cardholder_name(value):
 #endregion
 
 # ----------------- Models -----------------
-
+#region
 # Stores the payment information
 class PaymentDetails(models.Model):
     # Payment Information
@@ -96,7 +98,7 @@ class User(models.Model):
         CLUBREP = 'CR', _('Club Rep')
         ACCOUNTSMANAGER = 'AM', _('Accounts Manager')
         CINEMAMANAGER = 'CM', _('Cinema Manager')
-        SUPERUSER = 'SU', _('Super User')
+        # SUPERUSER = 'SU', _('Super User')
 
     userType = models.CharField(
         max_length = 2,
@@ -125,6 +127,9 @@ class User(models.Model):
         else:
             return False
 
+    def getUserType(self):
+        return self.userType
+
     def __str__(self):
         return f"{self.username} ({self.firstName} {self.lastName})"
 
@@ -147,3 +152,15 @@ class UserForm(forms.ModelForm):
                 }
             )
         }
+#endregion
+
+# ----------------- Receivers -----------------
+#region
+# This should run whenever the User model wishes to save itself
+@receiver(pre_save, sender=User)
+def encrypt_user_password(sender, instance, **kwargs):
+    # Checks if password field is not None
+    if instance.password:
+        # Runs encryptPassword before .save() is completed
+        instance.encryptPassword(instance.password)
+#endregion
