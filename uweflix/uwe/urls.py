@@ -2,7 +2,7 @@ from django.urls import path
 from uwe import views
 
 urlpatterns = [
-    path('', views.login, name='login'),
+    path('', views.loginView, name='loginView'),
     path('register/', views.register, name='register'),
     path('superuser/', views.superuser, name='superuser'),
     # path('create/',views.addClub, name="create"),
