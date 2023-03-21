@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from .forms import ScreenForm,RowForm,SeatForm,FilmForm
-from .models import screen,row,film
+from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm
+from .models import screen,row,film,showing
 from django.http import HttpResponseRedirect
 class CinemaManager():
     def get_screenList():
@@ -58,7 +58,7 @@ class CinemaManager():
     def add_film(request):
         submitted = False
         if request.method == "POST":
-            form = FilmForm(request.POST)
+            form = FilmForm(request.POST,request.FILES)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect("/cinema/add_film?submitted=True")
@@ -141,4 +141,21 @@ def update_film(request, film_id):
 def delete_film(request,film_id):
     Film = CinemaManager.get_film(film_id)
     Film.delete()
-    return redirect("list_films")
+    return redirect("cinema:list_films")
+
+def add_showing(request):
+        submitted = False
+        if request.method == "POST":
+            form = ShowingForm(request.POST,request.FILES)
+            if form.is_valid():
+                form.save()
+                return HttpResponseRedirect("/cinema/add_showing?submitted=True")
+        else:
+            form = ShowingForm
+            if "submitted" in request.GET:
+                submitted = True
+        return render(request,"cinema/add_showing.html",{"form":form ,"submitted":submitted})
+
+def list_showings(request):
+    showing_list = showing.objects.all()
+    return render(request,"cinema/showings.html",{"showing_list":showing_list})

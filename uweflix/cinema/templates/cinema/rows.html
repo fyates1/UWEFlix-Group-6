@@ -6,9 +6,9 @@
         <h1>List of rows in cinema</h1>
         <br>
         {%for row in row_list%}
-            <a href="{% url 'show_row' row.id %}">{{row}}</a><br>
-            <a href="{% url 'update_row' row.id %}">Update</a>
-            <a href="{% url 'delete_row' row.id %}">Delete</a><br>
+            <a href="{% url 'cinema:show_row' row.id %}">{{row}}</a><br>
+            <a href="{% url 'cinema:update_row' row.id %}">Update</a>
+            <a href="{% url 'cinema:delete_row' row.id %}">Delete</a><br>
         {%endfor%}
     </center>
 
