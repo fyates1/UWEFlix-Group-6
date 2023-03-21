@@ -1,41 +1,38 @@
 {% extends "uwe/base.html" %}
 {% block title %}
-  Register
+    Register
 {% endblock %}
 {% block content %}
-  <h1>New User Registration</h1>
-    <form  method="post">
-        {% csrf_token %}
-        <label for="username">Username</label>
-          {{ form.username }}
-        <label for="email">Email</label>
-          {{ form.email}}
-        <label for="password">Password</label>
-          {{ form.password1 }}
-        <label for="password">confirm Password</label>
-          {{ form.password2 }}
 
-        <label class="control control--checkbox mb-0"><span class="caption">Club Representative</span>
-            {{ form.is_clubRepresentative }}
-          <div class="control__indicator"></div>
-        </label>
-        <label class="control control--checkbox mb-0"><span class="caption">Customer</span>
-            {{ form.is_customer }}
-          <div class="control__indicator"></div>
-        </label>
-        <label class="control control--checkbox mb-0"><span class="caption">Cinema Manager</span>
-            {{ form.is_cinemaManager }}
-          <div class="control__indicator"></div>
-        </label>
-        <label class="control control--checkbox mb-0"><span class="caption">Account Manager</span>
-          {{ form.is_accountManager }}
-        <div class="control__indicator"></div>
-        </label>
-        <span class="text-error">{{ form.errors }}</span>
-      <input type="submit"  value="Register" class="btn btn-pill text-white btn-block btn-primary">
-    </form>
-    <div class="text-center">
-      <button onclick="history.back()">Go Back</button>
-    </div>
+<form action="{% url 'accounts:index' %}" method="post">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend>
+            <h2>Registration</h2>
+        </legend>
+
+        {% for field in form %}
+            {% if field.name == "firstName" %}
+                <h4>Personal Details</h4>
+            {% endif %}
+
+            <!-- TODO Make it so only the first 3 options of UserType is available -->
+
+            <div class="fieldContainer">
+                {% if field.name != "paymentDetails" %}
+                    {{ field.label_tag }} {{ field }}
+                {% endif %}
+
+                {% for errors in field.errors %}
+                    <div class="error">{{ errors }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <br><input type="submit" name="register" value="Register">
+    </fieldset>
+</form>
+
 {% endblock %}
 
