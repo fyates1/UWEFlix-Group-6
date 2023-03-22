@@ -2,11 +2,14 @@
 
 
 {%block content%}
-    <center>
-        <h1>Film: </h1>
-        Name: {{film.title}}
-        Screen: {{film.description}}
-        
-    </center>
+    
+
+    <ul> 
+        <center><strong><h2>Film:{{film.title}}</h2></strong></center><br/>
+        <li><strong>Description:</strong> {{film.description}}</br></li><br/>
+        <li><strong>Age Rating :</strong> {{film.age}}</li><br/>
+
+    </ul>
+
 
 {%endblock%}

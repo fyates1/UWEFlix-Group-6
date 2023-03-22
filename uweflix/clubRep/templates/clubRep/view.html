@@ -14,14 +14,12 @@ view
     {% for td in clubs_view %}
         <tr>
         <td><br/><strong>Club: <a href="{% url 'showClub' td.id %}">{{td.clubName}}</a></strong></td>
-        <td align="right"><br/><strong><a href="{% url 'deleteClub' td.id%}">Delete </a></strong></td>
-
-        
-    </tr>
-    
+        <td align="right"><br/><strong>To delete Club:<a href="{% url 'deleteClub' td.id%}">  Delete </a></strong></td>
+        </tr>
+    </table>
     {% endfor %}
 
-
+</br>
     <h3>Please <a href = "/">Login</a> First to be able to register </h3>
 
 

@@ -159,3 +159,15 @@ def add_showing(request):
 def list_showings(request):
     showing_list = showing.objects.all()
     return render(request,"cinema/showings.html",{"showing_list":showing_list})
+
+def index(request):
+    index = film.objects.all()
+    return render(request,"cinema/index.html",{"index":index})
+
+def display_films(request):
+    film_list = film.objects.all()
+    return render(request,"cinema/display_films.html",{"film_list":film_list})
+
+def film_showing(request, film_id):
+    film_showings = showing.objects.get(pk=film_id)
+    return render(request,"cinema/film_showing.html",{"film_showings":film_showings})

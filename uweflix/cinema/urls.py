@@ -44,6 +44,9 @@ urlpatterns = [
     
     path("add_showing",views.add_showing,name="add_showing"),
     path("list_showings",views.list_showings,name="list_showings"),
+    path("index",views.index,name="index"),
+    path("display",views.display_films,name="list_films"),
+    path("film_showing/<film_id>",views.film_showing,name="film_showings"),
 
 ]
 if settings.DEBUG:

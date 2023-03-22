@@ -5,7 +5,7 @@ class screen(models.Model):
     name= models.CharField(max_length=256)
     capacity= models.IntegerField()
 
-    def str(self):
+    def __str__(self):
         return self.name
 
 class row(models.Model):
@@ -18,23 +18,35 @@ class seat(models.Model):
     number = models.IntegerField()
     row = models.ForeignKey(row,on_delete=models.CASCADE)
 
-    def str(self):
+    def __str__(self):
         return f"{self.row},{self.number}"
 
 class film(models.Model):
     title = models.CharField(max_length=256)
-    ageRating=models.CharField(max_length=256)
+    #ageRating=models.CharField(max_length=256)
     description = models.TextField(max_length=256)
     filmImage = models.ImageField(upload_to='images/')
-    duration = models.IntegerField()
-    def str(self):
-        return self.title
+    duration = models.CharField(max_length=6)
+    ageSelection = (
+        ("U", "U"),
+        ("PG", "PG"),
+        ("12A", "12A"),
+        ("12", "12"),
+        ("15", "15"),
+        ("18", "18"),
+    )
+
+    age = models.CharField(choices=ageSelection, max_length=3)
+    
+
+    def __str__(self):
+        return self.title 
 
 class showing(models.Model):
     date= models.DateField("Date of showing (mm/dd/yyyy)")
     startTime=models.TimeField("Time of showing (HH:MM)")
     numberOfSales = models.IntegerField(blank=True, null=True)
-    film=models.ForeignKey(film,on_delete=models.CASCADE)
+    film=models.ForeignKey(film, on_delete=models.SET_NULL, null=True)
     screen= models.ForeignKey(screen,on_delete=models.CASCADE)
-    def str(self):
-        return f"{self.dateTime},{self.film}"
+    def __str__(self):
+        return f"{self.date},{self.film},{self.startTime}"

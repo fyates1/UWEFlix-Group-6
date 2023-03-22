@@ -1,0 +1,32 @@
+{% extends "cinema/index.html" %}
+
+{% block title %}
+
+
+{%endblock%}
+
+
+{% block content %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  
+  {%for film in film_list%}
+    <div class="col">
+      <div class="card h-100">
+      <img src="{{ film.filmImage.url }}" alt="connect" style="height:auto; width:auto;">
+      <div class="card-body">
+        <p><a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a></p>
+        <p class="card-text">Description?</p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted"><a href="{% url 'cinema:film_showings' film.id %}">View showings</a></small>
+      </div>
+      </div>
+    </div>
+  {%endfor%}
+
+</div>
+</br>
+<h3>Please <a href = "/">Login</a> First to be able to register </h3>
+
+
+{%endblock%}

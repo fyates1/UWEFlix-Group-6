@@ -1,0 +1,24 @@
+{% extends "cinema/index.html" %}
+
+{% block title %}
+Film Showing
+
+{%endblock%}
+
+
+{% block content %}
+
+
+    </br>
+
+
+        <ul> 
+            <strong><h1>{{ film_showings.film.title }}</h1></strong><br/>
+            <li><strong>screen name: </strong>{{film_showings.screen.name }}</li> <br/>
+            <li><strong>date: </strong>{{film_showings.date}}</li><br/>
+            <li><strong>Start: </strong>{{film_showings.startTime}}</li><br/>
+
+        </ul>
+            <button type="button" class="btn btn-success">Book Showing</button>
+
+{%endblock%}
