@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 
-<form action="{% url 'accounts:index' %}" method="post">
+<form action="{% url 'register' %}" method="post">
     {% csrf_token %}
 
     <fieldset>

@@ -11,14 +11,29 @@
 
   <title>UWEFlix Login</title>
 </head>
-<body>
-    <form  method="post">
-        {% csrf_token %}
-        <label for="username">Username</label>
-        {{ form.username }}
-        <label for="password">Password</label>
-        {{ form.password }}
-        <input type="submit" value="LOGIN" class="btn">
-    </form>
-</body>
-</html>
+
+{% if message %}
+<div class="alert">{{ message }}</div><br>
+{% endif %}
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend>
+            <h2>Login</h2>
+        </legend>
+
+        {% for field in form %}
+            <div class="fieldContainer">
+                {{ field.label_tag }} {{ field }}
+
+                {% for errors in field.errors %}
+                    <div class="error">{{ errors }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <br><input type="submit" name="login" value="login">
+    </fieldset>
+</form>
