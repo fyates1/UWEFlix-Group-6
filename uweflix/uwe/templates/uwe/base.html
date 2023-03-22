@@ -9,40 +9,8 @@
 </head>
 
 <body>
-    {% if user.is_superuser == True %}
-        <div class="top-nav">                  
-            <a href="{% url 'superuser' %}">Home</a>
-            <a href="{% url 'loginView' %}">Logout</a>
-        </div>
-    {% endif %}
+    <!-- Need to make navbar options based on usertype when usertype exists -->
 
-    {% if user.is_accountManager == True %}
-        <div class="top-nav">                  
-            <a href="{% url 'accountManager' %}">Home</a>
-            <a href="{% url 'loginView' %}">Logout</a>
-        </div>
-    {% endif %}
-
-    {% if user.is_clubRepresentative == True %}
-        <div class="top-nav">                  
-            <a href="{% url 'clubRepresentative' %}">Home</a>
-            <a href="{% url 'loginView' %}">Logout</a>
-        </div>
-    {% endif %}
-
-    {% if user.is_customer == True %}
-        <div class="top-nav">                  
-            <a href="{% url 'customer' %}">Home</a>
-            <a href="{% url 'loginView' %}">Logout</a>
-        </div>
-    {% endif %}
-
-    {% if user.is_cinemaManager == True %}
-        <div class="top-nav">                  
-            <a href="{% url 'cinemaManager' %}">Home</a>
-            <a href="{% url 'loginView' %}">Logout</a>
-        </div>
-    {% endif %}
     <div class="main">
         {% block content %}
         {% endblock %}

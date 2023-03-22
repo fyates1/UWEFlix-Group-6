@@ -24,16 +24,15 @@ def register(request):
         # Saves the inputs to the database
         user = form.save()
         # Returns to the login page with a message
-        return redirect(reverse('loginView') + '?message=Registration Successful')
+        return redirect(reverse('login') + '?message=Registration Successful')
     else:
         return render(request, 'uwe/register.html', context)
 
 #LOGIN
 def login(request):
-    # TODO Needs to be tested
-
+    print("Started")
     # Creates the UserForm based on if .POST exists
-    form = UserForm(request.POST or None)
+    form = LoginForm(request.POST or None)
 
     # Gets the message from the query parameters
     message = request.GET.get('message', None)
@@ -45,26 +44,44 @@ def login(request):
     }
 
     # Checks if it's POST method
-    if request.method == 'POST' and form.is_valid():
+    if request.method == 'POST':
+        print("is POST")
         # Gets the username and password inputs from the form
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+
+        print(f"username: {username} \npassword: {password}")
 
         # Authenticates the user
-        user = authenticate(username=username, password=password)
+        user = authenticate(request, username=username, password=password)
+
+        print(user)
 
         if user is not None:
+            print("User is existing")
             # Logs in the user and sets the user type in the session
-            login(request, user)
-            request.session['user_type'] = user.getUserType()
+            userType = user.getUserType()
+            request.session['user_type'] = userType
+            print(userType)
 
-            # Redirects to the home page
-            return redirect('home')
+            # Redirects to pages based on user type
+            if userType == "AM":
+                return redirect(reverse("accountManager"))
+            elif userType == "CR":
+                return redirect('clubRepresentative')
+            elif userType == "C" or  userType == "S":
+                return redirect('customer')
+            elif  userType == "CM":
+                return redirect('cinemaManager')
+            else:
+                return redirect(reverse("login") + f'?message=Unkown User Type [{userType}]')
         else:
+            print("User doesnt exist")
             # Adds an error message to the context and renders the page again
-            context['error'] = 'Invalid username or password'
-            return render(request, 'uwe/login.html', context)
+            context['message'] = 'Invalid username or password'
+            return redirect(reverse("login") + f'?message=Invalid Login')
 
+    print("Get page")
     # Renders the page
     return render(request, 'uwe/login.html', context)
 
@@ -101,8 +118,8 @@ def login(request):
 #USERS
 def superuser(request):
     return render(request, 'uwe/superuser.html')
-def accountManager(request):
-    return render(request, 'uwe/accountManager.html')
+# def accountManager(request):
+#     return render(request, 'accounts/index.html')
 def clubRepresentative(request):
     return render(request, 'uwe/clubRepresentative.html')
 def customer(request):

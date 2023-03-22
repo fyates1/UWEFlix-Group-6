@@ -122,10 +122,13 @@ class User(models.Model):
         self.password = make_password(plainPassword)
 
     def checkPassword(self, plainPassword):
-        if check_password(plainPassword):
+        if check_password(plainPassword, self.password):
             return True
         else:
             return False
+    # def checkPassword(self, plainPassword):
+    #     return check_password(plainPassword, self.password)
+
 
     def getUserType(self):
         return self.userType
