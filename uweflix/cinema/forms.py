@@ -27,4 +27,9 @@ class ShowingForm(ModelForm):
     class Meta:
         model = showing
         fields = ("date","startTime","film","screen")
+
+class BookingForm(ModelForm):
+    class Meta:
+        #model = booking
+        fields = "__all__"
     
