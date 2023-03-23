@@ -168,6 +168,6 @@ def display_films(request):
     film_list = film.objects.all()
     return render(request,"cinema/display_films.html",{"film_list":film_list})
 
-def film_showing(request, film_id):
-    film_showings = showing.objects.get(pk=film_id)
+def film_showing(request, _id):
+    film_showings = showing.objects.get(id=_id)
     return render(request,"cinema/film_showing.html",{"film_showings":film_showings})

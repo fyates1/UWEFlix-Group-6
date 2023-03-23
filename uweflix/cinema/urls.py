@@ -46,7 +46,7 @@ urlpatterns = [
     path("list_showings",views.list_showings,name="list_showings"),
     path("index",views.index,name="index"),
     path("display",views.display_films,name="list_films"),
-    path("film_showing/<film_id>",views.film_showing,name="film_showings"),
+    path("film_showing/<_id>",views.film_showing,name="film_showing"),
 
 ]
 if settings.DEBUG:
