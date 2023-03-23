@@ -12,13 +12,17 @@ Film Showing
     </br>
 
 
-        <ul> 
-            <strong><h1>{{ film_showings.film.title }}</h1></strong><br/>
-            <li><strong>screen name: </strong>{{film_showings.screen.name }}</li> <br/>
-            <li><strong>date: </strong>{{film_showings.date}}</li><br/>
-            <li><strong>Start: </strong>{{film_showings.startTime}}</li><br/>
 
+    <strong><h1>{{ film_showings.title }}</h1></strong><br/>
+    {% for i in film_showings.showing_set.all %}
+        <ul>
+            <li><strong>Date: </strong>{{ i.date }}</li> <br/>
+            <li><strong>Screen name: </strong>{{i.screen}}</li><br/>
+            <li><strong>Start: </strong>{{i.startTime}}</li><br/>
+            <button href="#" type="button" class="btn btn-success">Book Showing</button>
+            </br>
         </ul>
-            <button type="button" class="btn btn-success">Book Showing</button>
+        {% endfor %}
+
 
 {%endblock%}
