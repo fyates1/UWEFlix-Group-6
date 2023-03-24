@@ -4,7 +4,7 @@ from datetime import date
 class screen(models.Model):
     name= models.CharField(max_length=256)
     capacity= models.IntegerField()
-
+    # capacity = {array of 1 to 50}
     def __str__(self):
         return self.name
 

@@ -23,7 +23,7 @@ def addClub(response):
             return redirect('view')
     else:
         form = clubRegister()
-        print("okay")
+
         if 'submitted' in response.GET:
             submitted = True
         return render(response, "clubRep/registerClub.html", {'form':form, 'submitted':submitted})
