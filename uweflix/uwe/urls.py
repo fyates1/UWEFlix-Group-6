@@ -4,13 +4,13 @@ from accounts import views as AMViews
 
 urlpatterns = [
     path('', views.login, name='login'),
-    path('register/', views.register, name='register'),
-    path('superuser/', views.superuser, name='superuser'),
+    path('register', views.register, name='register'),
+    path('superuser', views.superuser, name='superuser'),
     # path('create/',views.addClub, name="create"),
 
-    path('accounts/', AMViews.index, name='accountManager'),
+    path('accounts', AMViews.index, name='accountManager'),
     # TODO THE FOLLOWING NEEDS TO BE CHANGED BSAED ON THE HOME PAGES FOR EACH ROLE
-    path('clubRepresentative/', views.clubRepresentative, name='clubRepresentative'),
-    path('customer/', views.customer, name='customer'),
-    path('cinemaManager/', views.cinemaManager, name='cinemaManager'),
+    path('clubRepresentative', views.clubRepresentative, name='clubRepresentative'),
+    path('customer', views.customer, name='customer'),
+    path('cinemaManager', views.cinemaManager, name='cinemaManager'),
 ]

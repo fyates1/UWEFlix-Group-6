@@ -93,7 +93,7 @@ class User(models.Model):
 
     # User Type
     class UserType(models.TextChoices):
-        CUSTOMER = 'C', _('Customer')
+        # CUSTOMER = 'G', _('Guest')
         STUDENT = 'S', _('Student')
         CLUBREP = 'CR', _('Club Rep')
         ACCOUNTSMANAGER = 'AM', _('Accounts Manager')
