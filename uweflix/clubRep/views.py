@@ -20,7 +20,7 @@ def addClub(response):
             #t.save() 
             form.save()
             #response.user.clubname.add(t)
-            return redirect('view')
+            return redirect('clubRep:view')
     else:
         form = clubRegister()
 
@@ -41,4 +41,4 @@ def view_club(response, club_id):
 def delete_club(response, club_id):
     club = Club.objects.get(pk=club_id)
     club.delete()
-    return redirect('view')
+    return redirect('clubRep:view')

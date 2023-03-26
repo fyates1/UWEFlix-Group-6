@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'cinema.apps.CinemaConfig',
     'clubRep.apps.ClubrepConfig',
     'customer.apps.CustomerConfig',
-    'crispy_forms'
+    'crispy_forms',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +65,7 @@ TEMPLATES = [
             os.path.join(BASE_DIR, 'customer/templates'),
             os.path.join(BASE_DIR, 'cinema/templates'),
             os.path.join(BASE_DIR, 'clubRep/templates'),
-            os.path.join(BASE_DIR, 'accounts/templates')
+            os.path.join(BASE_DIR, 'accounts/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

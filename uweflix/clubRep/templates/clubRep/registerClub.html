@@ -1,8 +1,9 @@
-{%extends "uwe/base.html"%}
-
+{% extends "uwe/base.html" %}
+{% load crispy_forms_tags %}
 {%block title%} Create new Club {%endblock%}
 
-{% load crispy_forms_tags %}
+
+
 
 {% block content %}
 
@@ -15,7 +16,7 @@
         <form action="" method="POST" class="form-group">
             {%csrf_token%}
 
-            {{form|crispy}}
+            {{form.as_p}}
 
             <button type="submit">Register</button>
 

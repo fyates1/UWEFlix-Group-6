@@ -17,11 +17,11 @@ Including another URLconf
 from django.urls import path
 from clubRep import views
 
-#app_name = "clubRep"
+app_name = "clubRep"
 
 urlpatterns = [
-    path('addClub/',views.addClub, name="addClub"),
-    path("view/",views.view_clubs, name="view"),
+    path('addClub',views.addClub, name="addClub"),
+    path("view",views.view_clubs, name="view"),
     path("show_club/<club_id>",views.view_club, name="showClub"),
     path("delete_club/<club_id>",views.delete_club, name="deleteClub"),
 

@@ -25,7 +25,7 @@
             <a class="navbar-brand" href="{% url 'cinema:list_films' %}">Display Films</a>
             <a class="navbar-brand" href="{% url 'cinema:list_showings' %}">Display Showings</a>
 
-            <!-- Main page -->
+            <!-- Main page + Cinema manager nav bar -->
             
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -43,7 +43,26 @@
                 </div>
             </div>
 
+            <!-- Accounts + Club dropdown -->
+            
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Account Manager (Clubs)
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'clubRep:addClub' %}">Add Club</a>
+                <a class="dropdown-item" href="{% url 'clubRep:view' %}">View Clubs</a>
+                <a class="dropdown-item" href="#">Future tabs</a>
+                <a class="dropdown-item" href="#">Future tabs</a>
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
           </div>
+          <!-- Log in to be in all type of roles  -->
+          <a class="navbar-brand" href="{% url 'login' %}">Log in</a>
+          <a class="navbar-brand" href="{% url 'register' %}">Register user</a>
         </nav>
         {% block content %}
     <!-- Block content  -->

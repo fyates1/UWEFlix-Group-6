@@ -1,3 +1,4 @@
+{% extends "uwe/base.html" %}
 <!doctype html>
 {% load static %}
 <html lang="en">
@@ -11,7 +12,7 @@
 
   <title>UWEFlix Login</title>
 </head>
-
+{% block content %}
 {% if message %}
 <div class="alert">{{ message }}</div><br>
 {% endif %}
@@ -36,4 +37,5 @@
 
         <br><input type="submit" name="login" value="login">
     </fieldset>
+    {%endblock%}
 </form>
