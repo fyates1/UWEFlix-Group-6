@@ -93,7 +93,7 @@ class User(models.Model):
 
     # User Type
     class UserType(models.TextChoices):
-        CUSTOMER = 'C', _('Customer')
+        # CUSTOMER = 'C', _('Customer')
         STUDENT = 'S', _('Student')
         CLUBREP = 'CR', _('Club Rep')
         ACCOUNTSMANAGER = 'AM', _('Accounts Manager')
@@ -103,7 +103,7 @@ class User(models.Model):
     userType = models.CharField(
         max_length = 2,
         choices = UserType.choices,
-        default = UserType.CUSTOMER
+        default = UserType.STUDENT
     )
 
     # Personal Info

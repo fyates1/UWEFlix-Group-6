@@ -47,8 +47,8 @@ def login(request):
     if request.method == 'POST':
         print("is POST")
         # Gets the username and password inputs from the form
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
+        username = request.POST['username']
+        password = request.POST['password']
 
         print(f"username: {username} \npassword: {password}")
 
@@ -69,7 +69,7 @@ def login(request):
                 return redirect(reverse("accountManager"))
             elif userType == "CR":
                 return redirect('clubRepresentative')
-            elif userType == "C" or  userType == "S":
+            elif userType == "S":
                 return redirect('customer')
             elif  userType == "CM":
                 return redirect('cinemaManager')
