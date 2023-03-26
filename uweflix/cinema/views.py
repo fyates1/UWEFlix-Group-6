@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm
 from .models import screen,row,film,showing
 from django.http import HttpResponseRedirect
+from customer.forms import BookingForm
+
 class CinemaManager():
     def get_screenList():
         List = screen.objects.all()
@@ -123,8 +125,8 @@ def add_film(request):
     return CinemaManager.add_film(request)
 
 def list_films(request):
-    film_list = film.objects.all()
-    return render(request,"cinema/films.html",{"film_list":film_list})
+    film_listing = film.objects.all()
+    return render(request,"cinema/films.html",{"film_listing":film_listing})
 
 def show_film(request,film_id):
     film = CinemaManager.get_film(film_id)
@@ -156,18 +158,28 @@ def add_showing(request):
                 submitted = True
         return render(request,"cinema/add_showing.html",{"form":form ,"submitted":submitted})
 
+
+# Showing display for cinema manager to add crud to 
 def list_showings(request):
     showing_list = showing.objects.all()
     return render(request,"cinema/showings.html",{"showing_list":showing_list})
 
+# Not used currently. Although keep
 def index(request):
     index = film.objects.all()
     return render(request,"cinema/index.html",{"index":index})
 
+# Main display screen
 def display_films(request):
     film_list = film.objects.all()
     return render(request,"cinema/display_films.html",{"film_list":film_list})
 
+# Film details when clicking
 def film_showing(request, _id):
     film_showings = film.objects.get(id=_id)
     return render(request,"cinema/film_showing.html",{"film_showings":film_showings})
+
+# Booking 
+def booking_sheet(request):
+    form = BookingForm()
+    return render(request,'customer/booking.html', {'form': form })

@@ -5,11 +5,12 @@
     <center>
         <h1>List of films in cinema</h1>
         <br>
-        {%for film in film_list%}
-            <a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a><br>
-            <img src="{{ film.filmImage.url }}">
+        {%for film in film_listing %}
+            <p>Film Name:<a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a></p>
+            <!-- <img src="{{ film.filmImage.url }}"> -->
             <a href="{% url 'cinema:update_film' film.id %}">Update</a>
             <a href="{% url 'cinema:delete_film' film.id %}">Delete</a><br>
+            </br>
         {%endfor%}
     </center>
 

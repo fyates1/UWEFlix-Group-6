@@ -1,15 +1,13 @@
-{% extends "uwe/base.html" %}
-{% load crispy_forms_tags %}
-{%block title%} Create new Club {%endblock%}
+{% extends "cinema/index.html" %}
 
 
+{% block title %}
+
+<h2> Booking</h2>
+{%endblock%}
 
 
 {% block content %}
-
-    <h2> Register a Club</h2>
-    
-    <br/>
     {% if submitted %}
         Your account was succesfully submitted
     {% else %}

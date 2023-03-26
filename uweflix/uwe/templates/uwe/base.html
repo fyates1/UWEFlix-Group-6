@@ -1,22 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
+    <!-- required tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Staic file -->
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS link, we are using Bootstrap 5.1 -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 </head>
 
 <body>
-    <!-- Need to make navbar options based on usertype when usertype exists -->
+    <!-- Main Nav bar for anyone open the website  -->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a href="{% url 'cinema:list_films' %}"><img src="/images/uweflix_logo.png"  style="height:60px; width:120px;"></a>
+            <a class="navbar-brand" href="{% url 'cinema:list_films' %}">Display Films</a>
+            <a class="navbar-brand" href="{% url 'cinema:list_showings' %}">Display Showings</a>
 
-    <div class="main">
+            <!-- Main page + Cinema manager nav bar -->
+            
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Cinema Manager
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'cinema:add_film' %}">Add Films</a>
+                <a class="dropdown-item" href="{% url 'cinema:film_listing' %}">View Films</a>
+                <a class="dropdown-item" href="{% url 'cinema:list_showings' %}">View showings</a>
+                <a class="dropdown-item" href="{% url 'cinema:add_showing' %}">Add Showings</a>
+                <a class="dropdown-item" href="{% url 'cinema:list_screens' %}">View Screens</a>
+                <a class="dropdown-item" href="{% url 'cinema:add_screen' %}">Add Screens</a>
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
+            <!-- Accounts + Club dropdown -->
+            
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Account Manager (Clubs)
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'clubRep:addClub' %}">Add Club</a>
+                <a class="dropdown-item" href="{% url 'clubRep:view' %}">View Clubs</a>
+                <a class="dropdown-item" href="#">Future tabs</a>
+                <a class="dropdown-item" href="#">Future tabs</a>
+                <hr class="dropdown-divider">
+                <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </div>
+
+          </div>
+          <!-- Log in to be in all type of roles  -->
+          <a class="navbar-brand" href="{% url 'login' %}">Log in</a>
+          <a class="navbar-brand" href="{% url 'register' %}">Register user</a>
+        </nav>
         {% block content %}
+    <!-- Block content  -->
+        
         {% endblock %}
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<head>
+    
+</head>
+
 </html>
