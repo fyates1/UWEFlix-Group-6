@@ -60,7 +60,12 @@ ROOT_URLCONF = 'uweflix.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'customer/templates'),
+            os.path.join(BASE_DIR, 'cinema/templates'),
+            os.path.join(BASE_DIR, 'clubRep/templates'),
+            os.path.join(BASE_DIR, 'accounts/templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,3 +146,4 @@ MEDIA_UL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'uwe.Users'
+

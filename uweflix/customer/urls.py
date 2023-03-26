@@ -15,6 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
+from . import forms
 
+
+app_name = 'customer'
 urlpatterns = [
+    path('booking/',views.StudentBooking, name="booking"),
+
+
 ]

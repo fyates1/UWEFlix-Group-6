@@ -6,16 +6,13 @@ from django.utils import timezone
 from cinema.models import *
 
 class TicketBooking(models.Model):
-    STUDENT = 1
-    CHILD = 2
-    ADULT = 3
-
+    
     ticket_date = models.DateField(default=django.utils.timezone.now)
     ticket_count = models.IntegerField(blank=False)
     TICKET_CHOICES = (
-        (STUDENT, 'Student'),
-        (CHILD, 'Child'),
-        (ADULT, 'Adult'),
+        ('Student', 'Student'),
+        ('Child', 'Child'),
+        ('Adult', 'Adult'),
     )
     ticket_type = models.CharField(choices=TICKET_CHOICES, max_length=15)
     showing = models.ForeignKey(showing, on_delete=models.CASCADE)
@@ -26,4 +23,13 @@ class TicketBooking(models.Model):
     status = models.CharField(max_length=30)
 
     def __str__(self):
-        return "{0} - {1}  ".format(self.showing)#, self.buyer)
+        return "{0} - {1}  ".format(self.showing)
+
+
+
+class Basket(models.Model):
+
+
+
+    def __str__(self):
+        return 
