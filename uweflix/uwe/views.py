@@ -61,7 +61,7 @@ def login(request):
             print("User is existing")
             # Logs in the user and sets the user type in the session
             userType = user.getUserType()
-            request.session['user_type'] = userType
+            request.session['user'] = user
             print(userType)
 
             # Redirects to pages based on user type
