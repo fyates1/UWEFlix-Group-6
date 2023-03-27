@@ -3,7 +3,8 @@ from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm
 from .models import screen,row,film,showing
 from django.http import HttpResponseRedirect
 from customer.forms import BookingForm
-
+from django.db.models.deletion import RestrictedError
+from django.shortcuts import get_list_or_404, get_object_or_404
 class CinemaManager():
     def get_screenList():
         List = screen.objects.all()
@@ -143,9 +144,14 @@ def update_film(request, film_id):
     return render(request,"cinema/update_film.html",{"film":Film, "form":form})
 
 def delete_film(request,film_id):
-    Film = CinemaManager.get_film(film_id)
-    Film.delete()
-    return redirect("cinema:list_films")
+    Film= CinemaManager.get_film(film_id)
+    try:
+        Film.delete()
+        return redirect("cinema:list_films")
+    except RestrictedError:
+        message = "Sorry cant delete a film that has shwoings!"
+        film_listing = film.objects.all()
+        return render(request,"cinema/films.html",{"film_listing":film_listing,"message":message})
 
 def add_showing(request):
         submitted = False
