@@ -3,8 +3,14 @@ from .forms import *
 from django.contrib.auth import authenticate, login
 from accounts.models import *
 from django.urls import reverse
+from django.conf import settings
 
 # ----------------- Views -----------------
+# Contact Us Page
+def contact_us(request):
+    return render(request, 'uwe/contact_us.html')
+    
+
 # Register page
 def register(request):
     # Creates the UserForm based on if .POST exists
