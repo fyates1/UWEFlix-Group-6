@@ -1,0 +1,47 @@
+{% extends "uwe/base.html" %}
+{% block title %}
+  Contact Us
+{% endblock %}
+{% block content %}
+
+  <div id="main1">
+    <div class="left">
+      <h1>Contact Us</h1>
+      <h1>Company Name: UWEFLIX</h1>
+      <h1>Company Address: University of the West of England <br> Frenchay Campus <br> Coldharbour Lane <br> Bristol <br> BS16 1QY <br> United Kingdom</h1>
+      <h1>Company Phone: 0117 965 6261</h1>
+      <h1>Company Email: infopoint@uwe.ac.uk</h1>
+      <h1>Days Open Information: Open Mon-Sun</h1>
+      <h1>Opening Times: 9:00am</h1>
+      <h1>Closing Times: 5:30pm</h1>
+    </div>
+
+    <div class="'right">
+    
+      <script> 
+          let map;
+          function initMap() {
+          map = new google.maps.Map(document.getElementById("map"), {
+              center: { lat: 51.503464, lng: -2.551307 },
+              zoom: 8,
+          });
+          marker = new google.maps.Marker({
+            position: {lat: parseFloat(51.503464), lng: parseFloat(-2.551307)},
+            map: map,
+          })
+          }
+          window.initMap = initMap;
+      
+      </script>
+      
+
+          <div class="mapholder">
+              <div id="map"></div>
+              <script
+              src="https://maps.googleapis.com/maps/api/js?key={{key}}&callback=initMap&v=weekly"
+              defer
+              ></script>
+          </div>
+    </div>
+  </div>
+{% endblock content %}
