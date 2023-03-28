@@ -3,7 +3,7 @@ from .forms import *
 from django.contrib.auth import authenticate, login
 from accounts.models import *
 from django.urls import reverse
-from django.conf import settings
+from django.conf import uweflix.settings
 
 # ----------------- Views -----------------
 # Contact Us Page
