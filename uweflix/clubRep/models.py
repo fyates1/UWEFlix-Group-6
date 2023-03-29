@@ -11,7 +11,7 @@ from django.db import models
 
 import uuid, re, datetime
 from datetime import date, timedelta
-from accounts.models import isLandlineNumber, isMobileNumber
+from accounts.validators import isLandlineNumber, isMobileNumber
 
 # Create your models here.
 
@@ -29,8 +29,6 @@ class Club(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
-
-    
 
     def __str__(self):
         return self.clubName

@@ -9,3 +9,5 @@ tomli==2.0.1
 tzdata==2022.7
 django-crispy-forms>=1.14.0
 pillow==9.4.0
+djangorestframework==3.14.0
+djoser==2.1.0

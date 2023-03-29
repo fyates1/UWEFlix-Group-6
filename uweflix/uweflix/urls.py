@@ -18,7 +18,16 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.i18n import JavaScriptCatalog
+from rest_framework.routers import DefaultRouter
+from accounts.viewsets import ModelViewSet
+
+router = DefaultRouter()
+# register the ModuleViewSet with the router
+router.register(r"modules", ModelViewSet)
+
 urlpatterns = [
+    # path to the api
+    path("api/", include(router.urls)),
     path('admin/', admin.site.urls),
     path('', include('uwe.urls')),
     path('accounts/', include('accounts.urls')),
