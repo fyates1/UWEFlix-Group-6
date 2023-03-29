@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'clubRep.apps.ClubrepConfig',
     'customer.apps.CustomerConfig',
     'crispy_forms',
+    'rest_framework',
+    'djoser',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
@@ -90,7 +92,7 @@ WSGI_APPLICATION = 'uweflix.wsgi.application'
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'NAME': 'uweflixdb',
 #         'USER': 'postgres',
-#         'PASSWORD': '',
+#         'PASSWORD': 'root',
 #         'HOST': '127.0.0.1',
 #         'PORT': '5432',
 #     }
@@ -146,7 +148,7 @@ MEDIA_UL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'uwe.Users'
+AUTH_USER_MODEL = 'accounts.User'
 
 # GOOGLE_API_KEY = 
 
