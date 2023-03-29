@@ -30,10 +30,18 @@ class Club(models.Model):
     city = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
 
-    
+    #added balance for the club reps to use
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
         return self.clubName
+    
+class Transaction(models.Model):
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.CharField(max_length=255)
+
 
 # class ClubForm(forms.ModelForm):
 #     # Form for Club model
