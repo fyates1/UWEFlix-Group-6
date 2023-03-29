@@ -1,9 +1,13 @@
 from django.urls import path
 from uwe import views
 from accounts import views as AMViews
+from cinema import views as CViews
 
 urlpatterns = [
-    path('', views.login, name='login'),
+    # Home Page
+    path('', CViews.display_films, name='home'),
+
+    path('login', views.login, name='login'),
     path('register', views.register, name='register'),
     path('superuser', views.superuser, name='superuser'),
     # path('create/',views.addClub, name="create"),
