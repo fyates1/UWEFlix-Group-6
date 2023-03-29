@@ -56,6 +56,8 @@ urlpatterns = [
     path("index",views.index,name="index"),
     path("display",views.display_films,name="list_films"),
     path("film_showing/<_id>",views.film_showing,name="film_showing"),
+    path("delete_showing/<showing_id>",views.delete_showing,name="delete_showing"),
+    path("update_showing/<showing_id>",views.update_showing,name="update_showing"),
     path("cinema/booking/",views.booking_sheet,name="booking_sheet"),
 
 ]

@@ -46,7 +46,7 @@ class showing(models.Model):
     date= models.DateField("Date of showing (mm/dd/yyyy)")
     startTime=models.TimeField("Time of showing (HH:MM)")
     numberOfSales = models.IntegerField(blank=True, null=True)
-    film=models.ForeignKey(film, on_delete=models.SET_NULL, null=True)
+    film=models.ForeignKey(film, on_delete=models.RESTRICT, null=True)
     screen= models.ForeignKey(screen,on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.date},{self.film},{self.startTime}"

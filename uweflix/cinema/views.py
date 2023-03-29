@@ -3,7 +3,8 @@ from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm
 from .models import screen,row,film,showing
 from django.http import HttpResponseRedirect
 from customer.forms import BookingForm
-
+from django.db.models.deletion import RestrictedError
+from django.shortcuts import get_list_or_404, get_object_or_404
 class CinemaManager():
     def get_screenList():
         List = screen.objects.all()
@@ -17,6 +18,8 @@ class CinemaManager():
         return row.objects.get(pk=id)
     def get_film(id):
         return film.objects.get(pk=id)
+    def get_showing(id):
+        return showing.objects.get(pk=id)
 
     def add_screen(request):
         submitted = False
@@ -141,9 +144,14 @@ def update_film(request, film_id):
     return render(request,"cinema/update_film.html",{"film":Film, "form":form})
 
 def delete_film(request,film_id):
-    Film = CinemaManager.get_film(film_id)
-    Film.delete()
-    return redirect("cinema:list_films")
+    Film= CinemaManager.get_film(film_id)
+    try:
+        Film.delete()
+        return redirect("cinema:list_films")
+    except RestrictedError:
+        message = "Sorry cant delete a film that has shwoings!"
+        film_listing = film.objects.all()
+        return render(request,"cinema/films.html",{"film_listing":film_listing,"message":message})
 
 def add_showing(request):
         submitted = False
@@ -163,6 +171,19 @@ def add_showing(request):
 def list_showings(request):
     showing_list = showing.objects.all()
     return render(request,"cinema/showings.html",{"showing_list":showing_list})
+
+def delete_showing(request,showing_id):
+    Showing = CinemaManager.get_showing(showing_id)
+    Showing.delete()
+    return redirect("cinema:list_showings")
+
+def update_showing(request, showing_id):
+    Showing = CinemaManager.get_showing(showing_id)
+    form = ShowingForm(request.POST or None,instance=Showing)
+    if form.is_valid():
+            form.save()
+            return redirect('cinema:list_showings')
+    return render(request,"cinema/update_showing.html",{"showing":Showing, "form":form})
 
 # Not used currently. Although keep
 def index(request):
