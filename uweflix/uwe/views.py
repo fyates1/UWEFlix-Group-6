@@ -9,7 +9,6 @@ from django.conf import settings
 # Contact Us Page
 def contact_us(request):
     return render(request, 'uwe/contact_us.html')
-    
 
 # Register page
 def register(request):
@@ -58,6 +57,11 @@ def login(request):
 
         print(f"username: {username} \npassword: {password}")
 
+        # Testing code
+        allUsers = User.objects.all()
+        for user in allUsers:
+            print(f"ID: {user.pk} | Username: {user.username} | Password: {user.password}")
+
         # Authenticates the user
         user = authenticate(request, username=username, password=password)
 
@@ -87,7 +91,7 @@ def login(request):
             context['message'] = 'Invalid username or password'
             return redirect(reverse("login") + f'?message=Invalid Login')
 
-    print("Get page")
+    print("age")
     # Renders the page
     return render(request, 'uwe/login.html', context)
 

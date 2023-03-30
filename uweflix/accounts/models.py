@@ -50,19 +50,19 @@ class User(models.Model):
 
     # Affiliated Club
     # TODO - Make this work when Haroun/Lewis finish their model
-    affiliatedClub = models.ForeignKey(Club, on_delete=models.CASCADE)
+    affiliatedClub = models.ForeignKey(Club, on_delete=models.CASCADE, blank=True, null=True)
 
     # Payment information
     paymentDetails = models.ForeignKey(PaymentDetails, on_delete=models.CASCADE, blank=True, null=True)
 
-    def encryptPassword(self, plainPassword):
-        self.password = make_password(plainPassword)
+    # def encryptPassword(self, plainPassword):
+    #     self.password = make_password(plainPassword)
 
-    def checkPassword(self, plainPassword):
-        if check_password(plainPassword, self.password):
-            return True
-        else:
-            return False
+    # def checkPassword(self, plainPassword):
+    #     if check_password(plainPassword, self.password):
+    #         return True
+    #     else:
+    #         return False
     # def checkPassword(self, plainPassword):
     #     return check_password(plainPassword, self.password)
 
@@ -97,10 +97,10 @@ class UserForm(forms.ModelForm):
 # ----------------- Receivers -----------------
 #region
 # This should run whenever the User model wishes to save itself
-@receiver(pre_save, sender=User)
-def encrypt_user_password(sender, instance, **kwargs):
-    # Checks if password field is not None
-    if instance.password:
-        # Runs encryptPassword before .save() is completed
-        instance.encryptPassword(instance.password)
+# @receiver(pre_save, sender=User)
+# def encrypt_user_password(sender, instance, **kwargs):
+#     # Checks if password field is not None
+#     if instance.password:
+#         # Runs encryptPassword before .save() is completed
+#         instance.encryptPassword(instance.password)
 #endregion
