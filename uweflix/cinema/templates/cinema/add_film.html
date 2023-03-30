@@ -17,6 +17,28 @@ Add Film
             {{ form.as_p }}
             <input type="submit" value="Submit" class="btn btn-success">
         </form>
+        <br>
+        <h1>Most popular films</h1>
     </center>
+    
+
+    <br>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+  
+        {%for movie in movies%}
+          <div class="col-4">
+            <div class="card h-100">
+            <img src="{{ movie.image }}" alt="connect" style="height:auto; width:auto;">
+            <div class="card-body">
+                <p>{{movie.title}}</p>
+              </div>
+            </div>
+          </div>
+        {%endfor%}
+      
+      </div>
+
+
+
 
 {%endblock%}
