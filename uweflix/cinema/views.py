@@ -204,3 +204,9 @@ def film_showing(request, _id):
 def booking_sheet(request):
     form = BookingForm()
     return render(request,'customer/booking.html', {'form': form })
+
+
+
+# STRIPE_PUBLIC_KEY = "pk_test_51MrLYgKummhyRPIWqq60hKyrzmecGOBIrzbUr5d8OpMXE98T8zYPWomn0UUQ9JMg1K0MWVdLG24YofEy4ILDut0c00MlPTvUTt"
+# STRIPE_SECRET_KEY = "sk_test_51MrLYgKummhyRPIWVlw5HAGLAlVUWQuE2HCt6YyiZTe1FTTDr0LzOEgLog8Tz2FjGX9ccHncBBii3tmnyWIOzyFY006ZSe2icc"
+# STRIPE_WEBHOOK_SECRET = ""
