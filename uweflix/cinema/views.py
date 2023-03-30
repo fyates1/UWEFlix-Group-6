@@ -236,8 +236,12 @@ def book_showing(request, showing_id):
             adult_tickets = form.cleaned_data.get('adult_tickets')
             # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
             booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
-            booking.save()
-            return redirect('cinema:list_showings')
+            #booking.save()
+            request.session['adult']= adult_tickets
+            request.session['student']= student_tickets
+            request.session['child']= child_tickets
+            request.session['showing_info'] = showing_id 
+            return redirect('customer:checkout')
     else:
         form = BookingForm()
         return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
