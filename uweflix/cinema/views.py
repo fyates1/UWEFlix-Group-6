@@ -1,8 +1,7 @@
 from django.shortcuts import render,redirect
-from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm
-from .models import screen,row,film,showing
+from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm,BookingForm
+from .models import screen,row,film,showing,Booking
 from django.http import HttpResponseRedirect
-from customer.forms import BookingForm
 from django.db.models.deletion import RestrictedError
 from django.shortcuts import get_list_or_404, get_object_or_404
 class CinemaManager():
@@ -203,4 +202,20 @@ def film_showing(request, _id):
 # Booking 
 def booking_sheet(request):
     form = BookingForm()
-    return render(request,'customer/booking.html', {'form': form })
+    return render(request,'cinema/film_showing.html', {'form': form })
+
+def book_showing(request, showing_id):
+    showing = CinemaManager.get_showing(showing_id)
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=Booking())
+        if form.is_valid():
+            student_tickets = form.cleaned_data.get('student_tickets')
+            child_tickets = form.cleaned_data.get('child_tickets')
+            adult_tickets = form.cleaned_data.get('adult_tickets')
+            # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
+            booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
+            booking.save()
+            return redirect('cinema:list_showings')
+    else:
+        form = BookingForm()
+    return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
