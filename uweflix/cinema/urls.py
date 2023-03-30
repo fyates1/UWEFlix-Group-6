@@ -59,6 +59,7 @@ urlpatterns = [
     path("delete_showing/<showing_id>",views.delete_showing,name="delete_showing"),
     path("update_showing/<showing_id>",views.update_showing,name="update_showing"),
     path("cinema/booking/",views.booking_sheet,name="booking_sheet"),
+    path("cinema/booking_film/<showing_id>",views.book_showing,name="create_booking"),
 
 ]
 if settings.DEBUG:

@@ -50,3 +50,16 @@ class showing(models.Model):
     screen= models.ForeignKey(screen,on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.date},{self.film},{self.startTime}"
+    
+    
+class Booking(models.Model):
+    bookingID = models.AutoField(primary_key=True,unique=True)
+    showing = models.ForeignKey(showing, on_delete=models.CASCADE, null=True)
+    student_tickets = models.IntegerField(default=0)
+    child_tickets = models.IntegerField(default=0)
+    adult_tickets = models.IntegerField(default=0)
+    total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
+    # created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return f"{self.bookingID},{self.showing},{self.student_tickets},{self.child_tickets},{self.adult_tickets},{self.total_price}"

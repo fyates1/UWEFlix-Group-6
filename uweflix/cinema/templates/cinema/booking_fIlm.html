@@ -1,0 +1,19 @@
+{% extends "cinema/index.html" %}
+
+{% block content %}
+    <h1>Booking: {{ showing.film.title }}</h1>
+    <ul>
+        <li><strong>Title: </strong>{{ showing.film.title }}</li>
+        <li><strong>Description: </strong>{{ showing.film.description }}</li>
+        <li><strong>Age rating: </strong>{{ showing.film.ageRating }}</li>
+        <li><strong>Date: </strong>{{ showing.date }}</li>
+        <li><strong>Screen name: </strong>{{ showing.screen }}</li>
+        <li><strong>Start: </strong>{{ showing.startTime }}</li>
+    </ul>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="hidden" name="showing_id" value="{{ showing.id }}">
+        <button type="submit">Book tickets</button>
+    </form>
+{% endblock %}

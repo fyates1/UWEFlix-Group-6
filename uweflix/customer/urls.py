@@ -17,11 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from . import views
 from . import forms
+#from .views import CreateCheckoutSessionView, ProductLandingPageView
 
 
 app_name = 'customer'
 urlpatterns = [
     path('booking/',views.StudentBooking, name="booking"),
+    #path('checkout_session/',views.CreateCheckoutSessionView.as_view(), name="checkout-session"),
+    path('landing/',views.landing, name="landing-page"),
+    path('checkout/',views.pay, name="checkout"),
+    path('sucess/',views.sucess, name="sucess"),
+    path('cancel/',views.cancel, name="cancel"),
 
 
 ]

@@ -53,7 +53,7 @@ def settle(request):
         form = settle_accounts(request.POST, instance=club)
         if form.is_valid():
             form.save()
-            return redirect('clubRep:view_clubs')
+            return redirect('clubRep:settle')
     else:
         form = settle_accounts(instance=club)
         
