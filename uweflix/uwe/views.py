@@ -90,9 +90,9 @@ def login(request):
             print("User is existing")
             # Convert the User object to a dictionary
             user_dict = model_to_dict(user)
-            user_dict = json.dumps(user_dict, cls=CustomJSONEncoder)
-            print(user_dict)
-            request.session['user'] = user_dict
+            user_json = json.dumps(user_dict, cls=CustomJSONEncoder)
+            print(user_json)
+            request.session['user'] = user_json
 
             # Redirects to pages based on user type
             # TODO Make this redirect to pages based on the logged in user
@@ -106,7 +106,9 @@ def login(request):
             #     return redirect('cinemaManager')
             # else:
             #     return redirect(reverse("login") + f'?message=Unkown User Type [{userType}]')
-            return redirect(reverse('home'))
+
+            print(f'first name: {user_dict["firstName"]} | last name: {user_dict["lastName"]}')
+            return redirect(reverse('home') + f'?message={user_dict["firstName"]} {user_dict["lastName"]} is now logged in')
         else:
             print("User doesnt exist")
             # Adds an error message to the context and renders the page again

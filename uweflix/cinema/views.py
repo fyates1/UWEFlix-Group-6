@@ -213,8 +213,10 @@ def index(request):
 
 # Main display screen
 def display_films(request):
+    message = request.GET.get('message')
+
     film_list = film.objects.all()
-    return render(request,"cinema/display_films.html",{"film_list":film_list})
+    return render(request,"cinema/display_films.html",{"film_list":film_list, "message": message})
 
 # Film details when clicking
 def film_showing(request, _id):
