@@ -49,7 +49,6 @@ class User(models.Model):
     dateOfBirth = models.DateField()
 
     # Affiliated Club
-    # TODO - Make this work when Haroun/Lewis finish their model
     affiliatedClub = models.ForeignKey(Club, on_delete=models.CASCADE, blank=True, null=True)
 
     # Payment information
