@@ -5,6 +5,16 @@ from accounts.models import *
 from django.urls import reverse
 from django.conf import settings
 
+# ----------------- Custom -----------------
+def custom_authenticate(username, password):
+    try:
+        user = User.objects.get(username=username)
+        if user.check_password(password):
+            return user
+    except User.DoesNotExist:
+        pass
+    return None
+
 # ----------------- Views -----------------
 # Contact Us Page
 def contact_us(request):
@@ -63,7 +73,8 @@ def login(request):
             print(f"ID: {user.pk} | Username: {user.username} | Password: {user.password}")
 
         # Authenticates the user
-        user = authenticate(request, username=username, password=password)
+        # user = authenticate(request, username=username, password=password)
+        user = custom_authenticate(username=username, password=password)
 
         print(user)
 
