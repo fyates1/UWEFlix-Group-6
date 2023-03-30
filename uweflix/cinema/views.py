@@ -229,6 +229,11 @@ def booking_sheet(request):
 
 
 
+<<<<<<< HEAD
+# STRIPE_PUBLIC_KEY = "pk_test_51MrLYgKummhyRPIWqq60hKyrzmecGOBIrzbUr5d8OpMXE98T8zYPWomn0UUQ9JMg1K0MWVdLG24YofEy4ILDut0c00MlPTvUTt"
+# STRIPE_SECRET_KEY = "sk_test_51MrLYgKummhyRPIWVlw5HAGLAlVUWQuE2HCt6YyiZTe1FTTDr0LzOEgLog8Tz2FjGX9ccHncBBii3tmnyWIOzyFY006ZSe2icc"
+# STRIPE_WEBHOOK_SECRET = ""
+=======
 #Function to pull data on the most popular films from api
 def movie_api_request(page):
     url = "https://moviesdatabase.p.rapidapi.com/titles"
@@ -252,3 +257,4 @@ def movie_api_request(page):
     for x in range(0,9):
         data.append({"title":df["titleText"][x]["text"],"image":df["primaryImage"][x]["url"]})
     return data
+>>>>>>> origin
