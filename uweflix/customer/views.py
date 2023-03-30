@@ -12,6 +12,9 @@ from django.views import View
 from django.views.generic import TemplateView
 import stripe
 from django.conf import settings
+from cinema.models import Booking, showing
+from django.contrib.sessions.models import Session
+from cinema.views import CinemaManager
 
 # STRIPE_PUBLIC_KEY = "pk_test_51MrLYgKummhyRPIWqq60hKyrzmecGOBIrzbUr5d8OpMXE98T8zYPWomn0UUQ9JMg1K0MWVdLG24YofEy4ILDut0c00MlPTvUTt"
 # STRIPE_SECRET_KEY = "sk_test_51MrLYgKummhyRPIWVlw5HAGLAlVUWQuE2HCt6YyiZTe1FTTDr0LzOEgLog8Tz2FjGX9ccHncBBii3tmnyWIOzyFY006ZSe2icc"
@@ -45,21 +48,32 @@ def landing(response):
     pass
     return render(response, "customer/checkout.html")
 
-def sucess(response):
-    pass
-    return render(response, "customer/sucess.html")
+def sucess(request):
+
+    adult_tickets = request.session['adult']
+    student_tickets = request.session['student']
+    child_tickets = request.session['child']
+    showing_id = request.session['showing_info']
+    showing = CinemaManager.get_showing(showing_id)
+
+    booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
+
+    booking.save()
+    return render(request, "customer/sucess.html")
 
 def cancel(response):
     pass
     return render(response, "customer/cancel.html")
 
-adults = 1
-student = 1
-child = 1
+# adults = 1
+# student = 1
+# child = 1
 
 def pay(request):
-
-        
+    #booking = Booking.objects.get(pk=booking_id)
+    adults = request.session['adult']
+    student = request.session['student']
+    child = request.session['child']
     DOMAIN ='http://127.0.0.1:8000/customer/',
     payment_method_types=['card']
     items=[]
@@ -92,8 +106,8 @@ def pay(request):
 
 #testing card details 
 #number : 4242 4242 4242 4242
-#
-#
+# 03/23 
+# 123
 #
 
 
