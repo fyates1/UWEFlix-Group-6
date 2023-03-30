@@ -19,7 +19,7 @@ Film Showing
             <li><strong>Date: </strong>{{ i.date }}</li> <br/>
             <li><strong>Screen name: </strong>{{i.screen}}</li><br/>
             <li><strong>Start: </strong>{{i.startTime}}</li><br/>
-            <a href="{% url 'cinema:booking_sheet' %}" class="btn btn-success">Book Showing</a>
+            <a href="{% url 'cinema:create_booking' i.id %}" class="btn btn-success">Book Showing</a>
             </br>
         </ul>
         {% endfor %}

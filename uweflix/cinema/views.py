@@ -1,8 +1,7 @@
 from django.shortcuts import render,redirect
-from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm
-from .models import screen,row,film,showing
+from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm,BookingForm
+from .models import screen,row,film,showing,Booking
 from django.http import HttpResponseRedirect
-from customer.forms import BookingForm
 from django.db.models.deletion import RestrictedError
 from django.shortcuts import get_list_or_404, get_object_or_404
 import requests
@@ -225,15 +224,27 @@ def film_showing(request, _id):
 # Booking 
 def booking_sheet(request):
     form = BookingForm()
+    return render(request,'cinema/film_showing.html', {'form': form })
+
+def book_showing(request, showing_id):
+    showing = CinemaManager.get_showing(showing_id)
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=Booking())
+        if form.is_valid():
+            student_tickets = form.cleaned_data.get('student_tickets')
+            child_tickets = form.cleaned_data.get('child_tickets')
+            adult_tickets = form.cleaned_data.get('adult_tickets')
+            # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
+            booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
+            booking.save()
+            return redirect('cinema:list_showings')
+    else:
+        form = BookingForm()
+        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
     return render(request,'customer/booking.html', {'form': form })
 
 
 
-<<<<<<< HEAD
-# STRIPE_PUBLIC_KEY = "pk_test_51MrLYgKummhyRPIWqq60hKyrzmecGOBIrzbUr5d8OpMXE98T8zYPWomn0UUQ9JMg1K0MWVdLG24YofEy4ILDut0c00MlPTvUTt"
-# STRIPE_SECRET_KEY = "sk_test_51MrLYgKummhyRPIWVlw5HAGLAlVUWQuE2HCt6YyiZTe1FTTDr0LzOEgLog8Tz2FjGX9ccHncBBii3tmnyWIOzyFY006ZSe2icc"
-# STRIPE_WEBHOOK_SECRET = ""
-=======
 #Function to pull data on the most popular films from api
 def movie_api_request(page):
     url = "https://moviesdatabase.p.rapidapi.com/titles"
@@ -257,4 +268,3 @@ def movie_api_request(page):
     for x in range(0,9):
         data.append({"title":df["titleText"][x]["text"],"image":df["primaryImage"][x]["url"]})
     return data
->>>>>>> origin
