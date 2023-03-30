@@ -150,5 +150,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'uwe.Users'
 
-# GOOGLE_API_KEY = 
-
