@@ -11,7 +11,7 @@ from django.db import models
 
 import uuid, re, datetime
 from datetime import date, timedelta
-from accounts.models import isLandlineNumber, isMobileNumber
+from accounts.validation import *
 
 # Create your models here.
 

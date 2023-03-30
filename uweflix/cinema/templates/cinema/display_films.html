@@ -10,12 +10,11 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
   
   {%for film in film_list%}
-    <div class="col-4">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
       <div class="card h-100">
       <img src="{{ film.filmImage.url }}" alt="connect" style="height:auto; width:auto;">
       <div class="card-body">
         <p><a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a></p>
-        <p class="card-text">Description?</p>
       </div>
       <div class="card-footer">
         <small class="text-muted"><a href="{% url 'cinema:film_showing' film.id %}">View showings</a></small>

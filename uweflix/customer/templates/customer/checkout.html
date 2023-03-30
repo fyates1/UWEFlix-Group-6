@@ -1,0 +1,7 @@
+{% extends "uwe/base.html" %}
+{%block content%}      
+      <form action="{% url 'customer:checkout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" id="checkout-button">Checkout</button>
+      </form>
+{%endblock%}

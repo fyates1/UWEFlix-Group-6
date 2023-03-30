@@ -149,4 +149,10 @@ MEDIA_UL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'uwe.Users'
+<<<<<<< HEAD
 
+STRIPE_PUBLIC_KEY = "pk_test_51MrLYgKummhyRPIWqq60hKyrzmecGOBIrzbUr5d8OpMXE98T8zYPWomn0UUQ9JMg1K0MWVdLG24YofEy4ILDut0c00MlPTvUTt"
+STRIPE_SECRET_KEY = "sk_test_51MrLYgKummhyRPIWVlw5HAGLAlVUWQuE2HCt6YyiZTe1FTTDr0LzOEgLog8Tz2FjGX9ccHncBBii3tmnyWIOzyFY006ZSe2icc"
+# STRIPE_WEBHOOK_SECRET = ""
+=======
+>>>>>>> origin

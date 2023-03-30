@@ -4,9 +4,21 @@ from django.shortcuts import render, redirect, get_object_or_404
 import re
 
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http import JsonResponse
 from . import models
 #from . import forms
 from .forms import BookingForm
+from django.views import View
+from django.views.generic import TemplateView
+import stripe
+from django.conf import settings
+
+# STRIPE_PUBLIC_KEY = "pk_test_51MrLYgKummhyRPIWqq60hKyrzmecGOBIrzbUr5d8OpMXE98T8zYPWomn0UUQ9JMg1K0MWVdLG24YofEy4ILDut0c00MlPTvUTt"
+# STRIPE_SECRET_KEY = "sk_test_51MrLYgKummhyRPIWVlw5HAGLAlVUWQuE2HCt6YyiZTe1FTTDr0LzOEgLog8Tz2FjGX9ccHncBBii3tmnyWIOzyFY006ZSe2icc"
+# STRIPE_WEBHOOK_SECRET = ""
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 def StudentBooking(response):
     #response.user
@@ -26,6 +38,63 @@ def StudentBooking(response):
         if 'submitted' in response.GET:
             submitted = True
         return render(response, "customer/booking.html", {'form':form, 'submitted':submitted})
+
+#stripe.api_key = settings.STRIPE_SECRET_KEY
+
+def landing(response):
+    pass
+    return render(response, "customer/checkout.html")
+
+def sucess(response):
+    pass
+    return render(response, "customer/sucess.html")
+
+def cancel(response):
+    pass
+    return render(response, "customer/cancel.html")
+
+adults = 1
+student = 1
+child = 1
+
+def pay(request):
+
+        
+    DOMAIN ='http://127.0.0.1:8000/customer/',
+    payment_method_types=['card']
+    items=[]
+    if(adults > 0):
+        items += [{
+            "price": "price_1MrLtCKummhyRPIWtVsccm4O",
+            "quantity": adults,
+            }]
+    if(student > 0 ):
+        items += [{
+            "price": "price_1MrLtaKummhyRPIWQbNz4wn6",
+            "quantity": student,
+            }]
+    if(child > 0 ):
+        items += [{
+            "price": "price_1MrLvzKummhyRPIW8U9BAMmJ",
+            "quantity": child,
+            }]
+    
+    checkout_session = stripe.checkout.Session.create(
+        payment_method_types=['card'], 
+        line_items=items,   
+        mode='payment',
+        success_url= 'http://127.0.0.1:8000/customer/sucess/',
+        cancel_url= 'http://127.0.0.1:8000/customer/cancel/',
+        
+        )
+
+    return redirect(checkout_session.url)
+
+#testing card details 
+#number : 4242 4242 4242 4242
+#
+#
+#
 
 
 
