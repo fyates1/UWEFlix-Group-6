@@ -8,11 +8,7 @@ from django.conf import settings
 # ----------------- Views -----------------
 # Contact Us Page
 def contact_us(request):
-    key = settings.GOOGLE_API_KEY
-    context = {
-        'key': key,
-    }
-    return render(request, 'uwe/contact_us.html', context)
+    return render(request, 'uwe/contact_us.html')
     
 
 # Register page
