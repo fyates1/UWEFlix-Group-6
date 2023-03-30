@@ -1,0 +1,37 @@
+{% extends "uwe/base.html" %}
+{% block title %}
+    Register
+{% endblock %}
+{% block content %}
+
+<form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend>
+            <h2>Registration</h2>
+        </legend>
+
+        {% for field in form %}
+            {% if field.name == "firstName" %}
+                <h4>Personal Details</h4>
+            {% endif %}
+
+            <!-- TODO Make it so only the first 3 options of UserType is available -->
+
+            <div class="fieldContainer">
+                {% if field.name != "paymentDetails" %}
+                    {{ field.label_tag }} {{ field }}
+                {% endif %}
+
+                {% for errors in field.errors %}
+                    <div class="error">{{ errors }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <br><input type="submit" name="register" value="Register">
+    </fieldset>
+</form>
+
+{% endblock %}
