@@ -27,9 +27,17 @@ class TicketBooking(models.Model):
 
 
 
-class Basket(models.Model):
+# class Basket(models.Model):
 
 
+
+#     def __str__(self):
+#         return 
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.IntegerField(default=0)
 
     def __str__(self):
-        return 
+        return self.name
