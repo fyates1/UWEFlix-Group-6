@@ -62,8 +62,12 @@
 
           </div>
           <!-- Log in to be in all type of roles  -->
-          <a class="navbar-brand" href="{% url 'login' %}">Log in</a>
-          <a class="navbar-brand" href="{% url 'register' %}">Register user</a>
+          {% if not request.session.user is not None %}
+            <a class="navbar-brand" href="{% url 'login' %}">Log in</a>
+            <a class="navbar-brand" href="{% url 'register' %}">Register user</a>
+          {% else %}
+            <a class="navbar-brand" href="{% url 'logout' %}">Log out</a>
+          {% endif %}
         </nav>
 
         {% if message %}

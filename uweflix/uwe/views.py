@@ -53,7 +53,6 @@ def register(request):
 
 #LOGIN
 def login(request):
-    print("Started")
     # Creates the UserForm based on if .POST exists
     form = LoginForm(request.POST or None)
 
@@ -68,30 +67,18 @@ def login(request):
 
     # Checks if it's POST method
     if request.method == 'POST':
-        print("is POST")
         # Gets the username and password inputs from the form
         username = request.POST['username']
         password = request.POST['password']
-
-        print(f"username: {username} \npassword: {password}")
-
-        # Testing code
-        allUsers = User.objects.all()
-        for user in allUsers:
-            print(f"ID: {user.pk} | Username: {user.username} | Password: {user.password}")
 
         # Authenticates the user
         # user = authenticate(request, username=username, password=password)
         user = custom_authenticate(username=username, password=password)
 
-        print(user)
-
         if user is not None:
-            print("User is existing")
             # Convert the User object to a dictionary
             user_dict = model_to_dict(user)
             user_json = json.dumps(user_dict, cls=CustomJSONEncoder)
-            print(user_json)
             request.session['user'] = user_json
 
             # Redirects to pages based on user type
@@ -107,47 +94,25 @@ def login(request):
             # else:
             #     return redirect(reverse("login") + f'?message=Unkown User Type [{userType}]')
 
-            print(f'first name: {user_dict["firstName"]} | last name: {user_dict["lastName"]}')
             return redirect(reverse('home') + f'?message={user_dict["firstName"]} {user_dict["lastName"]} is now logged in')
         else:
-            print("User doesnt exist")
             # Adds an error message to the context and renders the page again
             context['message'] = 'Invalid username or password'
             return redirect(reverse("login") + f'?message=Invalid Login')
 
-    print("age")
     # Renders the page
     return render(request, 'uwe/login.html', context)
 
-# def loginView(request):
-#     form=LoginForm(request.POST or None)
-#     if request.method == 'POST':
-#         if form.is_valid():
-#             username = form.cleaned_data.get('username')
-#             password = form.cleaned_data.get('password')
-#             print(username,password)
-#             user = authenticate(username=username, password=password)
-#             print(user)
-#             if user is not None and user.is_superuser:
-#                 login(request, user)
-#                 return redirect('superuser')
-#             elif user is not None and user.is_accountManager:
-#                 login(request, user)
-#                 return redirect('accountManager')
-#             elif user is not None and user.is_clubRepresentative:
-#                 login(request, user)
-#                 return redirect('clubRepresentative')
-#             elif user is not None and user.is_customer:
-#                 login(request, user)
-#                 return redirect('customer')
-#             elif user is not None and user.is_cinemaManager:
-#                 login(request, user)
-#                 return redirect('cinemaManager')
-#             else:
-#                 return redirect('loginView')
-#         else:
-#             return redirect('loginView')
-#     return render(request, 'uwe/login.html', {'form': form})
+def logout(request):
+    print(request.session)
+
+    if 'user' in request.session:
+        print("runs")
+        del request.session['user']
+    else:
+        print("No run")
+
+    return redirect(reverse('login'))
 
 #USERS
 def superuser(request):

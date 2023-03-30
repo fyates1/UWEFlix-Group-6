@@ -9,6 +9,7 @@ urlpatterns = [
 
     path('login', views.login, name='login'),
     path('register', views.register, name='register'),
+    path('logout', views.logout, name='logout'),
     path('superuser', views.superuser, name='superuser'),
     # path('create/',views.addClub, name="create"),
 
