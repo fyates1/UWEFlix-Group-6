@@ -3,17 +3,25 @@ from .forms import *
 from django.contrib.auth import authenticate, login
 from accounts.models import *
 from django.urls import reverse
-from django.conf import settings
+from django.forms.models import model_to_dict
+import json
+from datetime import date
 
 # ----------------- Custom -----------------
 def custom_authenticate(username, password):
     try:
         user = User.objects.get(username=username)
-        if user.check_password(password):
+        if user.password == password:
             return user
     except User.DoesNotExist:
         pass
     return None
+
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, date):
+            return obj.isoformat()
+        return super().default(obj)
 
 # ----------------- Views -----------------
 # Contact Us Page
@@ -80,22 +88,25 @@ def login(request):
 
         if user is not None:
             print("User is existing")
-            # Logs in the user and sets the user type in the session
-            userType = user.getUserType()
-            request.session['user'] = user
-            print(userType)
+            # Convert the User object to a dictionary
+            user_dict = model_to_dict(user)
+            user_dict = json.dumps(user_dict, cls=CustomJSONEncoder)
+            print(user_dict)
+            request.session['user'] = user_dict
 
             # Redirects to pages based on user type
-            if userType == "AM":
-                return redirect(reverse("accountManager"))
-            elif userType == "CR":
-                return redirect('clubRepresentative')
-            elif userType == "S":
-                return redirect('customer')
-            elif  userType == "CM":
-                return redirect('cinemaManager')
-            else:
-                return redirect(reverse("login") + f'?message=Unkown User Type [{userType}]')
+            # TODO Make this redirect to pages based on the logged in user
+            # if userType == "AM":
+            #     return redirect(reverse("accountManager"))
+            # elif userType == "CR":
+            #     return redirect('clubRepresentative')
+            # elif userType == "S":
+            #     return redirect('customer')
+            # elif  userType == "CM":
+            #     return redirect('cinemaManager')
+            # else:
+            #     return redirect(reverse("login") + f'?message=Unkown User Type [{userType}]')
+            return redirect(reverse('home'))
         else:
             print("User doesnt exist")
             # Adds an error message to the context and renders the page again
