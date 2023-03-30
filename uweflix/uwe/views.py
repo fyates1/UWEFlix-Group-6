@@ -107,10 +107,7 @@ def logout(request):
     print(request.session)
 
     if 'user' in request.session:
-        print("runs")
         del request.session['user']
-    else:
-        print("No run")
 
     return redirect(reverse('login'))
 
