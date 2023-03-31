@@ -31,7 +31,8 @@ def contact_us(request):
 # Register page
 def register(request):
     # Creates the UserForm based on if .POST exists
-    form = UserForm(request.POST or None)
+    # form = UserForm(request.POST or None)
+    form = RegisterForm(request.POST or None)
 
     # Gets all the variables to be passed into the page
     context = {

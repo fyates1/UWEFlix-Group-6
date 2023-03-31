@@ -30,7 +30,7 @@ class User(models.Model):
 
     # User Type
     class UserType(models.TextChoices):
-        # CUSTOMER = 'C', _('Customer')
+        CUSTOMER = 'C', _('Customer')
         STUDENT = 'S', _('Student')
         CLUBREP = 'CR', _('Club Rep')
         ACCOUNTSMANAGER = 'AM', _('Accounts Manager')
@@ -40,7 +40,7 @@ class User(models.Model):
     userType = models.CharField(
         max_length = 2,
         choices = UserType.choices,
-        default = UserType.STUDENT
+        default = UserType.CUSTOMER
     )
 
     # Personal Info
@@ -91,6 +91,30 @@ class UserForm(forms.ModelForm):
                 }
             )
         }
+
+class RegisterForm(forms.ModelForm):
+    # Form for User model
+    class Meta:
+        model = User
+        fields = '__all__'
+        widgets = {
+            'dateOfBirth': forms.DateInput(
+                format=('%Y-%m-%d'),
+                attrs={'class': 'form-control',
+                    'placeholder': 'Select a date',
+                    'type': 'date'
+                }),
+            'password': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter a password',
+                    'type': 'password'
+                }
+            )
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        self.fields['userType'].choices = [('C', 'Customer'), ('S', 'Student')]
 #endregion
 
 # ----------------- Receivers -----------------
