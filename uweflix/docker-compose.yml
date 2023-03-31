@@ -1,25 +1,21 @@
-services:
-  django-web-app:
-    build: .
-    entrypoint: ["./django-web-app-entrypoint.sh"]
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
-    volumes:
-      - .:/app
-    depends_on:
-      - postgres-db
+version: "3.9"
 
-  postgres-db:
-    image: custom-postgres:latest
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
-    environment:
-      POSTGRES_PASSWORD: ###### add database password here
-      POSTGRES_DB: ###### add database name here
+services:
+  web:
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
     volumes:
-      - db:/var/lib/postgresql/data
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
 
 volumes:
-  db:
+  postgres_data:
