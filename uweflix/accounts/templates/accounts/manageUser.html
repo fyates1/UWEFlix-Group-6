@@ -1,0 +1,52 @@
+{% extends "uwe/base.html" %}
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Style -->
+  <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
+
+  <title>UWEFlix Login</title>
+</head>
+{% block content %}
+
+<title>Manage User Details</title>
+<h1>This is the manage page for {{ user.firstName }} {{ user.lastName }}</h1>
+
+<form action="{% url 'accounts:manageUser' user.id%}" method="post">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend>
+            <h2>Details for {{ user.firstName }} {{ user.lastName }}</h2>
+        </legend>
+
+        <!-- {% if userForm.errors %}
+        {{ userForm.errors }}
+        {% endif %}
+
+        {{ userForm.as_p }} -->
+
+        {% for field in userForm %}
+            {% if field.name == "cardNumber" %}
+                <h4>Payment Details</h4>
+            {% endif %}
+
+            <div class="fieldContainer">
+                {{ field.label_tag }} {{ field }}
+                {% for errors in field.errors %}
+                    <div class="error">{{ errors }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <br><input type="submit" name="submit" value="Submit">
+        <input type="submit" name="delete" value="Delete">
+    </fieldset>
+</form>
+
+{%endblock%}

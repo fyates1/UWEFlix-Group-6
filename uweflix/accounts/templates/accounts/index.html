@@ -1,23 +1,33 @@
+{% extends "uwe/base.html" %}
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Style -->
+  <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
+
+  <title>UWEFlix Login</title>
+</head>
+{% block content %}
+
 <title>Accounts Index</title>
 
 <h1>Accounts Index</h1>
 
-{% if message %}
-<div class="alert">{{ message }}</div>
-{% endif %}
-
-
-
 <h3><strong>All Users</strong></h3>
 
 <ul>
-    <li class="create"><a href="">Create new User</a></li>
+    <li class="create"><a href="{% url 'accounts:createUser' %}">Create new User</a></li>
 
     {% if userList %}
 
         {% for user in userList %}
             <li>
-                <a href="">
+                <a href="{% url 'accounts:manageUser' user.id %}">
                     {{ user.username }} ({{ user.firstName }} {{ user.lastName }})
                 </a>
             </li>
@@ -27,3 +37,5 @@
         <p>There are no users</p>
     {% endif %}
 </ul>
+
+{%endblock%}

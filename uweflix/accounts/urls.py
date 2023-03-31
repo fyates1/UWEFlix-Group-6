@@ -21,5 +21,11 @@ app_name = "accounts"
 
 urlpatterns = [
     # Accounts Index
-    path('', views.index, name='index')
+    path('', views.index, name='index'),
+
+    # User Creation Page
+    path('user/create/', views.createUser, name="createUser"),
+
+    # User Manage page
+    path('user/<int:userID>/', views.manageUser, name="manageUser"),
 ]
