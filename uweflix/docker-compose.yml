@@ -1,25 +1,12 @@
+version: '3.4'
+
 services:
-  django-web-app:
-    build: .
-    entrypoint: ["./django-web-app-entrypoint.sh"]
+  djangouwe:
+    container_name: djangouweflix-1
+    image: djangouwe
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     ports:
-      - "8000:8000"
-    restart: unless-stopped
-    volumes:
-      - .:/app
-    depends_on:
-      - postgres-db
+      - 8000:8000
 
-  postgres-db:
-    image: custom-postgres:latest
-    ports:
-      - "5432:5432"
-    restart: unless-stopped
-    environment:
-      POSTGRES_PASSWORD: ###### add database password here
-      POSTGRES_DB: ###### add database name here
-    volumes:
-      - db:/var/lib/postgresql/data
-
-volumes:
-  db:
