@@ -27,7 +27,7 @@
             <a class="navbar-brand" href="{% url 'contact_us' %}">Contact Us</a>
 
             <!-- Main page + Cinema manager nav bar -->
-            
+            {% if request.session.userType == '"CM"' %}
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Cinema Manager
@@ -43,26 +43,30 @@
                 <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </div>
+            {% endif %}
 
             <!-- Accounts + Club dropdown -->
-            
+            {% if request.session.userType == '"AM"' %}
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Account Manager (Clubs)
+                    Account Manager
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'clubRep:addClub' %}">Add Club</a>
+                <a class="dropdown-item" href="{% url 'accounts:index' %}">View User</a>
+                <a class="dropdown-item" href="{% url 'accounts:createUser' %}">Add User</a>
                 <a class="dropdown-item" href="{% url 'clubRep:view' %}">View Clubs</a>
+                <a class="dropdown-item" href="{% url 'clubRep:addClub' %}">Add Club</a>
                 <a class="dropdown-item" href="{% url 'clubRep:settle' %}">Settle balances</a>
                 <a class="dropdown-item" href="#">Future tabs</a>
                 <hr class="dropdown-divider">
                 <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </div>
+            {% endif %}
 
           </div>
           <!-- Log in to be in all type of roles  -->
-          {% if not request.session.user is not None %}
+          {% if request.session.id is None %}
             <a class="navbar-brand" href="{% url 'login' %}">Log in</a>
             <a class="navbar-brand" href="{% url 'register' %}">Register user</a>
           {% else %}
@@ -76,7 +80,7 @@
 
         {% block content %}
     <!-- Block content  -->
-        
+
         {% endblock %}
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

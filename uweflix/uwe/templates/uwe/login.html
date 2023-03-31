@@ -13,9 +13,6 @@
   <title>UWEFlix Login</title>
 </head>
 {% block content %}
-{% if message %}
-<div class="alert">{{ message }}</div><br>
-{% endif %}
 
 <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
