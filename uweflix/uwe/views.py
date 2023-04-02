@@ -31,7 +31,8 @@ def contact_us(request):
 # Register page
 def register(request):
     # Creates the UserForm based on if .POST exists
-    form = UserForm(request.POST or None)
+    # form = UserForm(request.POST or None)
+    form = RegisterForm(request.POST or None)
 
     # Gets all the variables to be passed into the page
     context = {
@@ -78,8 +79,12 @@ def login(request):
         if user is not None:
             # Convert the User object to a dictionary
             user_dict = model_to_dict(user)
-            user_json = json.dumps(user_dict, cls=CustomJSONEncoder)
-            request.session['user'] = user_json
+            # user_json = json.dumps(user_dict, cls=CustomJSONEncoder)
+            # request.session['user'] = user_json
+
+            for key, value in user_dict.items():
+                request.session[key] = json.dumps(value, cls=CustomJSONEncoder)
+                # request.session[key] = str(value)
 
             # Redirects to pages based on user type
             # TODO Make this redirect to pages based on the logged in user
@@ -106,8 +111,9 @@ def login(request):
 def logout(request):
     print(request.session)
 
-    if 'user' in request.session:
-        del request.session['user']
+    if 'id' in request.session:
+        # del request.session['user']
+        request.session.flush()
 
     return redirect(reverse('login'))
 

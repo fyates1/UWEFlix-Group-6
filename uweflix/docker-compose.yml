@@ -1,12 +1,11 @@
 version: '3.4'
 
 services:
-  djangouwe:
-    container_name: djangouweflix-1
-    image: djangouwe
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 8000:8000
-
+  uweflix:
+      build:
+        context: .
+        dockerfile: ./Dockerfile
+      ports:
+        - '8000:8000'
+      volumes:
+        - .:/app

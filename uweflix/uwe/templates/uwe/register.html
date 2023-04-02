@@ -20,12 +20,12 @@
             <!-- TODO Make it so only the first 3 options of UserType is available -->
 
             <div class="fieldContainer">
-                {% if field.name != "paymentDetails" %}
+                {% if field.name != "paymentDetails" and field.name != "affiliatedClub" %}
                     {{ field.label_tag }} {{ field }}
                 {% endif %}
 
                 {% for errors in field.errors %}
-                    <div class="error">{{ errors }}</div>
+                        <div class="error">{{ errors }}</div>
                 {% endfor %}
             </div>
         {% endfor %}
