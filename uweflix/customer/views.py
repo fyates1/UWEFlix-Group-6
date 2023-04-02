@@ -8,6 +8,7 @@ from django.conf import settings
 from cinema.models import Booking
 from django.contrib.sessions.models import Session
 from cinema.views import CinemaManager
+from django.views.decorators.csrf import csrf_exempt
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -34,6 +35,7 @@ def landing(response):
     return render(response, "customer/checkout.html")
 
 # sucess page where the booking gets saved
+@csrf_exempt
 def sucess(request):
 
     adult_tickets = request.session['adult']
@@ -46,11 +48,13 @@ def sucess(request):
     return render(request, "customer/sucess.html")
 
 # cancel page
+@csrf_exempt
 def cancel(response):
     pass
     return render(response, "customer/cancel.html")
 
 # stripe payment
+@csrf_exempt
 def pay(request):
     #booking = Booking.objects.get(pk=booking_id)
     adults = request.session['adult']
