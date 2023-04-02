@@ -247,7 +247,7 @@ def book_showing(request, showing_id):
     else:
         form = BookingForm()
         return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
-    return render(request,'customer/booking.html', {'form': form })
+    #return render(request,'customer/booking.html', {'form': form })
 
 
 
