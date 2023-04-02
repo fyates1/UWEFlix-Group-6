@@ -9,3 +9,15 @@ services:
         - '8000:8000'
       volumes:
         - .:/app
+
+  stripe:
+    image: "stripe/stripe-cli:latest"
+    network_mode: host
+    environment:
+        STRIPE_API_KEY: "sk_test_51MrLYgKummhyRPIWVlw5HAGLAlVUWQuE2HCt6YyiZTe1FTTDr0LzOEgLog8Tz2FjGX9ccHncBBii3tmnyWIOzyFY006ZSe2icc"
+    command:
+        listen --forward-to localhost:8000/stripe/webhook/ --skip-verify \--api-key sk_test_key
+    volumes:
+      - .:/app
+    depends_on:
+      - uweflix
