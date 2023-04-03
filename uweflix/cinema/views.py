@@ -157,7 +157,7 @@ def update_film(request, film_id):
     form = FilmForm(request.POST or None,instance=Film)
     if form.is_valid():
             form.save()
-            return redirect('list_films')
+            return redirect('cinema:list_films')
     return render(request,"cinema/update_film.html",{"film":Film, "form":form})
 
 #Function to delete a film
