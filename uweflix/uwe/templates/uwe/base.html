@@ -40,7 +40,21 @@
                 <a class="dropdown-item" href="{% url 'cinema:list_screens' %}">View Screens</a>
                 <a class="dropdown-item" href="{% url 'cinema:add_screen' %}">Add Screens</a>
                 <hr class="dropdown-divider">
-                <a class="dropdown-item" href="#">Something else here</a>
+
+                </div>
+            </div>
+            {% endif %}
+
+            {% if request.session.userType == '"CR"' %}
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Cinema Manager
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                <a class="dropdown-item" href="{% url 'clubRep:settle '%}">Settle Balances</a>
+
+                <hr class="dropdown-divider">
                 </div>
             </div>
             {% endif %}
@@ -56,10 +70,6 @@
                 <a class="dropdown-item" href="{% url 'accounts:createUser' %}">Add User</a>
                 <a class="dropdown-item" href="{% url 'clubRep:view' %}">View Clubs</a>
                 <a class="dropdown-item" href="{% url 'clubRep:addClub' %}">Add Club</a>
-                <a class="dropdown-item" href="{% url 'clubRep:settle' %}">Settle balances</a>
-                <a class="dropdown-item" href="#">Future tabs</a>
-                <hr class="dropdown-divider">
-                <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </div>
             {% endif %}
