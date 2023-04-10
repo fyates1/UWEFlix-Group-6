@@ -2,22 +2,87 @@
 {% block title %}
   Contact Us
 {% endblock %}
+    {% load static %}
 {% block content %}
 
-  <div id="main1" style="display:flex;">
-    <div class="left" style="text-align:left;" >
-      <h1>Contact Us</h1>
-      <p>Company Name: UWEFLIX</p>
-      <p>Company Address: University of the West of England <br> Frenchay Campus <br> Coldharbour Lane <br> Bristol <br> BS16 1QY <br> United Kingdom</p>
-      <p>Company Phone: 0117 965 6261</p>
-      <p>Company Email: infopoint@uwe.ac.uk</p>
-      <p>Days Open Information: Open Mon-Sun</p>
-      <p>Opening Times: 9:00am</p>
-      <p>Closing Times: 5:30pm</p>
-    </div>
+            <!-- breadcrumb-area -->
+            <section class="breadcrumb-area breadcrumb-bg" data-background="{% static 'uwe/img/banner/new.jpeg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="breadcrumb-content">
+                                <h2 class="title">Contact Us</h2>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- breadcrumb-area-end -->
 
-    <div class="right" style="text-align:right; padding-left: 50px; padding-top: 10px;">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.5606445589224!2d-2.5547291842301973!3d51.502929579634305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48718fa5b4e5f827%3A0xfef76b37b45ecccc!2sFrenchay%20Campus!5e0!3m2!1sen!2suk!4v1680170222257!5m2!1sen!2suk" width="400" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-  </div>
+            <!-- contact-area -->
+            <section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="contact-form-wrap">
+                                <div class="widget-title mb-50">
+                                    <h5 class="title">Contact Form</h5>
+                                </div>
+                                <div class="contact-form">
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="text" placeholder="You Name *">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="email" placeholder="You  Email *">
+                                            </div>
+                                        </div>
+                                        <input type="text" placeholder="Subject *">
+                                        <textarea name="message" placeholder="Type Your Message..."></textarea>
+                                        <button class="btn">Send Message</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="widget-title mb-50">
+                                <h5 class="title">Information</h5>
+                            </div>
+                            <div class="contact-info-wrap">
+                                <p><span>Find solutions :</span> to common problems, or get help from a support agent industry's standard .</p>
+                                <div class="contact-info-list">
+                                    <ul>
+                                        <li>
+                                            <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                                            <p><span>Address :</span>University of the West of England Frenchay Campus Coldharbour Lane Bristol BS16 1QY United Kingdom</p>
+                                        </li>
+                                        <li>
+                                            <div class="icon"><i class="fas fa-phone-alt"></i></div>
+                                            <p><span>Phone :</span> 0117 965 6261</p>
+                                        </li>
+                                        <li>
+                                            <div class="icon"><i class="fas fa-envelope"></i></div>
+                                            <p><span>Email :</span> infopoint@uwe.ac.uk</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- contact-area-end -->
+
+            <!-- map -->
+            <div id="map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.5606445589224!2d-2.5547291842301973!3d51.502929579634305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48718fa5b4e5f827%3A0xfef76b37b45ecccc!2sFrenchay%20Campus!5e0!3m2!1sen!2suk!4v1680170222257!5m2!1sen!2suk" width="100%" height="500px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+            <!-- map-end -->
 {% endblock content %}

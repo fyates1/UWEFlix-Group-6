@@ -1,37 +1,49 @@
 {% extends "uwe/base.html" %}
 {% block title %}
-    Register
+Register
 {% endblock %}
+{% load static %}
 {% block content %}
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
 
-<form action="{% url 'register' %}" method="post">
-    {% csrf_token %}
 
-    <fieldset>
-        <legend>
-            <h2>Registration</h2>
-        </legend>
+                <div class="contact-form">
 
-        {% for field in form %}
-            {% if field.name == "firstName" %}
-                <h4>Personal Details</h4>
-            {% endif %}
+                    <form action="{% url 'register' %}" method="post">
+                        {% csrf_token %}
 
-            <!-- TODO Make it so only the first 3 options of UserType is available -->
+                        <fieldset>
+                            <legend>
+                                <h2>Registration</h2>
+                            </legend>
 
-            <div class="fieldContainer">
-                {% if field.name != "paymentDetails" and field.name != "affiliatedClub" %}
-                    {{ field.label_tag }} {{ field }}
-                {% endif %}
+                            {% for field in form %}
+                            {% if field.name == "firstName" %}
+                            <h4>Personal Details</h4>
+                            {% endif %}
 
-                {% for errors in field.errors %}
-                        <div class="error">{{ errors }}</div>
-                {% endfor %}
+                            <!-- TODO Make it so only the first 3 options of UserType is available -->
+
+                            <div class="fieldContainer">
+                                {% if field.name != "paymentDetails" and field.name != "affiliatedClub" %}
+                                {{ field.label_tag }} {{ field }}
+                                {% endif %}
+
+                                {% for errors in field.errors %}
+                                <div class="error">{{ errors }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <input type="submit" class="btn" name="register" value="Register">
+                        </fieldset>
+                    </form>
+                </div>
             </div>
-        {% endfor %}
-
-        <br><input type="submit" name="register" value="Register">
-    </fieldset>
-</form>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

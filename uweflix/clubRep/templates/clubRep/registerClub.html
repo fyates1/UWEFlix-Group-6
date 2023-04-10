@@ -1,27 +1,37 @@
 {% extends "uwe/base.html" %}
 {% load crispy_forms_tags %}
+{% load static%}
 {%block title%} Create new Club {%endblock%}
 
 
-
-
 {% block content %}
-
-    <h2> Register a Club</h2>
-    
-    <br/>
-    {% if submitted %}
-        Your account was succesfully submitted
-    {% else %}
-        <form action="" method="POST" class="form-group">
-            {%csrf_token%}
-
-            {{form.as_p}}
-
-            <button type="submit">Register</button>
+{% if submitted %}
+Your account was succesfully submitted
+{% else %}
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <div class="widget-title mb-50">
+            <h1 class="title">Add CLub</h1>
+        </div>
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
 
 
-        </form>
-    {% endif %}
+                <div class="contact-form">
+                    <form action="" method="POST" class="form-group">
+                        {%csrf_token%}
+
+                        {{form.as_p}}
+
+                        <button type="submit" class="btn">Register</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 
 {%endblock%}

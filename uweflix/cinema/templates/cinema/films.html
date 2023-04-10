@@ -1,30 +1,41 @@
 {%extends "uwe/base.html"%}
-
+{% load static %}
 
 {%block content%}
-{{ message }}
+<section class="services-area services-bg" data-background="{% static 'uwe/img/bg/services_bg.jpg' %}">
+    <div class="container">
+        <div class="row align-items-center">
 
-    <br>
-    <br>
+            {{ message }}
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th colspan="2">Actions</th>
 
-    <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Title</th>
-            <th colspan="2">Actions</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          {%for film in film_listing %}
-            <tr> 
-                <th scope="col"><p>Film Name:<a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a></p></th>
-                <th scope="col"><button type="submit" onclick="window.location.href='{% url 'cinema:update_film' film.id %}'" class="btn btn-primary btn-sm">Update</button></th>
-                <th scope="col"><button onclick="window.location.href='{% url 'cinema:delete_film' film.id %}'" type="button" class="btn btn-danger btn-sm">Delete</button></th>
-            </tr>
-          {%endfor%}
-        </tbody>
-      </table>
-
+                </tr>
+                </thead>
+                <tbody>
+                {%for film in film_listing %}
+                <tr>
+                    <th scope="col"><p>Film Name:<a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a></p>
+                    </th>
+                    <th scope="col">
+                        <button type="submit" onclick="window.location.href='{% url 'cinema:update_film' film.id %}'"
+                                class="btn btn-primary btn-sm">Update
+                        </button>
+                    </th>
+                    <th scope="col">
+                        <button onclick="window.location.href='{% url 'cinema:delete_film' film.id %}'" type="button"
+                                class="btn btn-danger btn-sm">Delete
+                        </button>
+                    </th>
+                </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 {%endblock%}
 

@@ -1,10 +1,19 @@
 {%extends "uwe/base.html"%}
 
+{% load static %}
 
 {%block content%}
-    <center>
-        <h1>Add Screen To cinema</h1>
-        <br/>
+
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
+                <div class="contact-form-wrap">
+                    <div class="widget-title mb-50">
+                        <h5 class="title">Add Screen</h5>
+                    </div>
+                    <div class="contact-form">
+
         {%if submitted %}
             Your Screen Was Added
         {%else%}
@@ -15,6 +24,11 @@
             {{ form.as_p }}
             <input type="submit" value="Submit" class="btn btn-success">
         </form>
-    </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {%endblock%}

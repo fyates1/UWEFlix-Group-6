@@ -1,52 +1,53 @@
 {% extends "uwe/base.html" %}
-<!doctype html>
 {% load static %}
-<html lang="en">
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
-
-  <title>UWEFlix Login</title>
-</head>
 {% block content %}
 
 <title>Manage User Details</title>
-<h1>This is the manage page for {{ user.firstName }} {{ user.lastName }}</h1>
 
-<form action="{% url 'accounts:manageUser' user.id%}" method="post">
-    {% csrf_token %}
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <h1>This is the manage page for {{ user.firstName }} {{ user.lastName }}</h1>
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
 
-    <fieldset>
-        <legend>
-            <h2>Details for {{ user.firstName }} {{ user.lastName }}</h2>
-        </legend>
 
-        <!-- {% if userForm.errors %}
-        {{ userForm.errors }}
-        {% endif %}
+                <div class="contact-form">
 
-        {{ userForm.as_p }} -->
 
-        {% for field in userForm %}
-            {% if field.name == "cardNumber" %}
-                <h4>Payment Details</h4>
-            {% endif %}
+                    <form action="{% url 'accounts:manageUser' user.id%}" method="post">
+                        {% csrf_token %}
 
-            <div class="fieldContainer">
-                {{ field.label_tag }} {{ field }}
-                {% for errors in field.errors %}
-                    <div class="error">{{ errors }}</div>
-                {% endfor %}
+                        <fieldset>
+                            <legend>
+                                <h2>Details for {{ user.firstName }} {{ user.lastName }}</h2>
+                            </legend>
+
+                            <!-- {% if userForm.errors %}
+                            {{ userForm.errors }}
+                            {% endif %}
+
+                            {{ userForm.as_p }} -->
+
+                            {% for field in userForm %}
+                            {% if field.name == "cardNumber" %}
+                            <h4>Payment Details</h4>
+                            {% endif %}
+
+                            <div class="fieldContainer">
+                                {{ field.label_tag }} {{ field }}
+                                {% for errors in field.errors %}
+                                <div class="error">{{ errors }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <input type="submit" class="btn" name="submit" value="Submit">
+                            <input type="submit" class="btn" name="delete" value="Delete">
+                        </fieldset>
+                    </form>
+                </div>
             </div>
-        {% endfor %}
+        </div>
+    </div>
+</section>
 
-        <br><input type="submit" name="submit" value="Submit">
-        <input type="submit" name="delete" value="Delete">
-    </fieldset>
-</form>
-
-{%endblock%}
+                    {%endblock%}

@@ -1,41 +1,50 @@
 {% extends "uwe/base.html" %}
-<!doctype html>
 {% load static %}
-<html lang="en">
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
-
-  <title>UWEFlix Login</title>
-</head>
 {% block content %}
 
-<title>Accounts Index</title>
+<!--<title>Accounts Index</title>-->
 
-<h1>Accounts Index</h1>
+<!--<h1>Accounts Index</h1>-->
 
-<h3><strong>All Users</strong></h3>
+<!--<h3><strong>All Users</strong></h3>-->
 
-<ul>
-    <li class="create"><a href="{% url 'accounts:createUser' %}">Create new User</a></li>
+<!--<ul>-->
+<!--    <li class="create"><a href="{% url 'accounts:createUser' %}">Create new User</a></li>-->
 
-    {% if userList %}
+<!--    -->
+<section class="services-area services-bg" data-background="{% static 'uwe/img/bg/services_bg.jpg' %}">
+    <div class="container">
+        <a class="btn mb-2 float-right" href="{% url 'accounts:createUser' %}">Create new User</a>
+        <div class=" align-items-center">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">User Name</th>
+                </tr>
+                </thead>
+                <tbody>
 
-        {% for user in userList %}
-            <li>
-                <a href="{% url 'accounts:manageUser' user.id %}">
-                    {{ user.username }} ({{ user.firstName }} {{ user.lastName }})
-                </a>
-            </li>
-        {% endfor %}
+                {% for user in userList %}
+                {% if userList %}
+                <tr>
+                    <td>
+                    <a href="{% url 'accounts:manageUser' user.id %}">
+                        {{ user.username }} ({{ user.firstName }} {{ user.lastName }})
+                    </a>
+                    </td>
+                </tr>
+                {% else %}
+                <td>
+                    <p>There are no users</p>
+                </td>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
-    {% else %}
-        <p>There are no users</p>
-    {% endif %}
-</ul>
+<!--</ul>-->
 
 {%endblock%}

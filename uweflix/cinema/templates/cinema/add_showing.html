@@ -2,21 +2,34 @@
 {%block title%}
 Add Showing
 {%endblock%}
+{% load static %}
+
 
 {%block content%}
-    <center>
-        <h1>Add Showing</h1>
-        <br/>
-        {%if submitted %}
-            Your Showing Was Added
-        {%else%}
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
+                <div class="contact-form-wrap">
+                    <div class="widget-title mb-50">
+                        <h5 class="title">Add Show</h5>
+                    </div>
+                    <div class="contact-form">
+                        {%if submitted %}
+                        Your Showing Was Added
+                        {%else%}
 
-        {% endif %}
-        <form action="" method="POST">
-            {%csrf_token%}
-            {{ form.as_p }}
-            <input type="submit" value="Submit" class="btn btn-success">
-        </form>
-    </center>
-    
+                        {% endif %}
+                        <form action="" method="POST">
+                            {%csrf_token%}
+                            {{ form.as_p }}
+                            <input type="submit" value="Submit" class="btn btn-success">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {%endblock%}

@@ -1,8 +1,16 @@
 {%extends "uwe/base.html"%}
-
+{% load static%}
 
 {%block content%}
-    <center>
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
+
+
+                <div class="contact-form">
+
+
         <h1>Update<h1>
         <form action="" method=POST>
             {% csrf_token %}
@@ -10,7 +18,9 @@
             <input type="submit" value="Update" class="btn btn-success">
         </form>
         
-
-    </center>
-
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {%endblock%}

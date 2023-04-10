@@ -1,5 +1,13 @@
 {% extends "uwe/base.html" %}
+
+{% load static%}
 {%block content%} 
-  <section>
-    <p>Thanks for booking with us please return to main page. </p>
+  <section class="movie-details-area" data-background="{% static 'uwe/img/bg/movie_details_bg.jpg' %}">
+    <div class="container">
+        <div class="row align-items-center">
+
+    <p class="mt-3">Thanks for booking with us please return to main page. </p>
+        </div>
+    </div>
+  </section>
 {%endblock%}
