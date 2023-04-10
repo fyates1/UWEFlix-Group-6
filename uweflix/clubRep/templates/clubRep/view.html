@@ -6,21 +6,36 @@ view
 
 {%endblock%}
 
-
+{% load static%}
 {% block content %}
+<section class="services-area services-bg" data-background="{% static 'uwe/img/bg/services_bg.jpg' %}">
+    <div class="container">
+        <div class="row align-items-center">
 
-    <h2>UWEFLIX clubs:</h2>
-    <table>
-    {% for td in clubs_view %}
-        <tr>
-        <td><br/><strong>Club: <a href="{% url 'clubRep:showClub' td.id %}">{{td.clubName}}</a></strong></td>
-        <td align="right"><br/><strong>To delete Club:<a href="{% url 'clubRep:deleteClub' td.id%}">  Delete </a></strong></td>
-        </tr>
-    </table>
-    {% endfor %}
-
-</br>
-    <h5>Please <a href = "/">Login</a> First to be able to register </h5>
-
-
+            {{ message }}
+            <h1>UWEFLIX clubs:
+</h1>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th colspan="2">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for td in clubs_view %}
+                <tr>
+                    <th scope="col">
+                        <p>Club: <a href="{% url 'clubRep:showClub' td.id %}">{{td.clubName}}</a></p>
+                    </th>
+                    <th scope="col"><a href="{% url 'clubRep:deleteClub' td.id%}" class="btn">
+                        Delete </a>
+                    </th>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 {%endblock%}

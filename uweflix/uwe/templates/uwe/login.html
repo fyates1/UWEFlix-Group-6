@@ -1,38 +1,47 @@
 {% extends "uwe/base.html" %}
-<!doctype html>
 {% load static %}
 <html lang="en">
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
+    <!-- Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
 
-  <title>UWEFlix Login</title>
+    <title>UWEFlix Login</title>
 </head>
 {% block content %}
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
 
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
 
-    <fieldset>
-        <legend>
-            <h2>Login</h2>
-        </legend>
+                <div class="contact-form">
+                    <form action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
 
-        {% for field in form %}
-            <div class="fieldContainer">
-                {{ field.label_tag }} {{ field }}
+                        <fieldset>
+                            <legend>
+                                <h2>Login</h2>
+                            </legend>
 
-                {% for errors in field.errors %}
-                    <div class="error">{{ errors }}</div>
-                {% endfor %}
+                            {% for field in form %}
+                            <div class="fieldContainer">
+                                {{ field.label_tag }} {{ field }}
+
+                                {% for errors in field.errors %}
+                                <div class="error">{{ errors }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            <input class="btn" type="submit" name="login" value="login">
+                        </fieldset>
+                        {%endblock%}
+                    </form>
+                </div>
             </div>
-        {% endfor %}
-
-        <br><input type="submit" name="login" value="login">
-    </fieldset>
-    {%endblock%}
-</form>
+        </div>
+    </div>
+</section>

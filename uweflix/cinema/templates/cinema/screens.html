@@ -1,15 +1,39 @@
 {%extends "uwe/base.html"%}
-
+{% load static %}
 
 {%block content%}
-    <center>
-        <h1>List Screens In Cinema</h1>
-        <br>
-        {%for screen in screen_list%}
-            <a href="{% url 'cinema:show_screen' screen.id %}">{{screen}}</a><br>
-            <a href="{% url 'cinema:update_screen' screen.id %}">Update</a>
-            <a href="{% url 'cinema:delete_screen' screen.id %}">Delete</a><br>
-        {%endfor%}
-    </center>
+<section class="services-area services-bg" data-background="{% static 'uwe/img/bg/services_bg.jpg' %}">
+    <div class="container">
+        <div class="row align-items-center">
 
+            <div class="widget-title mb-2">
+                <h5 class="title">List Screens In Cinema</h5>
+            </div>
+            {{ message }}
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Screen</th>
+                    <th colspan="2">Actions</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {%for screen in screen_list%}
+                <tr>
+                    <th><a href="{% url 'cinema:show_screen' screen.id %}">{{screen}}</a>
+                    </th>
+                    <th>
+                        <a href="{% url 'cinema:update_screen' screen.id %}" class="btn">Update</a>
+                    </th>
+                    <th>
+                        <a href="{% url 'cinema:delete_screen' screen.id %}" class="btn">Delete</a>
+                    </th>
+                </tr>
+                {%endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 {%endblock%}

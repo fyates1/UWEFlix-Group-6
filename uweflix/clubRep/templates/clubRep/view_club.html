@@ -5,27 +5,73 @@
 view club
 
 {%endblock%}
-
-<br/>
 {% block content %}
+<section class="services-area services-bg" data-background="{% static 'uwe/img/bg/services_bg.jpg' %}">
+    <div class="container">
+            <h1>{{ club }}</h1>
+        <div class="row align-items-center">
 
-<ul> 
-    <strong><h1>{{ club }}</h1></strong><br/>
-    <li><strong>Club Name: </strong>{{ club.clubName }}</li> <br/>
-    <li><strong>Members: </strong>{{ club.memberCount }}</li><br/>
-    <li><strong>Email: </strong>{{ club.email }}</li><br/>
-    <li><strong>Landline Number: </strong>{{ club.landlineNo }}</li><br/>
-    <li><strong>Mobile Number:</strong> {{ club.mobileNo }}</li><br/>
-    <li><strong>Discount Rate: </strong>{{ club.discount }}</li><br/>
-    <li><strong>Street Number:</strong> {{ club.streetNo }}</li><br/>
-    <li><strong>Street Name: </strong>{{ club.street }}</li><br/>
-    <li><strong>City:</strong> {{ club.city }}</li><br/>
-    <li><strong>Postcode: </strong>{{ club.postcode }}</li><br/>
-
-  </ul> 
-
-
-<h3>Please <a href = "/">Login</a> First to be able to register </h3>
-
-
+            <div class="col-md-6 p-2 border">
+                Club Name:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.clubName }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Members:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.memberCount }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Email:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.email }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Landline Number:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.landlineNo }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Mobile Number:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.mobileNo }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Discount Rate:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.discount }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Street Number:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.streetNo }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Street Name:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.street }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                City:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.city }}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Postcode:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{ club.postcode }}
+            </div>
+        </div>
+    </div>
+</section>
 {%endblock%}

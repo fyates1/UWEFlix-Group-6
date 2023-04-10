@@ -1,12 +1,24 @@
 {%extends "uwe/base.html"%}
-
+{%load static%}
 
 {%block content%}
-    <center>
-        <h1>Screen: </h1>
-        <p>Screen: {{screen.name}}</p>
-        <p>Capacity: {{screen.capacity}}</p>
-        <br>
-    </center>
-
+<section class="services-area services-bg" data-background="{% static 'uwe/img/bg/services_bg.jpg' %}">
+    <div class="container">
+            <h1>Screen: </h1>
+        <div class="row align-items-center">
+            <div class="col-md-6 p-2 border">
+                Screen:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{screen.name}}
+            </div>
+            <div class="col-md-6 p-2 border">
+                Capacity:
+            </div>
+            <div class="col-md-6 p-2 border">
+                {{screen.capacity}}
+            </div>
+        </div>
+    </div>
+</section>
 {%endblock%}

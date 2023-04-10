@@ -25,6 +25,7 @@ class film(models.Model):
     title = models.CharField(max_length=256)
     #ageRating=models.CharField(max_length=256)
     description = models.TextField(max_length=256)
+    trailer = models.TextField(max_length=550, default='null')
     filmImage = models.ImageField(upload_to='images/')
     duration = models.CharField(max_length=6)
     ageSelection = (

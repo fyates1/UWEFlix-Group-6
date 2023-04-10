@@ -8,105 +8,242 @@
     <!-- Staic file -->
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
+    <!--    <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>-->
+    <!--    hassan -->
+
+    <link rel="stylesheet" href="{% static 'uwe/css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/animate.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/magnific-popup.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/fontawesome-all.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/owl.carousel.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/flaticon.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/odometer.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/aos.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/slick.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/default.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'uwe/css/responsive.css' %}"/>
 
     <!-- Bootstrap CSS link, we are using Bootstrap 5.1 -->
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">-->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
 </head>
 
 <body>
-    <!-- Main Nav bar for anyone open the website  -->
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <div class="container-fluid">
-            <a href="{% url 'cinema:list_films' %}"><img src="/images/uweflix_logo.png"  style="height:60px; width:120px;"></a>
-            <a class="navbar-brand" href="{% url 'cinema:list_films' %}">Display Films</a>
-            <a class="navbar-brand" href="{% url 'cinema:list_showings' %}">Display Showings</a>
-            <a class="navbar-brand" href="{% url 'contact_us' %}">Contact Us</a>
+<header>
+    <div id="sticky-header" class="menu-area transparent-header">
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mobile-nav-toggler"><i class="fas fa-bars"></i></div>
+                    <div class="menu-wrap">
+                        <nav class="menu-nav show">
+                            <div class="logo">
+                                <a href="{% url 'cinema:list_films' %}"><img src="/images/uweflix_logo.png"
+                                                                             style="height:60px; width:120px;"></a>
+                            </div>
+                            <div class="navbar-wrap main-menu d-none d-lg-flex">
+                                <ul class="navigation">
+                                    <li class="menu-item">
+                                        <a class="navbar-brand" href="{% url 'cinema:list_films' %}">Display Films</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class="navbar-brand" href="{% url 'cinema:list_showings' %}">Display
+                                            Showings</a>
+                                    </li>
+                                    <li><a href="{% url 'contact_us' %}">contacts</a></li>
+                                    {% if request.session.userType == '"CM"' %}
+                                    <li class="menu-item-has-children"><a href="#">Cinema Manager</a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'cinema:add_film' %}">Add Films</a></li>
+                                            <li><a href="{% url 'cinema:film_listing' %}">View Films</a></li>
+                                            <li><a href="{% url 'cinema:add_showing' %}">Add Showings</a></li>
+                                            <li><a href="{% url 'cinema:list_showings' %}">View showings</a></li>
+                                            <li><a href="{% url 'cinema:add_screen' %}">Add Screens</a></li>
+                                            <li><a href="{% url 'cinema:list_screens' %}">View Screens</a></li>
+                                        </ul>
+                                    </li>
+                                    {% endif %}
 
-            <!-- Main page + Cinema manager nav bar -->
-            {% if request.session.userType == '"CM"' %}
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Cinema Manager
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'cinema:add_film' %}">Add Films</a>
-                <a class="dropdown-item" href="{% url 'cinema:film_listing' %}">View Films</a>
-                <a class="dropdown-item" href="{% url 'cinema:list_showings' %}">View showings</a>
-                <a class="dropdown-item" href="{% url 'cinema:add_showing' %}">Add Showings</a>
-                <a class="dropdown-item" href="{% url 'cinema:list_screens' %}">View Screens</a>
-                <a class="dropdown-item" href="{% url 'cinema:add_screen' %}">Add Screens</a>
-                <hr class="dropdown-divider">
+                                    {% if request.session.userType == '"AM"' %}
+                                    <li class="menu-item-has-children"><a href="#">Account Manager</a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'accounts:createUser' %}">Add User</a></li>
+                                            <li><a href="{% url 'accounts:index' %}">View User</a></li>
+                                            <li><a href="{% url 'clubRep:addClub' %}">Add Club</a></li>
+                                            <li><a href="{% url 'clubRep:view' %}">View Clubs</a></li>
+                                        </ul>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="header-action d-none d-md-block">
+                                <ul>
+                                    <li class="header-search"><a href="#" data-toggle="modal"
+                                                                 data-target="#search-modal"><i
+                                            class="fas fa-search"></i></a></li>
+                                    <li class="header-lang">
+                                        <form action="#">
+                                            <div class="icon"><i class="flaticon-globe"></i></div>
+                                            <select id="lang-dropdown">
+                                                <option value="">En</option>
+                                                <option value="">Au</option>
+                                                <option value="">AR</option>
+                                                <option value="">TU</option>
+                                            </select>
+                                        </form>
+                                    </li>
+                                    {% if request.session.id is None %}
+                                    <li class="header-btn"><a href="{% url 'register' %}" class="btn">Register</a></li>
+                                    <li class="header-btn"><a href="{% url 'login' %}" class="btn">Sign In</a></li>
 
+                                    {% else %}
+                                    <li class="header-btn"><a href="{% url 'logout' %}" class="btn">Log out</a></li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                    </nav>
                 </div>
-            </div>
-            {% endif %}
 
-            {% if request.session.userType == '"CR"' %}
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Cinema Manager
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <!-- Mobile Menu  -->
+                <div class="mobile-menu">
+                    <div class="close-btn"><i class="fas fa-times"></i></div>
 
-                <a class="dropdown-item" href="{% url 'clubRep:settle '%}">Settle Balances</a>
-
-                <hr class="dropdown-divider">
+                    <nav class="menu-box">
+                        <div class="nav-logo"><a href="index.html"><img src="img/logo/logo.png" alt="" title=""></a>
+                        </div>
+                        <div class="menu-outer">
+                            <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+                        </div>
+                        <div class="social-links">
+                            <ul class="clearfix">
+                                <li><a href="#"><span class="fab fa-twitter"></span></a></li>
+                                <li><a href="#"><span class="fab fa-facebook-square"></span></a></li>
+                                <li><a href="#"><span class="fab fa-pinterest-p"></span></a></li>
+                                <li><a href="#"><span class="fab fa-instagram"></span></a></li>
+                                <li><a href="#"><span class="fab fa-youtube"></span></a></li>
+                            </ul>
+                        </div>
+                    </nav>
                 </div>
-            </div>
-            {% endif %}
+                <div class="menu-backdrop"></div>
+                <!-- End Mobile Menu -->
 
-            <!-- Accounts + Club dropdown -->
-            {% if request.session.userType == '"AM"' %}
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Account Manager
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{% url 'accounts:index' %}">View User</a>
-                <a class="dropdown-item" href="{% url 'accounts:createUser' %}">Add User</a>
-                <a class="dropdown-item" href="{% url 'clubRep:view' %}">View Clubs</a>
-                <a class="dropdown-item" href="{% url 'clubRep:addClub' %}">Add Club</a>
+                <!-- Modal Search -->
+                <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form>
+                                <input type="text" placeholder="Search here...">
+                                <button><i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
+                <!-- Modal Search-end -->
+
             </div>
-            {% endif %}
-
-          </div>
-          <!-- Log in to be in all type of roles  -->
-          {% if request.session.id is None %}
-            <a class="navbar-brand" href="{% url 'login' %}">Log in</a>
-            <a class="navbar-brand" href="{% url 'register' %}">Register user</a>
-          {% else %}
-            <a class="navbar-brand" href="{% url 'logout' %}">Log out</a>
-          {% endif %}
-        </nav>
-
-        {% if message %}
-        <div class="alert">{{ message }}</div>
-        {% endif %}
-
-        {% block content %}
-    <!-- Block content  -->
-
-        {% endblock %}
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </div>
+</header>
+<!-- Main Nav bar for anyone open the website  -->
+<main>
+<!--    {% if message %}-->
+<!--    <div class="alert">{{ message }}</div>-->
+<!--    {% endif %}-->
+
+    {% block content %}
+
+    {% endblock %}
+</main>
+
+<!-- footer-area -->
+<footer>
+    <div class="footer-top-wrap">
+        <div class="container">
+            <div class="footer-menu-wrap">
+                <div class="row align-items-center">
+                    <div class="col-lg-3">
+                        <div class="footer-logo">
+                            <a href="index.html"><img src="/images/uweflix_logo.png"  class="img-fluid" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="footer-menu">
+                            <nav>
+                                <ul class="navigation">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="index.html">Movie</a></li>
+                                    <li><a href="index.html">tv show</a></li>
+                                    <li><a href="index.html">pages</a></li>
+                                    <li><a href="pricing.html">Pricing</a></li>
+                                </ul>
+                                <div class="footer-search">
+                                    <form action="#">
+                                        <input type="text" placeholder="Find Favorite Movie">
+                                        <button><i class="fas fa-search"></i></button>
+                                    </form>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-quick-link-wrap">
+                <div class="row align-items-center">
+                    <div class="col-md-7">
+                        <div class="quick-link-list">
+                            <ul>
+                                <li><a href="#">FAQ</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Terms of Use</a></li>
+                                <li><a href="#">Privacy</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="footer-social">
+                            <ul>
+                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer-area-end -->
+
+
+<!--Hassan-->
+<!-- JS here -->
+<script src="{% static 'uwe/js/vendor/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'uwe/js/popper.min.js' %}"></script>
+<script src="{% static 'uwe/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'uwe/js/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'uwe/js/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'uwe/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'uwe/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'uwe/js/jquery.odometer.min.js' %}"></script>
+<script src="{% static 'uwe/js/jquery.appear.js' %}"></script>
+<script src="{% static 'uwe/js/slick.min.js' %}"></script>
+<script src="{% static 'uwe/js/ajax-form.js' %}"></script>
+<script src="{% static 'uwe/js/wow.min.js' %}"></script>
+<script src="{% static 'uwe/js/aos.js' %}"></script>
+<script src="{% static 'uwe/js/plugins.js' %}"></script>
+<script src="{% static 'uwe/js/main.js' %}"></script>
 </body>
 
 
-
-
-
-
-
 <head>
-    
+
 </head>
 
 </html>

@@ -1,20 +1,17 @@
 {% extends "uwe/base.html" %}
-<!doctype html>
 {% load static %}
-<html lang="en">
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Style -->
-  <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>
-
-  <title>UWEFlix Login</title>
-</head>
 {% block content %}
 
-<title>Create new user</title>
+<!--<title>Create new user</title>-->
+
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
+
+
+                <div class="contact-form">
+
 
 <form action="{% url 'accounts:createUser' %}"  method="post">
     {% csrf_token %}
@@ -42,9 +39,13 @@
                 {% endfor %}
             </div>
         {% endfor %}
-
-        <br><input type="submit" name="submit" value="Submit">
+        <input class="btn mt-2" type="submit" name="submit" value="Submit">
     </fieldset>
 </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {%endblock%}

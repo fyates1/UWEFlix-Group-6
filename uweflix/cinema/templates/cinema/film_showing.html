@@ -4,25 +4,28 @@
 Film Showing
 
 {%endblock%}
-
+{% load static %}
 
 {% block content %}
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+            <h1>{{ film_showings.title }}</h1>
+            <ul>
+                {% for i in film_showings.showing_set.all %}
 
-
-    </br>
-
-
-
-    <strong><h1>{{ film_showings.title }}</h1></strong><br/>
-    {% for i in film_showings.showing_set.all %}
-        <ul>
-            <li><strong>Date: </strong>{{ i.date }}</li> <br/>
-            <li><strong>Screen name: </strong>{{i.screen}}</li><br/>
-            <li><strong>Start: </strong>{{i.startTime}}</li><br/>
-            <a href="{% url 'cinema:create_booking' i.id %}" class="btn btn-success">Book Showing</a>
-            </br>
-        </ul>
-        {% endfor %}
-
+                <li><strong>Date: </strong>{{ i.date }}</li>
+                <br/>
+                <li><strong>Screen name: </strong>{{i.screen}}</li>
+                <br/>
+                <li><strong>Start: </strong>{{i.startTime}}</li>
+                <br/>
+                <a href="{% url 'cinema:create_booking' i.id %}" class="btn btn-success">Book
+                    Showing</a>
+                </br>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
 
 {%endblock%}

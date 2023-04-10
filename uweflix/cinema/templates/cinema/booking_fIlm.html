@@ -1,6 +1,13 @@
 {% extends "cinema/index.html" %}
-
+{% load static%}
 {% block content %}
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
+
+
+                <div class="contact-form">
     <h1>Booking: {{ showing.film.title }}</h1>
     <ul>
         <li><strong>Title: </strong>{{ showing.film.title }}</li>
@@ -14,6 +21,11 @@
         {% csrf_token %}
         {{ form.as_p }}
         <input type="hidden" name="showing_id" value="{{ showing.id }}">
-        <button type="submit">Book tickets</button>
+        <button type="submit" class="btn">Book tickets</button>
     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
