@@ -28,7 +28,7 @@
                                         <a class="nav-link" id="movies-tab" data-toggle="tab" href="#movies" role="tab" aria-controls="movies" aria-selected="false">Movies</a>
                                     </li>
                                     <li class="nav-item" role="presentation">
-                                        <a class="nav-link" id="anime-tab" data-toggle="tab" href="#anime" role="tab" aria-controls="anime" aria-selected="false">Anime</a>
+                                        <a class="nav-link" id="anime-tab" data-toggle="tab" href="#action" role="tab" aria-controls="action" aria-selected="false">Action</a>
                                     </li>
                                 </ul>
                             </div>
@@ -46,14 +46,14 @@
                                     <div class="movie-content">
                                         <div class="top">
                                             <h5 class="title"><a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a></h5>
-                                            <span class="date">2021</span>
+                                            <span class="date">{{film.year}}</span>
                                         </div>
                                         <div class="bottom">
                                             <ul>
-                                                <li><span class="quality">hd</span></li>
+                                                <li><span class="quality">4k</span></li>
                                                 <li>
-                                                    <span class="duration"><i class="far fa-clock"></i> 128 min</span>
-                                                    <span class="rating"><i class="fas fa-thumbs-up"></i> 3.5</span>
+                                                    <span class="duration"><i class="far fa-clock"></i>{{film.duration}}</span>
+                                                    <span class="rating"><i class="fas fa-thumbs-up"></i>{{film.rating}}/10 IMDb</span>
                                                 </li>
                                             </ul>
                                         </div>

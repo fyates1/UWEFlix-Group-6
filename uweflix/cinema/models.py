@@ -36,6 +36,8 @@ class film(models.Model):
         ("15", "15"),
         ("18", "18"),
     )
+    year = models.CharField(max_length=4)
+    rating = models.CharField(max_length=3)
 
     age = models.CharField(choices=ageSelection, max_length=3)
     
@@ -44,7 +46,7 @@ class film(models.Model):
         return self.title 
 
 class showing(models.Model):
-    date= models.DateField("Date of showing (mm/dd/yyyy)")
+    date= models.DateField("Date of showing (yyyy/mm/dd)")
     startTime=models.TimeField("Time of showing (HH:MM)")
     numberOfSales = models.IntegerField(blank=True, null=True)
     film=models.ForeignKey(film, on_delete=models.RESTRICT, null=True)

@@ -20,7 +20,10 @@ class Migration(migrations.Migration):
                 ('ageRating', models.CharField(max_length=256)),
                 ('description', models.TextField(max_length=256)),
                 ('trailer', models.TextField(max_length=550, default='null')),
+                ('year', models.CharField(max_length=4)),
+                ('rating', models.CharField(max_length=3)),
                 ('duration', models.IntegerField()),
+            
             ],
         ),
         migrations.CreateModel(
