@@ -8,6 +8,7 @@ import requests
 import json
 from json import JSONDecodeError
 import pandas as pd
+from datetime import datetime, timedelta
 
 class CinemaManager():
     #All data functions related to getting data from the database are here
@@ -188,7 +189,9 @@ def add_showing(request):
 
 # Showing display for cinema manager to add crud to 
 def list_showings(request):
-    showing_list = showing.objects.all()
+    startdate= datetime.today()
+    enddate = startdate + timedelta(days=6)
+    showing_list = showing.objects.filter(date__range=[startdate, enddate])
     return render(request,"cinema/showings.html",{"showing_list":showing_list})
 
 #Form to delete a showing
