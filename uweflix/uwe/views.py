@@ -52,8 +52,8 @@ def register(request):
         # Saves the inputs to the database
         user = form.save()
         email = [form.cleaned_data.get('userEmail')]
-        email_subject = 'Successful Registration'
-        email_message = 'Congratulations, you have successfully created an account at UWEFLIX, we hope you enjoy'
+        email_subject = 'Registration Confirmation'
+        email_message = 'Congratulations, \n\nYou have successfully created an account at UWEFLIX. \n\nWe hope you enjoy it!\n\n\nKind regards,\nUWEFlix Team.'
         user.save()
         send_mail(email_subject, email_message, settings.CONTACT_EMAIL, email)
         # Returns to the login page with a message

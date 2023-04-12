@@ -9,6 +9,7 @@ from cinema.models import Booking
 from django.contrib.sessions.models import Session
 from cinema.views import CinemaManager
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -45,7 +46,13 @@ def sucess(request):
     showing = CinemaManager.get_showing(showing_id)
     booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
     booking.save()
+    request.session['boooking_id'] = str(booking.bookingID)
     return render(request, "customer/sucess.html")
+
+@csrf_exempt
+def sendmaill(request):
+    send_mail("Booking Confirmation","Hello,\n\nThank you for your booking. \nThe confirmation ID is: "+request.session.get('boooking_id')+".\n\nKind regards,\nUWEFlix Team.","pkway20@gmail.com",[request.POST.get('email')], fail_silently=False)
+    return redirect('home')
 
 # cancel page
 @csrf_exempt

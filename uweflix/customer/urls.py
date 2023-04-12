@@ -28,6 +28,7 @@ urlpatterns = [
     path('checkout/',views.pay, name="checkout"),
     path('sucess/',views.sucess, name="sucess"),
     path('cancel/',views.cancel, name="cancel"),
+    path('sendmaill/',views.sendmaill, name="sendmaill")
 
 
 ]
