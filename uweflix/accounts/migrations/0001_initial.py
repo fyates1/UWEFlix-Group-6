@@ -32,6 +32,7 @@ class Migration(migrations.Migration):
                 ('userType', models.CharField(choices=[('C', 'Customer'), ('S', 'Student'), ('CR', 'Club Rep'), ('AM', 'Accounts Manager'), ('CM', 'Cinema Manager'), ('SU', 'Super User')], default='C', max_length=2)),
                 ('firstName', models.CharField(max_length=255)),
                 ('lastName', models.CharField(max_length=255)),
+                ('userEmail', models.CharField(max_length=255)),
                 ('dateOfBirth', models.DateField()),
                 ('paymentDetails', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='accounts.paymentdetails')),
             ],
