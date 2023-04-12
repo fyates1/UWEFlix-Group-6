@@ -190,7 +190,7 @@ def add_showing(request):
 # Showing display for cinema manager to add crud to 
 def list_showings(request):
     startdate= datetime.today()
-    enddate = startdate + timedelta(days=6)
+    enddate = startdate + timedelta(days=365)
     showing_list = showing.objects.filter(date__range=[startdate, enddate])
     return render(request,"cinema/showings.html",{"showing_list":showing_list})
 
