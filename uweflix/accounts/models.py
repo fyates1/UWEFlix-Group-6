@@ -47,6 +47,7 @@ class User(models.Model):
     firstName = models.CharField(max_length=255)
     lastName = models.CharField(max_length=255)
     dateOfBirth = models.DateField()
+    userEmail = models.CharField(max_length=255)
 
     # Affiliated Club
     affiliatedClub = models.ForeignKey(Club, on_delete=models.CASCADE, blank=True, null=True)

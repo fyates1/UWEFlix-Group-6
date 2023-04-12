@@ -7,6 +7,10 @@ from django.forms.models import model_to_dict
 import json
 from datetime import date
 
+#-------------Email------------------
+from django.conf import settings
+from django.core.mail import send_mail
+
 # ----------------- Custom -----------------
 def custom_authenticate(username, password):
     try:
@@ -47,6 +51,11 @@ def register(request):
     if form.is_valid():
         # Saves the inputs to the database
         user = form.save()
+        email = [form.cleaned_data.get('userEmail')]
+        email_subject = 'Successful Registration'
+        email_message = 'Congratulations, you have successfully created an account at UWEFLIX, we hope you enjoy'
+        user.save()
+        send_mail(email_subject, email_message, settings.CONTACT_EMAIL, email)
         # Returns to the login page with a message
         return redirect(reverse('login') + '?message=Registration Successful')
     else:
