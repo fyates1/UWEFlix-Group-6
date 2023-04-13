@@ -164,18 +164,19 @@ SESSION_COOKIE_AGE = 300
 SESSION_SAVE_EVERY_REQUEST = True
 
 ##Twilio send grid key
-SENDGRID_API_KEY = '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'
+SENDGRID_API_KEY = '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'
 CONTACT_EMAIL = 'uweflix6@gmail.com'
 
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'apikey'
-# EMAIL_HOST_PASSWORD = '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'
+EMAIL_HOST = 'smtp.sendgrid.net'
+# Using SSL for encryption 
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = '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'
 
 # Email using smtp with tls - gmail
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pkway20@gmail.com'
-EMAIL_HOST_PASSWORD = 'ykufcestbxecehvf'
-EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'pkway20@gmail.com'
+# EMAIL_HOST_PASSWORD = 'ykufcestbxecehvf'
+# EMAIL_USE_TLS = True

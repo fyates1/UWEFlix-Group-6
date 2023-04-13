@@ -51,7 +51,7 @@ def sucess(request):
 
 @csrf_exempt
 def sendmaill(request):
-    send_mail("Booking Confirmation","Hello,\n\nThank you for your booking. \nThe confirmation ID is: "+request.session.get('boooking_id')+".\n\nKind regards,\nUWEFlix Team.","pkway20@gmail.com",[request.POST.get('email')], fail_silently=False)
+    send_mail("Booking Confirmation","Hello,\n\nThank you for your booking. \nThe confirmation ID is: "+request.session.get('boooking_id')+".\n\nKind regards,\nUWEFlix Team.","uweflix6@gmail.com",[request.POST.get('email')], fail_silently=False)
     return redirect('home')
 
 # cancel page
