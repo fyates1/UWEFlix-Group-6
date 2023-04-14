@@ -60,6 +60,7 @@ urlpatterns = [
     path("update_showing/<showing_id>",views.update_showing,name="update_showing"),
     path("booking_film/",views.booking_sheet,name="booking_sheet"),
     path("booking_film/<showing_id>",views.book_showing,name="create_booking"),
+    path("booking_film_cr/<showing_id>",views.book_showing_cr,name="create_booking_cr"),
 
 ]
 if settings.DEBUG:
