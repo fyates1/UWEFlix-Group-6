@@ -24,6 +24,7 @@ urlpatterns = [
     path("view",views.view_clubs, name="view"),
     path("show_club/<club_id>",views.view_club, name="showClub"),
     path("delete_club/<club_id>",views.delete_club, name="deleteClub"),
+    path("update_club/<club_id>",views.update_club, name="updateClub"),
     path("settle",views.settle, name="settle"),
     path('view/', views.view_clubs, name='view_clubs'),
 
