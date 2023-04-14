@@ -22,6 +22,8 @@ Film Showing
                 <a href="{% url 'cinema:create_booking' i.id %}" class="btn btn-success">Book
                     Showing</a>
                 </br>
+                <a href="{% url 'cinema:create_booking_cr' i.id %}" class="btn btn-success">Book
+                    Showing CR</a>
                 {% endfor %}
             </ul>
         </div>
