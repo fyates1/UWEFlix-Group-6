@@ -53,3 +53,31 @@ class BookingForm(ModelForm):
         if commit:
             instance.save()
         return instance
+
+class BookingForm_cr(ModelForm):
+    
+    class Meta:
+        model = Booking
+        fields = ("cr_tickets",)
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        cr_tickets = self.cleaned_data["cr_tickets"]
+
+        instance.cr_tickets = cr_tickets
+
+        # instance.total_price = calculate_total_price(instance.showing, student_tickets, child_tickets, adult_tickets)
+        if commit:
+            instance.save()
+        return instance
+
+
+# class BookingForm_cr(ModelForm):
+   
+#     class Meta:
+#         model = Booking
+#         fields = ("cr_tickets", "showing")
