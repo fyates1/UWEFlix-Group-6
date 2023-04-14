@@ -28,6 +28,9 @@ view
                     <th scope="col">
                         <p>Club: <a href="{% url 'clubRep:showClub' td.id %}">{{td.clubName}}</a></p>
                     </th>
+                    <th scope="col"><a href="{% url 'clubRep:updateClub' td.id%}" class="btn">
+                        Update </a>
+                    </th>
                     <th scope="col"><a href="{% url 'clubRep:deleteClub' td.id%}" class="btn">
                         Delete </a>
                     </th>

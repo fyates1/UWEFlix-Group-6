@@ -1,6 +1,8 @@
 from django.db import models
 import datetime
 from datetime import date
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 class screen(models.Model):
     name= models.CharField(max_length=256)
     capacity= models.IntegerField()
@@ -61,8 +63,9 @@ class Booking(models.Model):
     student_tickets = models.IntegerField(default=0)
     child_tickets = models.IntegerField(default=0)
     adult_tickets = models.IntegerField(default=0)
+    cr_tickets = models.IntegerField(default=10, validators=[MinValueValidator(10),MaxValueValidator(100)])
     total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     # created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return f"{self.bookingID},{self.showing},{self.student_tickets},{self.child_tickets},{self.adult_tickets},{self.total_price}"
+        return f"{self.bookingID},{self.showing},{self.student_tickets},{self.child_tickets},{self.adult_tickets},{self.total_price},{self.cr_tickets}"

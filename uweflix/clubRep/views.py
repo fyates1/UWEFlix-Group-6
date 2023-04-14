@@ -66,3 +66,11 @@ def delete_club(response, club_id):
     club = Club.objects.get(pk=club_id)
     club.delete()
     return redirect('clubRep:view')
+
+def update_club(request, club_id):
+    club = Club.objects.get(pk=club_id)
+    form = clubRegister(request.POST or None,instance=club)
+    if form.is_valid():
+            form.save()
+            return redirect('clubRep:view')
+    return render(request,"clubRep/update_club.html",{"club":club, "form":form})

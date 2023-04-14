@@ -20,8 +20,8 @@ class Club(models.Model):
     clubName = models.CharField(max_length=255)
     memberCount = models.IntegerField(default=1)
     email = models.CharField(max_length=20)
-    landlineNo = models.CharField(max_length=255, validators=[isLandlineNumber], null=True)
-    mobileNo = models.CharField(max_length=20, validators=[isMobileNumber], null=True)
+    landlineNo = models.IntegerField(null=True)# validators=[isLandlineNumber], null=True)
+    mobileNo = models.IntegerField(null=True)# validators=[isMobileNumber], null=True)
     discount = models.IntegerField(default=2)
 
     # Location Details

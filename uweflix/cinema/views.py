@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm,BookingForm
+from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm,BookingForm, BookingForm_cr
 from .models import screen,row,film,showing,Booking
 from django.http import HttpResponseRedirect
 from django.db.models.deletion import RestrictedError
@@ -242,6 +242,7 @@ def book_showing(request, showing_id):
             # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
             booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
             #booking.save()
+            request.session['id']= 1
             request.session['adult']= adult_tickets
             request.session['student']= student_tickets
             request.session['child']= child_tickets
@@ -252,6 +253,24 @@ def book_showing(request, showing_id):
         return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
     #return render(request,'customer/booking.html', {'form': form })
 
+def book_showing_cr(request, showing_id):
+    showing = CinemaManager.get_showing(showing_id)
+    if request.method == 'POST':
+        forms = BookingForm_cr(request.POST, instance=Booking())
+
+        if forms.is_valid():
+            cr_tickets = forms.cleaned_data.get('cr_tickets')
+
+            # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
+            booking = Booking(showing=showing, cr_tickets=cr_tickets) #, total_price=total_price)
+            #booking.save()
+            request.session['cr']= cr_tickets
+            request.session['id']= 2
+            request.session['showing_info'] = showing_id 
+            return redirect('customer:checkout')
+    else:
+        forms = BookingForm_cr()
+        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
 
 
 #Function to pull data on the most popular films from api
