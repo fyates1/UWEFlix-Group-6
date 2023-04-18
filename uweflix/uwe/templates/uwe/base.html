@@ -53,6 +53,19 @@
                                             Showings</a>
                                     </li>
                                     <li><a href="{% url 'contact_us' %}">contacts</a></li>
+
+                                    {% if request.session.userType == '"S"'%}
+                                    <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
+                                    {% endif %}
+
+                                    {% if request.session.userType == '"C"'%}
+                                    <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
+                                    {% endif %}
+
+                                    {% if request.session.userType == '"CR"'%}
+                                    <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
+                                    {% endif %}
+
                                     {% if request.session.userType == '"CM"' %}
                                     <li class="menu-item-has-children"><a href="#">Cinema Manager</a>
                                         <ul class="submenu">

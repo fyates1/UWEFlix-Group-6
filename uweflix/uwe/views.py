@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.forms.models import model_to_dict
 import json
 from datetime import date
+from cinema.models import *
 
 #-------------Email------------------
 from django.conf import settings
@@ -31,6 +32,15 @@ class CustomJSONEncoder(json.JSONEncoder):
 # Contact Us Page
 def contact_us(request):
     return render(request, 'uwe/contact_us.html')
+
+def my_tickets(request):
+#def my_tickets(request, pk)
+    #data = Booking.objects.filter(username=pk)
+    data  = Booking.objects.all()
+    context = {
+        'data' : data
+    }
+    return render(request, 'uwe/my_tickets.html', context)
 
 # Register page
 def register(request):
