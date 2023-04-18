@@ -19,6 +19,6 @@ urlpatterns = [
     path('customer', views.customer, name='customer'),
     path('cinemaManager', views.cinemaManager, name='cinemaManager'),
     
-    #contact us display
     path('contact_us', views.contact_us, name='contact_us'),
+    path('my_tickets', views.my_tickets, name='my_tickets'),
 ]
