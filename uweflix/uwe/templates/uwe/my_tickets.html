@@ -1,0 +1,44 @@
+{% extends "uwe/base.html" %}
+{% block title %}
+  My Tickets
+{% endblock %}
+    {% load static %}
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Bookings ID</th>
+                <th scope="'col">Showing</th>
+                <th scope="'col">Student Tickets</th>
+                <th scope="'col">Child Tickets</th>
+                <th scope="'col">Adult Tickets</th>
+                {% if request.session.userType == '"CR"'%}
+                <th scope="'col">CR Tickets</th>
+                {% endif %}
+                <th scope="'col">Total Price</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in data %}
+                <tr>
+                    <td scope="row"><a>{{ data.bookingID }}</a></td>
+                    <td scope="row"><a>{{ data.showing }}</a></td>
+                    <td scope="row"><a>{{ data.student_tickets }}</a></td>
+                    <td scope="row"><a>{{ data.child_tickets }}</a></td>
+                    <td scope="row"><a>{{ data.adult_tickets }}</a></td>
+                    {% if request.session.userType == '"CR"'%}
+                    <td scope="row"><a>{{ data.cr_tickets }}</a></td>
+                    {% endif %}
+                    <td scope="row"><a>{{ data.total_price }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
