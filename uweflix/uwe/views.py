@@ -8,6 +8,8 @@ import json
 from datetime import date
 from cinema.models import *
 
+from django.db.models import Q
+
 #-------------Email------------------
 from django.conf import settings
 from django.core.mail import send_mail
@@ -33,14 +35,43 @@ class CustomJSONEncoder(json.JSONEncoder):
 def contact_us(request):
     return render(request, 'uwe/contact_us.html')
 
+def view_bookings(request):
+    search_query = ""
+    
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+
+    data = Booking.objects.filter(
+        Q(bookingID__icontains=search_query)
+    )
+
+    context = {
+        'data': data,
+        'search_query': search_query,
+    }
+    return render(request, 'uwe/view_bookings.html', context)
+
+def cancel_bookings(request, pk):
+    data = Booking.objects.get(bookingID=pk)
+
+    if request.method == 'POST':
+        data.delete()
+        return redirect('view_bookings')
+    context = {
+        'data' : data,
+    }
+    return render(request, 'uwe/cancel_bookings.html', context)
+
+
 def my_tickets(request):
-#def my_tickets(request, pk)
+#def my_tickets(request):
     #data = Booking.objects.filter(username=pk)
     data  = Booking.objects.all()
     context = {
         'data' : data
     }
     return render(request, 'uwe/my_tickets.html', context)
+
 
 # Register page
 def register(request):
