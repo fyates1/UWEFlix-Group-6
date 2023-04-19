@@ -1,0 +1,29 @@
+{% extends "uwe/base.html" %}
+{% block title %}
+  View Bookings
+{% endblock %}
+    {% load static %}
+{% block content %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <br><br>
+    <div class="alert alert-danger" role="alert">
+        Are you sure you want to cancel this booking?
+    </div>
+    
+    <p>
+        <a href="{% url 'view_bookings' %}"> <-- Go back</a>
+    </p>
+
+    <p>
+        <input class="btn btn-danger" type="submit" value="Confirm">
+    </p>
+</form>
+{% endblock %}
