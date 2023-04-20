@@ -65,8 +65,10 @@ def cancel_bookings(request, pk):
 
 def my_tickets(request):
 #def my_tickets(request):
-    #data = Booking.objects.filter(username=pk)
-    data  = Booking.objects.all()
+    user = User.objects.get(id=request.session['id'])
+    data = Booking.objects.filter(user=user)
+    
+    #data  = Booking.objects.get(user = user)
     context = {
         'data' : data
     }
