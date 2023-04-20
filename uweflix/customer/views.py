@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 import re
 from django.http import HttpResponse, HttpResponseRedirect
 from . import models
+from accounts.models import User
 from .forms import BookingForm
 import stripe
 from django.conf import settings
@@ -38,29 +39,41 @@ def landing(response):
 # sucess page where the booking gets saved
 @csrf_exempt
 def sucess(request):
-    #id = request.session['id']
-    id = 3
-    if id == 1:
+    version = request.session['version']
+
+    # saving bookiong depending on booking button
+    if version == 1:
+        # getting form information
         adult_tickets = request.session['adult']
         student_tickets = request.session['student']
         child_tickets = request.session['child']
         showing_id = request.session['showing_info']
+        # getting showing 
         showing = CinemaManager.get_showing(showing_id)
-        booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
+        # retrieving the user id that is logged in 
+        user = User.objects.get(id=request.session['id'])
+        booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
         booking.save()
+        # for emailing ticket
         request.session['boooking_id'] = str(booking.bookingID)
-        del request.session['id']
-    elif id ==2 :
+        # deleting booking version
+        del request.session['version']
+    # club rep payment version    
+    elif version ==2 :
+
         cr = request.session['cr']
         showing_id = request.session['showing_info']
+        current_user = request.user
         showing = CinemaManager.get_showing(showing_id)
-        booking = Booking(showing=showing, cr_tickets=cr)#, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
-        booking.save()
+        # retrieving the user id that is logged in 
+        user = User.objects.get(id=request.session['id'])
+        booking = Booking.objects.create(showing=showing, cr_tickets=cr, user=user)
         request.session['boooking_id'] = str(booking.bookingID)
-        del request.session['id']
+        del request.session['version']
     else:
+        # to save the settling payment information
         pass
-        #return voew balance.
+        #return view balance.
 
     return render(request, "customer/sucess.html")
 
@@ -72,15 +85,15 @@ def sendmaill(request):
 # cancel page
 @csrf_exempt
 def cancel(request):
-    id = request.session['id']
-    if id == 1:
+    version = request.session['version']
+    if version == 1:
         del request.session['adult']
         del request.session['student']
         del request.session['child']
-        del request.session['id']
+        del request.session['version']
     else:
         del request.session['cr']
-        del request.session['id']
+        del request.session['version'] # version of booking 
 
    
     
@@ -91,9 +104,9 @@ def cancel(request):
 
 def pay(request):
     #booking = Booking.objects.get(pk=booking_id)
-    #id = request.session['id']
-    id = 3
-    if id == 1:
+    version = request.session['version']
+    #id = 1
+    if version == 1:
 
         adults = request.session['adult']
         student = request.session['student']
@@ -136,7 +149,7 @@ def pay(request):
             )
         return redirect(checkout_session.url)
 
-    elif id == 2:
+    elif version == 2:
 
 
         cr = request.session['cr']

@@ -64,6 +64,7 @@
 
                                     {% if request.session.userType == '"CR"'%}
                                     <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
+                                    <li><a href="{% url 'clubRep:settle' %}">Settle payment</a></li>
                                     {% endif %}
 
                                     {% if request.session.userType == '"CM"' %}

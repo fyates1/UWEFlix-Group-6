@@ -1,38 +1,52 @@
 {% extends "uwe/base.html" %}
+{% block title %}
+Settle balance
 
+{%endblock%}
+{% load static %}
 {% block content %}
-  <h1>Settle Balance</h1>
-  <p>Current balance: {{ balance }}</p>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Settle</button>
-  </form>
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+  <div class="container">
 
-  <h1>Transaction History</h1>
+      <h1>Settle Balance</h1>
+      <p>Current balance: {{ balance }}</p>
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Settle</button>
+      </form>
+      
+      <br/>
 
-  {% if transactions %}
-    <table>
-      <thead>
-        <tr>
-          <th>  Club Name  </th>
-          <th>  Date  </th>
-          <th>  Balance  </th>
-          <th>  Description  </th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for transaction in transactions reversed %}
-          <tr>
-            <td>{{ transaction.club.clubName }}</td>
-            <td>{{ transaction.date }}</td>
-            <td>{{ transaction.amount }}</td>
-            <td>{{ transaction.description }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <p>No transactions found.</p>
-  {% endif %}
+      <a href="{% url 'customer:checkout' %}" class="btn btn-success">settle Balance</a>
+
+      <h1>Transaction History</h1>
+
+      {% if transactions %}
+        <table>
+          <thead>
+            <tr>
+              <th>  Club Name  </th>
+              <th>  Date  </th>
+              <th>  Balance  </th>
+              <th>  Description  </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in transactions reversed %}
+              <tr>
+                <td>{{ transaction.club.clubName }}</td>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.description }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      {% else %}
+        <p>No transactions found.</p>
+      {% endif %}
+  </div>
+</section>
 {% endblock %}

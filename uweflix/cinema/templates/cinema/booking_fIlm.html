@@ -16,6 +16,8 @@
         <li><strong>Date: </strong>{{ showing.date }}</li>
         <li><strong>Screen name: </strong>{{ showing.screen }}</li>
         <li><strong>Start: </strong>{{ showing.startTime }}</li>
+        <li><strong>User: </strong>{{ request.session.username }}</li>
+
     </ul>
     <form method="POST">
         {% csrf_token %}

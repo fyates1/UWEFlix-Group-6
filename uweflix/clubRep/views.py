@@ -49,6 +49,7 @@ def view_club(response, club_id):
 
 def settle(request):
     club = Club.objects.first()
+    request.session['version']= 3
     if request.method == 'POST':
         form = settle_accounts(request.POST, instance=club)
         if form.is_valid():
@@ -56,11 +57,20 @@ def settle(request):
             return redirect('clubRep:settle')
     else:
         form = settle_accounts(instance=club)
-        
+        #request.session['version']= 3
+        #return redirect('customer:checkout')
     # Get transaction history for the club
     transactions = Transaction.objects.filter(club=club)
 
     return render(request, 'clubRep/settle.html', {'form': form, 'transactions': transactions})
+
+# def settling_balance(request, showing_id):
+#     #showing = CinemaManager.get_showing(showing_id)
+    
+#     if request.method == 'POST':
+#         request.session['version']= 3
+#         return redirect('customer:checkout')
+
 
 def delete_club(response, club_id):
     club = Club.objects.get(pk=club_id)
