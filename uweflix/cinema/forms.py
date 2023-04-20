@@ -46,6 +46,7 @@ class BookingForm(ModelForm):
         student_tickets = self.cleaned_data['student_tickets']
         child_tickets = self.cleaned_data['child_tickets']
         adult_tickets = self.cleaned_data['adult_tickets']
+        instance.user = current_user
         instance.student_tickets = student_tickets
         instance.child_tickets = child_tickets
         instance.adult_tickets = adult_tickets

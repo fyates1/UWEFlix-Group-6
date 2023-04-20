@@ -61,6 +61,7 @@ urlpatterns = [
     path("booking_film/",views.booking_sheet,name="booking_sheet"),
     path("booking_film/<showing_id>",views.book_showing,name="create_booking"),
     path("booking_film_cr/<showing_id>",views.book_showing_cr,name="create_booking_cr"),
+    path("settling_balance",views.settling_balance,name="settling_balance"),
 
 ]
 if settings.DEBUG:

@@ -19,11 +19,19 @@ Film Showing
                 <br/>
                 <li><strong>Start: </strong>{{i.startTime}}</li>
                 <br/>
-                <a href="{% url 'cinema:create_booking' i.id %}" class="btn btn-success">Book
-                    Showing</a>
-                </br>
+
+
+                {% if  request.session.userType == '"CR"' %}
                 <a href="{% url 'cinema:create_booking_cr' i.id %}" class="btn btn-success">Book
                     Showing CR</a>
+                
+
+                {%else%}
+                <a href="{% url 'cinema:create_booking' i.id %}" class="btn btn-success">Book
+                    Showing</a>
+                    
+                {% endif %}
+                <br/>
                 {% endfor %}
             </ul>
         </div>

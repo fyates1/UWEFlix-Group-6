@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm,BookingForm, BookingForm_cr
 from .models import screen,row,film,showing,Booking
+from accounts.models import User
 from django.http import HttpResponseRedirect
 from django.db.models.deletion import RestrictedError
 from django.shortcuts import get_list_or_404, get_object_or_404
@@ -231,22 +232,30 @@ def booking_sheet(request):
     form = BookingForm()
     return render(request,'cinema/film_showing.html', {'form': form })
 
+
+
 def book_showing(request, showing_id):
     showing = CinemaManager.get_showing(showing_id)
+
+    for key,value in request.session.items():
+        print ('{} =>{}'.format(key,value))
+
     if request.method == 'POST':
         form = BookingForm(request.POST, instance=Booking())
         if form.is_valid():
+            #user = request.user
             student_tickets = form.cleaned_data.get('student_tickets')
             child_tickets = form.cleaned_data.get('child_tickets')
             adult_tickets = form.cleaned_data.get('adult_tickets')
             # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
             booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
             #booking.save()
-            request.session['id']= 1
+            request.session['version']= 1
             request.session['adult']= adult_tickets
             request.session['student']= student_tickets
             request.session['child']= child_tickets
             request.session['showing_info'] = showing_id 
+            #request.session['user'] = user
             return redirect('customer:checkout')
     else:
         form = BookingForm()
@@ -255,8 +264,11 @@ def book_showing(request, showing_id):
 
 def book_showing_cr(request, showing_id):
     showing = CinemaManager.get_showing(showing_id)
+    for key,value in request.session.items():
+        print ('{} =>{}'.format(key,value))
     if request.method == 'POST':
         forms = BookingForm_cr(request.POST, instance=Booking())
+        
 
         if forms.is_valid():
             cr_tickets = forms.cleaned_data.get('cr_tickets')
@@ -265,12 +277,20 @@ def book_showing_cr(request, showing_id):
             booking = Booking(showing=showing, cr_tickets=cr_tickets) #, total_price=total_price)
             #booking.save()
             request.session['cr']= cr_tickets
-            request.session['id']= 2
+            request.session['version']= 2
             request.session['showing_info'] = showing_id 
             return redirect('customer:checkout')
     else:
         forms = BookingForm_cr()
         return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+
+
+def settling_balance(request, showing_id):
+    #showing = CinemaManager.get_showing(showing_id)
+    
+    if request.method == 'POST':
+        request.session['version']= 3
+        return redirect('customer:checkout')
 
 
 #Function to pull data on the most popular films from api

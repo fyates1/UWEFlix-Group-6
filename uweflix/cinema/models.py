@@ -2,6 +2,7 @@ from django.db import models
 import datetime
 from datetime import date
 from django.core.validators import MinValueValidator, MaxValueValidator
+from accounts.models import User
 
 class screen(models.Model):
     name= models.CharField(max_length=256)
@@ -59,6 +60,7 @@ class showing(models.Model):
     
 class Booking(models.Model):
     bookingID = models.AutoField(primary_key=True,unique=True)
+    user = models.ForeignKey(User, on_delete = models.RESTRICT, null = True, blank=True)
     showing = models.ForeignKey(showing, on_delete=models.CASCADE, null=True)
     student_tickets = models.IntegerField(default=0)
     child_tickets = models.IntegerField(default=0)
