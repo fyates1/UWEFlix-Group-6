@@ -39,19 +39,22 @@ def landing(response):
 # sucess page where the booking gets saved
 @csrf_exempt
 def sucess(request):
-    version = request.session['version']
+    version = int(request.GET['version'])
+
 
     # saving bookiong depending on booking button
     if version == 1:
         # getting form information
-        adult_tickets = request.session['adult']
-        student_tickets = request.session['student']
-        child_tickets = request.session['child']
-        showing_id = request.session['showing_info']
+        adult_tickets = int(request.GET['adult'])
+        student_tickets = int(request.GET['student'])
+        child_tickets = int(request.GET['child'])
+        showing_id = int(request.GET['showing_id'])
+        id = int(request.GET['id'])
+        print(version, adult_tickets,child_tickets,showing_id)
         # getting showing 
         showing = CinemaManager.get_showing(showing_id)
         # retrieving the user id that is logged in 
-        user = User.objects.get(id=request.session['id'])
+        user = User.objects.get(id=id)
         booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
         booking.save()
         # for emailing ticket
@@ -106,6 +109,9 @@ def pay(request):
     #booking = Booking.objects.get(pk=booking_id)
     version = request.session['version']
     #id = 1
+    id= request.session['id']
+    showing_id = request.session['showing_info']
+
     if version == 1:
 
         adults = request.session['adult']
@@ -143,7 +149,7 @@ def pay(request):
             payment_method_types=['card'], 
             line_items=items,   
             mode='payment',
-            success_url= 'http://127.0.0.1:8000/customer/sucess/', # will be changed later to proper url
+            success_url= f'http://127.0.0.1:8000/customer/sucess/+?version={version}&adult={adults}&child={child}&student={student}&id={id}&showing_id={showing_id}', # will be changed later to proper url
             cancel_url= 'http://127.0.0.1:8000/customer/cancel/',
             
             )
