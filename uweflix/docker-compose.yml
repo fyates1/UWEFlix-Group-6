@@ -9,6 +9,14 @@ services:
         - '8000:8000'
       volumes:
         - .:/app
+        
+  sqlite3:
+      image: nouchka/sqlite3:latest
+      stdin_open: true
+      tty: true
+      volumes:
+        - .:/app
+      restart: unless-stopped
 
   stripe:
     image: "stripe/stripe-cli:latest"
