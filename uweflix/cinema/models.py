@@ -56,6 +56,25 @@ class showing(models.Model):
     screen= models.ForeignKey(screen,on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.date},{self.film},{self.startTime}"
+
+    def get_bookings(self):
+        quantity = 0
+        bookings = Booking.objects.filter(showing=self.id)
+        for booking in bookings:
+            quantity += booking.student_tickets
+            quantity += booking.child_tickets
+            quantity += booking.adult_tickets
+            quantity += booking.cr_tickets
+        return quantity
+
+    def get_availibility(self):
+        return (self.screen.capacity - self.get_bookings())
+    
+    def booking_is_valid(self, student_ticekts=0,child_tickets=0,adult_tickets=0,cr_tickets=0):
+        if student_ticekts + child_tickets+ adult_tickets+cr_tickets <= self.get_availibility():
+            return True
+        else:
+            return False
     
     
 class Booking(models.Model):
@@ -65,7 +84,7 @@ class Booking(models.Model):
     student_tickets = models.PositiveIntegerField(default=0)
     child_tickets = models.PositiveIntegerField(default=0)
     adult_tickets = models.PositiveIntegerField(default=0)
-    cr_tickets = models.PositiveIntegerField(default=10, validators=[MinValueValidator(10),MaxValueValidator(100)])
+    cr_tickets = models.PositiveIntegerField(default=10, validators=[MinValueValidator(10)])
     total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     # created_at = models.DateTimeField(auto_now_add=True)
     
