@@ -11,7 +11,7 @@ Film Showing
     <div class="container">
             <h1>{{ film_showings.title }}</h1>
             <ul>
-                {% for i in film_showings.showing_set.all %}
+                {% for i in film_showings %}
 
                 <li><strong>Date: </strong>{{ i.date }}</li>
                 <br/>
