@@ -12,6 +12,7 @@ import json
 from json import JSONDecodeError
 import pandas as pd
 from datetime import datetime, timedelta
+from django.db.models import Q
 
 class CinemaManager():
     #All data functions related to getting data from the database are here
@@ -227,7 +228,8 @@ def display_films(request):
 # Film details when clicking
 def film_showing(request, _id):
     film_showings = film.objects.get(id=_id)
-    return render(request,"cinema/film_showing.html",{"film_showings":film_showings})
+    showings = showing.objects.filter(Q(date__gte=datetime.today()))
+    return render(request,"cinema/film_showing.html",{"film_showings":showings})
 
 # Booking 
 def booking_sheet(request):
@@ -393,7 +395,7 @@ def book_showing_AM_CM(request, showing_id):
                 return redirect('customer:checkout')
             else:
                 forms = BookingForm_g()
-                messages.error(request,"There aren't that many seats sorry!")
+                messages.error(request,"There aren't that many seats sorry")
                 return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
 
         else:
