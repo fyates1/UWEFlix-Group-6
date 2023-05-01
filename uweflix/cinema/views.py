@@ -234,31 +234,47 @@ def booking_sheet(request):
     return render(request,'cinema/film_showing.html', {'form': form })
 
 
+# TICKET PRICES 
+adult_ticket_price = 8
+student_ticket_price = 8
+child_ticket_price = 5
+cr_ticket_price = 6.8
+
 # booking for guest 
 
 def book_showing(request, showing_id):
     showing = CinemaManager.get_showing(showing_id)
 
+
     # for key,value in request.session.items():
     #     print ('{} =>{}'.format(key,value))
 
+
     if request.method == 'POST':
         form = BookingForm(request.POST, instance=Booking())
+
         if form.is_valid():
             #user = request.user
             student_tickets = form.cleaned_data.get('student_tickets')
             child_tickets = form.cleaned_data.get('child_tickets')
             adult_tickets = form.cleaned_data.get('adult_tickets')
-            # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
-            booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
-            #booking.save()
-            request.session['version']= 1
-            request.session['adult']= adult_tickets
-            request.session['student']= student_tickets
-            request.session['child']= child_tickets
-            request.session['showing_info'] = showing_id 
-            #request.session['user'] = user
-            return redirect('customer:checkout')
+            user_id = int(request.session['id'])
+            user = User.objects.get(id=user_id)
+            balance = user.balance
+            print("your balance",balance)
+            total_price = (student_tickets * student_ticket_price )+ (child_tickets * child_ticket_price)+ (student_tickets)
+            print("total price ",total_price)
+            new_balance = balance - total_price
+            if new_balance > -150:
+                booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) 
+                booking.save()
+                user.balance = new_balance
+                user.save()
+            else:
+                forms = BookingForm()
+                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+    
+            return redirect('cinema:list_films')
         else:
             forms = BookingForm()
             return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
@@ -279,13 +295,24 @@ def book_showing_cr(request, showing_id):
         if forms.is_valid():
             cr_tickets = forms.cleaned_data.get('cr_tickets')
 
-            # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
-            booking = Booking(showing=showing, cr_tickets=cr_tickets) #, total_price=total_price)
-            #booking.save()
-            request.session['cr']= cr_tickets
-            request.session['version']= 2
-            request.session['showing_info'] = showing_id 
-            return redirect('customer:checkout')
+            user_id = int(request.session['id'])
+            user = User.objects.get(id=user_id)
+            balance = user.balance
+            print("your balance",balance)
+            total_price = (cr_tickets * cr_ticket_price)
+            print("total price ",total_price)
+            new_balance = balance - total_price
+            if new_balance > -150:
+                booking = Booking(showing=showing, cr_tickets = cr_tickets,user=user) 
+                booking.save()
+                user.balance = new_balance
+                user.save()
+                print("balance ",user.balance)
+            else:
+                forms = BookingForm()
+                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+    
+            return redirect('cinema:list_films')
         else:
             forms = BookingForm_cr()
             return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
@@ -305,7 +332,8 @@ def settling_balance(request, showing_id):
 # booking for guest
 def book_showing_guest(request, showing_id):
     showing = CinemaManager.get_showing(showing_id)
-
+    
+    
 
     if request.method == 'POST':
         form = BookingForm_g(request.POST, instance=Booking())

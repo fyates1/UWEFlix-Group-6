@@ -6,6 +6,8 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from clubRep.models import Club
 from accounts.validation import *
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 # ----------------- Models -----------------
 #region
@@ -54,6 +56,7 @@ class User(models.Model):
 
     # Payment information
     paymentDetails = models.ForeignKey(PaymentDetails, on_delete=models.CASCADE, blank=True, null=True)
+    balance = models.IntegerField(default=0, validators=[MinValueValidator(-150)])
 
     # def encryptPassword(self, plainPassword):
     #     self.password = make_password(plainPassword)
@@ -77,7 +80,7 @@ class UserForm(forms.ModelForm):
     # Form for User model
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ('username', 'password', 'userType', 'firstName', 'lastName', 'dateOfBirth', 'userEmail', 'affiliatedClub', 'paymentDetails',) #'__all__'
         widgets = {
             'dateOfBirth': forms.DateInput(
                 format=('%Y-%m-%d'),
@@ -97,7 +100,7 @@ class RegisterForm(forms.ModelForm):
     # Form for User model
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ('username', 'password', 'userType', 'firstName', 'lastName', 'dateOfBirth', 'userEmail', 'affiliatedClub', 'paymentDetails',) #'__all__'
         widgets = {
             'dateOfBirth': forms.DateInput(
                 format=('%Y-%m-%d'),
