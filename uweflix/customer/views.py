@@ -73,6 +73,47 @@ def sucess(request):
         booking = Booking.objects.create(showing=showing, cr_tickets=cr, user=user)
         request.session['boooking_id'] = str(booking.bookingID)
         del request.session['version']
+    elif version == 4:
+        # getting form information
+        
+
+        adult_tickets = int(request.GET['adult'])
+
+        child_tickets = int(request.GET['child'])
+        showing_id = int(request.GET['showing_id'])
+        id = int(request.GET['id'])
+        # getting showing 
+        showing = CinemaManager.get_showing(showing_id)
+        # retrieving the user id that is logged in 
+        if id != None:
+            user = User.objects.get(id=id)
+            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
+            booking.save()
+        else:
+            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
+            booking.save()
+        # for emailing ticket
+        request.session['boooking_id'] = str(booking.bookingID)
+        # deleting booking version
+        del request.session['version']
+
+        if version == 5:
+            # getting form information
+            adult_tickets = int(request.GET['adult'])
+            child_tickets = int(request.GET['child'])
+            showing_id = int(request.GET['showing_id'])
+            id = int(request.GET['id'])
+            print(version, adult_tickets,child_tickets,showing_id)
+            # getting showing 
+            showing = CinemaManager.get_showing(showing_id)
+            # retrieving the user id that is logged in 
+            user = User.objects.get(id=id)
+            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
+            booking.save()
+            # for emailing ticket
+            request.session['boooking_id'] = str(booking.bookingID)
+            # deleting booking version
+            del request.session['version']
     else:
         # to save the settling payment information
         pass
@@ -109,11 +150,11 @@ def pay(request):
     #booking = Booking.objects.get(pk=booking_id)
     version = request.session['version']
     #id = 1
-    id= request.session['id']
+    #user_id= request.session['id']
     showing_id = request.session['showing_info']
 
     if version == 1:
-
+        user_id= request.session['id']
         adults = request.session['adult']
         student = request.session['student']
         child = request.session['child']
@@ -149,18 +190,15 @@ def pay(request):
             payment_method_types=['card'], 
             line_items=items,   
             mode='payment',
-            success_url= f'http://127.0.0.1:8000/customer/sucess/+?version={version}&adult={adults}&child={child}&student={student}&id={id}&showing_id={showing_id}', # will be changed later to proper url
+            success_url= f'http://127.0.0.1:8000/customer/sucess/?version={version}&adult={adults}&child={child}&student={student}&id={user_id}&showing_id={showing_id}',
             cancel_url= 'http://127.0.0.1:8000/customer/cancel/',
-            
             )
         return redirect(checkout_session.url)
 
+    ############## club rep version #####################
     elif version == 2:
-
-
+        user_id= request.session['id']
         cr = request.session['cr']
-
-        #DOMAIN ='http://127.0.0.1:8000/customer/',
         items=[]
 
         if(cr > 0 ):
@@ -168,23 +206,73 @@ def pay(request):
                 "price": "price_1MwnZwKummhyRPIWTUSuVw01",
                 "quantity": cr,
                 }]
-        # del request.session['adult']
-        # del request.session['student']
-        # del request.session['child']
-        #del request.session['cr']
+
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'], 
             line_items=items,   
             mode='payment',
-            success_url= 'http://127.0.0.1:8000/customer/sucess/', # will be changed later to proper url
+            success_url= 'http://127.0.0.1:8000/customer/sucess/', 
             cancel_url= 'http://127.0.0.1:8000/customer/cancel/',
             
             )
         return redirect(checkout_session.url)
-    else:
-        #cr = request.session['cr']
+    
+    ########### guest version ###############
+    elif version == 4:
+        adults = request.session['adult']
+        child = request.session['child']
+        items=[]
+        if(adults > 0):
+            items += [{
+                "price": "price_1MrLtCKummhyRPIWtVsccm4O",
+                "quantity": adults,
+                }]
+        if(child > 0 ):
+            items += [{
+                "price": "price_1MrLvzKummhyRPIW8U9BAMmJ",
+                "quantity": child,
+                }]
 
-        #DOMAIN ='http://127.0.0.1:8000/customer/',
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'], 
+            line_items=items,   
+            mode='payment',
+            success_url= f'http://127.0.0.1:8000/customer/sucess/?version={version}&adult={adults}&child={child}&showing_id={showing_id}', 
+            cancel_url= 'http://127.0.0.1:8000/customer/cancel/',
+            
+            )
+        return redirect(checkout_session.url)
+
+    elif version == 5:
+        user_id= request.session['id']
+        adults = request.session['adult']
+        child = request.session['child']
+        items=[]
+        if(adults > 0):
+            items += [{
+                "price": "price_1MrLtCKummhyRPIWtVsccm4O",
+                "quantity": adults,
+                }]
+        if(child > 0 ):
+            items += [{
+                "price": "price_1MrLvzKummhyRPIW8U9BAMmJ",
+                "quantity": child,
+                }]
+
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=['card'], 
+            line_items=items,   
+            mode='payment',
+            success_url= f'http://127.0.0.1:8000/customer/sucess/?version={version}&id={user_id}&adult={adults}&child={child}&showing_id={showing_id}', 
+            cancel_url= 'http://127.0.0.1:8000/customer/cancel/',
+            
+            )
+        return redirect(checkout_session.url)
+
+    else:
+
+        #cr = request.session['cr']
+        user_id= request.session['id']
         items=[]
 
         
@@ -192,10 +280,7 @@ def pay(request):
             "price": "price_1MwospKummhyRPIWFz1IxOIy",
             "quantity": 1,
             }]
-        # del request.session['adult']
-        # del request.session['student']
-        # del request.session['child']
-        #del request.session['cr']
+
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'], 
             line_items=items,   

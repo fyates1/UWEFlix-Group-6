@@ -6,7 +6,7 @@ from accounts.models import User
 
 class screen(models.Model):
     name= models.CharField(max_length=256)
-    capacity= models.IntegerField()
+    capacity= models.PositiveIntegerField()
     # capacity = {array of 1 to 50}
     def __str__(self):
         return self.name
@@ -18,7 +18,7 @@ class row(models.Model):
         return f"Screen {self.screen}, row {self.letter}"
 
 class seat(models.Model):
-    number = models.IntegerField()
+    number = models.PositiveIntegerField()
     row = models.ForeignKey(row,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -51,7 +51,7 @@ class film(models.Model):
 class showing(models.Model):
     date= models.DateField("Date of showing (yyyy/mm/dd)")
     startTime=models.TimeField("Time of showing (HH:MM)")
-    numberOfSales = models.IntegerField(blank=True, null=True)
+    numberOfSales = models.PositiveIntegerField(blank=True, null=True)
     film=models.ForeignKey(film, on_delete=models.RESTRICT, null=True)
     screen= models.ForeignKey(screen,on_delete=models.CASCADE)
     def __str__(self):
@@ -62,10 +62,10 @@ class Booking(models.Model):
     bookingID = models.AutoField(primary_key=True,unique=True)
     user = models.ForeignKey(User, on_delete = models.RESTRICT, null = True, blank=True)
     showing = models.ForeignKey(showing, on_delete=models.CASCADE, null=True)
-    student_tickets = models.IntegerField(default=0)
-    child_tickets = models.IntegerField(default=0)
-    adult_tickets = models.IntegerField(default=0)
-    cr_tickets = models.IntegerField(default=10, validators=[MinValueValidator(10),MaxValueValidator(100)])
+    student_tickets = models.PositiveIntegerField(default=0)
+    child_tickets = models.PositiveIntegerField(default=0)
+    adult_tickets = models.PositiveIntegerField(default=0)
+    cr_tickets = models.PositiveIntegerField(default=10, validators=[MinValueValidator(10),MaxValueValidator(100)])
     total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     # created_at = models.DateTimeField(auto_now_add=True)
     

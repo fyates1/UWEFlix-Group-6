@@ -53,6 +53,8 @@
                                             Showings</a>
                                     </li>
                                     <li><a href="{% url 'contact_us' %}">contacts</a></li>
+                                    {% if request.session.id is None %}
+                                    
 
                                     {% if request.session.userType == '"S"'%}
                                     <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
@@ -89,6 +91,13 @@
                                             <li><a href="{% url 'clubRep:view' %}">View Clubs</a></li>
                                         </ul>
                                     </li>
+                                    
+                                    {% endif %}
+                                    <li class="menu-item"><a class="navbar-brand" href="{% url 'register' %}" class="btn">Register</a></li>
+                                    <li class="menu-item"><a class="navbar-brand" href="{% url 'login' %}" class="btn">Sign In</a></li>
+
+                                    {% else %}
+                                    <li class="menu-item"><a class="navbar-brand" href="{% url 'logout' %}" class="btn">Log out</a></li>
                                     {% endif %}
                                 </ul>
                             </div>
@@ -108,13 +117,13 @@
                                         </form>
                                     </li>
                                     
-                                    {% if request.session.id is None %}
+                                    <!-- {% if request.session.id is None %}
                                     <li class="header-btn"><a href="{% url 'register' %}" class="btn">Register</a></li>
                                     <li class="header-btn"><a href="{% url 'login' %}" class="btn">Sign In</a></li>
 
                                     {% else %}
                                     <li class="header-btn"><a href="{% url 'logout' %}" class="btn">Log out</a></li>
-                                    {% endif %}
+                                    {% endif %} -->
 
                                 </ul>
                             </div>

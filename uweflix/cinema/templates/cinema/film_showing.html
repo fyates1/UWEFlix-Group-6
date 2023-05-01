@@ -20,16 +20,28 @@ Film Showing
                 <li><strong>Start: </strong>{{i.startTime}}</li>
                 <br/>
 
-
+                <!-- Code for Club rep -->
                 {% if  request.session.userType == '"CR"' %}
                 <a href="{% url 'cinema:create_booking_cr' i.id %}" class="btn btn-success">Book
-                    Showing CR</a>
+                    Showing </a>
                 
-
-                {%else%}
+                <!-- Code for student -->
+                {%elif request.session.userType == '"S"'   %}
                 <a href="{% url 'cinema:create_booking' i.id %}" class="btn btn-success">Book
-                    Showing</a>
-                    
+                    Showing </a>
+                <!-- Code for STAFF -->
+                {%elif request.session.userType == '"CM"'   %}
+                <a href="{% url 'cinema:create_booking_AM_CM' i.id %}" class="btn btn-success">Book
+                    Showing </a>
+                
+                {%elif request.session.userType == '"AM"'   %}
+                <a href="{% url 'cinema:create_booking_AM_CM' i.id %}" class="btn btn-success">Book
+                    Showing </a>
+                
+                <!-- Code for guests -->
+                {%else%}
+                <a href="{% url 'cinema:create_booking_guest' i.id %}" class="btn btn-success">Book
+                    Showing </a>
                 {% endif %}
                 <br/>
                 {% endfor %}

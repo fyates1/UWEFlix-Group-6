@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
-from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm,BookingForm, BookingForm_cr
+#from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm,BookingForm, BookingForm_cr
+from .forms import *
 from .models import screen,row,film,showing,Booking
 from accounts.models import User
 from django.http import HttpResponseRedirect
@@ -233,12 +234,13 @@ def booking_sheet(request):
     return render(request,'cinema/film_showing.html', {'form': form })
 
 
+# booking for guest 
 
 def book_showing(request, showing_id):
     showing = CinemaManager.get_showing(showing_id)
 
-    for key,value in request.session.items():
-        print ('{} =>{}'.format(key,value))
+    # for key,value in request.session.items():
+    #     print ('{} =>{}'.format(key,value))
 
     if request.method == 'POST':
         form = BookingForm(request.POST, instance=Booking())
@@ -257,15 +259,19 @@ def book_showing(request, showing_id):
             request.session['showing_info'] = showing_id 
             #request.session['user'] = user
             return redirect('customer:checkout')
+        else:
+            forms = BookingForm()
+            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
     else:
         form = BookingForm()
         return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
     #return render(request,'customer/booking.html', {'form': form })
 
+# club rep paying directly
 def book_showing_cr(request, showing_id):
     showing = CinemaManager.get_showing(showing_id)
-    for key,value in request.session.items():
-        print ('{} =>{}'.format(key,value))
+    # for key,value in request.session.items():
+    #     print ('{} =>{}'.format(key,value))
     if request.method == 'POST':
         forms = BookingForm_cr(request.POST, instance=Booking())
         
@@ -280,9 +286,13 @@ def book_showing_cr(request, showing_id):
             request.session['version']= 2
             request.session['showing_info'] = showing_id 
             return redirect('customer:checkout')
+        else:
+            forms = BookingForm_cr()
+            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
     else:
         forms = BookingForm_cr()
         return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+
 
 
 def settling_balance(request, showing_id):
@@ -291,6 +301,61 @@ def settling_balance(request, showing_id):
     if request.method == 'POST':
         request.session['version']= 3
         return redirect('customer:checkout')
+
+# booking for guest
+def book_showing_guest(request, showing_id):
+    showing = CinemaManager.get_showing(showing_id)
+
+
+    if request.method == 'POST':
+        form = BookingForm_g(request.POST, instance=Booking())
+        if form.is_valid():
+            #user = request.user
+            
+            adult_tickets = form.cleaned_data.get('adult_tickets')
+            child_tickets = form.cleaned_data.get('child_tickets')
+            request.session['child']= child_tickets
+            # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
+
+            request.session['version']= 4
+            request.session['adult']= adult_tickets
+            request.session['showing_info'] = showing_id 
+
+            return redirect('customer:checkout')
+        else:
+            forms = BookingForm_g()
+            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+    else:
+        form = BookingForm_g()
+        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
+
+# booking for AM CM
+def book_showing_AM_CM(request, showing_id):
+    showing = CinemaManager.get_showing(showing_id)
+
+
+    if request.method == 'POST':
+        form = BookingForm_g(request.POST, instance=Booking())
+        if form.is_valid():
+            #user = request.user
+            
+            adult_tickets = form.cleaned_data.get('adult_tickets')
+            child_tickets = form.cleaned_data.get('child_tickets')
+            request.session['child']= child_tickets
+            # total_price = calculate_total_price(showing, student_tickets, child_tickets, adult_tickets)
+
+            request.session['version']= 5
+            request.session['adult']= adult_tickets
+            request.session['showing_info'] = showing_id 
+
+            return redirect('customer:checkout')
+        else:
+            forms = BookingForm_g()
+            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+    else:
+        form = BookingForm_g()
+        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
+
 
 
 #Function to pull data on the most popular films from api
