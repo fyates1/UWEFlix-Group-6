@@ -25,3 +25,7 @@ for club rep:
 Username: CR
 password: cr
 
+testing card details for stripe
+number : 4242 4242 4242 4242
+expiry: 04/24 
+cvc: 123
