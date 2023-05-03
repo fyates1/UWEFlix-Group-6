@@ -58,6 +58,9 @@ class User(models.Model):
     paymentDetails = models.ForeignKey(PaymentDetails, on_delete=models.CASCADE, blank=True, null=True)
     balance = models.IntegerField(default=0, validators=[MinValueValidator(-150)])
 
+    # If the account has been authorised
+    activated = models.BooleanField(default=False)
+
     # def encryptPassword(self, plainPassword):
     #     self.password = make_password(plainPassword)
 
@@ -100,7 +103,7 @@ class RegisterForm(forms.ModelForm):
     # Form for User model
     class Meta:
         model = User
-        fields = ('username', 'password', 'userType', 'firstName', 'lastName', 'dateOfBirth', 'userEmail', 'affiliatedClub', 'paymentDetails',) #'__all__'
+        fields = ('username', 'password', 'userType', 'firstName', 'lastName', 'dateOfBirth', 'userEmail') #'__all__'
         widgets = {
             'dateOfBirth': forms.DateInput(
                 format=('%Y-%m-%d'),

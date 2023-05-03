@@ -79,7 +79,7 @@ class showing(models.Model):
     
 class Booking(models.Model):
     bookingID = models.AutoField(primary_key=True,unique=True)
-    user = models.ForeignKey(User, on_delete = models.RESTRICT, null = True, blank=True)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null = True, blank=True)
     showing = models.ForeignKey(showing, on_delete=models.CASCADE, null=True)
     student_tickets = models.PositiveIntegerField(default=0)
     child_tickets = models.PositiveIntegerField(default=0)

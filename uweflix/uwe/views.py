@@ -37,7 +37,7 @@ def contact_us(request):
 
 def view_bookings(request):
     search_query = ""
-    
+
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
 
@@ -64,10 +64,9 @@ def cancel_bookings(request, pk):
 
 
 def my_tickets(request):
-#def my_tickets(request):
     user = User.objects.get(id=request.session['id'])
     data = Booking.objects.filter(user=user)
-    
+
     #data  = Booking.objects.get(user = user)
     context = {
         'data' : data

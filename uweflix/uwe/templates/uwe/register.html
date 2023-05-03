@@ -28,9 +28,11 @@ Register
                             <!-- TODO Make it so only the first 3 options of UserType is available -->
 
                             <div class="fieldContainer">
-                                {% if field.name != "paymentDetails" and field.name != "affiliatedClub" %}
+                                <!-- {% if field.name != "paymentDetails" and field.name != "affiliatedClub" %}
                                 {{ field.label_tag }} {{ field }}
-                                {% endif %}
+                                {% endif %} -->
+
+                                {{ field.label_tag }} {{ field }}
 
                                 {% for errors in field.errors %}
                                 <div class="error">{{ errors }}</div>

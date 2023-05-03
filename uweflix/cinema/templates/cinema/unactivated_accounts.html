@@ -1,0 +1,46 @@
+<title>Accounts Activation Requests</title>
+
+<h1>See all Accounts Activation Requests</h1>
+<h2>Select whether to accept or deny account activation requests</h2>
+
+{% if accounts %}
+
+    <h3><strong>All Unactivated Accounts</strong></h3>
+
+    <ul>
+        {% for account in accounts %}
+            <li>
+                <a href="{% url 'cinema:activate_accounts' account.id %}">
+                    {{ account.username }} ({{ account.firstName }} {{ account.lastName }})
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% else %}
+    <p>There are no account activation requests</p>
+{% endif %}
+
+{% if userForm %}
+<form action="{% url 'cinema:activate_accounts' user.id %}" method="post">
+    {% csrf_token %}
+
+    <fieldset>
+        <legend>
+            <h3>{{ user }}'s Account Details</h3>
+        </legend>
+
+        {% for field in userForm %}
+            <div class="fieldContainer">
+                <b>{{ field.label_tag }}</b> {{ field.value }}
+                {% for errors in field.errors %}
+                    <div class="error">{{ errors }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <br><input type="submit" name="approve" value="Approve">
+        <input type="submit" name="deny" value="Deny">
+    </fieldset>
+</form>
+{% endif %}
