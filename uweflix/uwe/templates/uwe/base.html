@@ -93,12 +93,12 @@
                                     </li>
                                     
                                     {% endif %}
-                                    <li class="menu-item"><a class="navbar-brand" href="{% url 'register' %}" class="btn">Register</a></li>
-                                    <li class="menu-item"><a class="navbar-brand" href="{% url 'login' %}" class="btn">Sign In</a></li>
+                                    <li class="menu-item"><a class="header-btn" href="{% url 'register' %}" class="btn">Register</a></li>
+                                    <li class="menu-item"><a class="header-btn" href="{% url 'login' %}" class="btn">Sign In</a></li>
 
                                     {% else %}
-                                    <li class="menu-item"><a class="navbar-brand" href="{% url 'logout' %}" class="btn">Log out</a></li>
-                                    {% endif %}
+                                    <li class="menu-item"><a class="header-btn" href="{% url 'logout' %}" class="btn btn-daark">Log out</a></li>
+                                    {% endif %} 
                                 </ul>
                             </div>
                             <div class="header-action d-none d-md-block">
@@ -179,6 +179,12 @@
 <!--    {% endif %}-->
 
     {% block content %}
+
+    <script>
+        function a(){
+          document.getElementById('a').style.display = 'block';
+        }
+    </script>
 
     {% endblock %}
 </main>
