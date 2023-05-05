@@ -9,6 +9,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
+
 import uuid, re, datetime
 from datetime import date, timedelta
 from accounts.validation import *
@@ -36,11 +37,12 @@ class Club(models.Model):
     def __str__(self):
         return self.clubName
     
-class Transaction(models.Model):
-    club = models.ForeignKey(Club, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    description = models.CharField(max_length=255)
+# class Transaction(models.Model):
+#     #club = models.ForeignKey(Club, on_delete=models.CASCADE)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     date = models.DateTimeField(auto_now_add=True)
+#     amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     description = models.CharField(max_length=255)
 
 
 # class ClubForm(forms.ModelForm):

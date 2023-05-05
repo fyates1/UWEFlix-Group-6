@@ -1,0 +1,7 @@
+{% block content %}
+    <div id="box">
+        <h1>Account Settling</h1>
+        <p>Thanks for settling your account. You have paid £{{ amount }}.</p>
+        <a class="myButton" href="{% url 'clubRep:settle' %}"> Return to balance page </a>
+    </div>
+{% endblock content %}
