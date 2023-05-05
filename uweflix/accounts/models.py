@@ -122,6 +122,13 @@ class RegisterForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.fields['userType'].choices = [('C', 'Customer'), ('S', 'Student')]
+
+class Transaction(models.Model):
+    #club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.CharField(max_length=255)
 #endregion
 
 # ----------------- Receivers -----------------

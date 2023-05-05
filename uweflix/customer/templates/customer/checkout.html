@@ -2,6 +2,8 @@
 {%block content%}      
       <form action="{% url 'customer:checkout' %}" method="POST">
         {% csrf_token %}
+        <label for="amount">Amount:</label>
+        <input type="text" name="amount">
         <button type="submit" id="checkout-button">Checkout</button>
       </form>
 {%endblock%}
