@@ -8,8 +8,6 @@
     <!-- Staic file -->
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
-    <!--    <link rel="stylesheet" type="text/css" href="{% static 'uwe/uwe.css' %}"/>-->
-    <!--    hassan -->
 
     <link rel="stylesheet" href="{% static 'uwe/css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'uwe/css/animate.min.css' %}"/>
@@ -53,22 +51,12 @@
                                             Showings</a>
                                     </li>
                                     <li><a href="{% url 'contact_us' %}">contacts</a></li>
-                                    {% if request.session.id is None %}
+                                    {% if request.session.id != None %}
+
+                                    {% endif %}
+
+
                                     
-
-                                    {% if request.session.userType == '"S"'%}
-                                    <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
-                                    {% endif %}
-
-                                    {% if request.session.userType == '"C"'%}
-                                    <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
-                                    {% endif %}
-
-                                    {% if request.session.userType == '"CR"'%}
-                                    <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
-                                    <li><a href="{% url 'clubRep:settle' %}">Settle payment</a></li>
-                                    {% endif %}
-
                                     {% if request.session.userType == '"CM"' %}
                                     <li class="menu-item-has-children"><a href="#">Cinema Manager</a>
                                         <ul class="submenu">
@@ -89,17 +77,36 @@
                                             <li><a href="{% url 'accounts:createUser' %}">Add User</a></li>
                                             <li><a href="{% url 'accounts:index' %}">View User</a></li>
                                             <li><a href="{% url 'clubRep:addClub' %}">Add Club</a></li>
-                                            <li><a href="{% url 'clubRep:activate_accounts_default' %}">View Unactivated Accounts</a></li>
+                                            <li><a href="{% url 'cinema:activate_accounts_default' %}">View Unactivated Accounts</a></li>
+                                            <!-- <li><a href="{% url 'clubRep:view' %}">View Clubs</a></li> -->
                                         </ul>
                                     </li>
-                                    
                                     {% endif %}
-                                    <li class="menu-item"><a class="header-btn" href="{% url 'register' %}" class="btn">Register</a></li>
-                                    <li class="menu-item"><a class="header-btn" href="{% url 'login' %}" class="btn">Sign In</a></li>
 
-                                    {% else %}
-                                    <li class="menu-item"><a class="header-btn" href="{% url 'logout' %}" class="btn btn-daark">Log out</a></li>
-                                    {% endif %} 
+                                    {% if request.session.userType == '"S"'%}
+                                    <li class="menu-item-has-children"><a href="#">Student</a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
+                                        </ul>
+                                    </li>
+                                    {% endif %}
+
+                                    {% if request.session.userType == '"C"'%}
+                                    <li class="menu-item-has-children"><a href="#">Customer</a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
+                                        </ul>
+                                    </li>
+                                    {% endif %}
+
+                                    {% if request.session.userType == '"CR"'%}
+                                    <li class="menu-item-has-children"><a href="#">Club Representative</a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'my_tickets' %}">My Tickets</a></li>
+                                            <li><a href="{% url 'clubRep:settle' %}">Settle payment</a></li>
+                                        </ul>
+                                    </li>
+                                    {% endif %}
                                 </ul>
                             </div>
                             <div class="header-action d-none d-md-block">
@@ -117,14 +124,14 @@
                                             </select>
                                         </form>
                                     </li>
-                                    
-                                    <!-- {% if request.session.id is None %}
+                                
+                                    {% if request.session.id is None %}
                                     <li class="header-btn"><a href="{% url 'register' %}" class="btn">Register</a></li>
                                     <li class="header-btn"><a href="{% url 'login' %}" class="btn">Sign In</a></li>
 
                                     {% else %}
                                     <li class="header-btn"><a href="{% url 'logout' %}" class="btn">Log out</a></li>
-                                    {% endif %} -->
+                                    {% endif %}
 
                                 </ul>
                             </div>
@@ -180,12 +187,10 @@
 <!--    {% endif %}-->
 
     {% block content %}
-
-    <script>
-        function a(){
-          document.getElementById('a').style.display = 'block';
-        }
-    </script>
+    
+    {% if message %}
+    <div class="alert">{{ message }}</div>
+    {% endif %}
 
     {% endblock %}
 </main>

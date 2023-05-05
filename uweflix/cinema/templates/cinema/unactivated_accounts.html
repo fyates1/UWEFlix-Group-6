@@ -1,46 +1,67 @@
-<title>Accounts Activation Requests</title>
+{% extends "uwe/base.html" %}
+{% load static %}
+{% block content %}
 
-<h1>See all Accounts Activation Requests</h1>
-<h2>Select whether to accept or deny account activation requests</h2>
+<section class="services-area services-bg" data-background="{% static 'uwe/img/bg/services_bg.jpg' %}">
 
-{% if accounts %}
+    <div class="container">
+        <h5 class="alert" style="width: 60%;border: 2px solid rgb(62, 62, 62); background-color: rgb(62, 62, 62); color: white;">{{ message }}</h5>
+        <h1 scope="col">Accounts Activation Requests</h1>
+    </div>
 
-    <h3><strong>All Unactivated Accounts</strong></h3>
+    <div class="container">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">All Unactivated Accounts</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    <ul>
-        {% for account in accounts %}
-            <li>
-                <a href="{% url 'cinema:activate_accounts' account.id %}">
-                    {{ account.username }} ({{ account.firstName }} {{ account.lastName }})
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
+            {% for account in accounts %}
+            {% if accounts %}
+            <tr>
+                <td>
+                    <a href="{% url 'cinema:activate_accounts' account.id %}">
+                        {{ account.username }} ({{ account.firstName }} {{ account.lastName }})
+                    </a>
+                </td>
+            </tr>
+            
+            {% else %}
+            <td>
+                <p>There are no account activation requests</p>
+            </td>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
 
-{% else %}
-    <p>There are no account activation requests</p>
-{% endif %}
-
-{% if userForm %}
-<form action="{% url 'cinema:activate_accounts' user.id %}" method="post">
-    {% csrf_token %}
-
-    <fieldset>
-        <legend>
-            <h3>{{ user }}'s Account Details</h3>
-        </legend>
-
-        {% for field in userForm %}
-            <div class="fieldContainer">
-                <b>{{ field.label_tag }}</b> {{ field.value }}
-                {% for errors in field.errors %}
-                    <div class="error">{{ errors }}</div>
+        {% if userForm %}
+        <form action="{% url 'cinema:activate_accounts' user.id %}" method="post">
+            {% csrf_token %}
+        
+            <fieldset>
+                <legend>
+                    <h3>{{ user }}'s Account Details</h3>
+                </legend>
+        
+                {% for field in userForm %}
+                    <div class="fieldContainer">
+                        <b>{{ field.label_tag }}</b> {{ field.value }}
+                        {% for errors in field.errors %}
+                            <div class="error">{{ errors }}</div>
+                        {% endfor %}
+                    </div>
                 {% endfor %}
-            </div>
-        {% endfor %}
+        
+                <br><button type="submit" name="approve" value="Approve" class="btn btn-success">Approve</button>
+                <button type="submit" name="deny" value="Deny" class="btn btn-success">Deny</button>
+            </fieldset>
+        </form>
+        {% endif %}
+        
+    </div>
+</section>
 
-        <br><input type="submit" name="approve" value="Approve">
-        <input type="submit" name="deny" value="Deny">
-    </fieldset>
-</form>
-{% endif %}
+{%endblock%}
