@@ -185,13 +185,15 @@
           document.getElementById('a').style.display = 'block';
         }
     </script>
+    {% if message %}
+    <div class="alert">{{ message }}</div>
+    {% endif %}
 
     {% endblock %}
 </main>
 
 <!-- footer-area -->
 <footer>
-    
     <div class="footer-top-wrap">
         <div class="container">
             <div class="footer-menu-wrap">
