@@ -148,7 +148,7 @@ def sendmaill(request):
     booking_id = request.session['booking_id']
     print(booking_id)
     print(request.POST.get('email'))
-    send_mail("Booking Confirmation","Hello,\n\nThank you for your booking. \nThe confirmation ID is: "+booking_id+".\n\nKind regards,\nUWEFlix Team.","uweflix6@gmail.com",str(request.POST.get('email')), fail_silently=False)
+    send_mail("Booking Confirmation","Hello,\n\nThank you for your booking. \nThe confirmation ID is: "+booking_id+".\n\nKind regards,\nUWEFlix Team.","uweflix6@gmail.com",[request.POST.get('email')], fail_silently=False)
     return redirect('home')
 
 # cancel page
