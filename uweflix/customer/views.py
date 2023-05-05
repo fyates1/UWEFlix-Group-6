@@ -64,7 +64,7 @@ def sucess(request):
         # for emailing ticket
         request.session['boooking_id'] = str(booking.bookingID)
         # deleting booking version
-        del request.session['version']
+        #del request.session['version']
     # club rep payment version    
     elif version ==2 :
 
@@ -76,7 +76,7 @@ def sucess(request):
         user = User.objects.get(id=request.session['id'])
         booking = Booking.objects.create(showing=showing, cr_tickets=cr, user=user)
         request.session['boooking_id'] = str(booking.bookingID)
-        del request.session['version']
+        #del request.session['version']
     elif version ==3 :
 
         #amount = request.session['amount']
@@ -93,7 +93,7 @@ def sucess(request):
         user.balance+=amount
         user.save()
         
-        del request.session['version']
+        #del request.session['version']
     elif version == 4:
         # getting form information
         
@@ -117,7 +117,7 @@ def sucess(request):
         # for emailing ticket
         request.session['booking_id'] = str(booking.bookingID)
         # deleting booking version
-        del request.session['version']
+        #del request.session['version']
 
         if version == 5:
             # getting form information
@@ -135,7 +135,7 @@ def sucess(request):
             # for emailing ticket
             request.session['booking_id'] = str(booking.bookingID)
             # deleting booking version
-            del request.session['version']
+            #del request.session['version']
     else:
         # to save the settling payment information
         pass
@@ -155,30 +155,30 @@ def sendmaill(request):
 @csrf_exempt
 def cancel(request):
     version = request.session['version']
-    if version == 1:
-        del request.session['adult']
-        del request.session['student']
-        del request.session['child']
-        del request.session['version']
-        del request.session['showing_id']
-    elif version == 2:
-        del request.session['cr']
-        del request.session['version']
-        del request.session['showing_id']
-    elif version == 3:
-        del request.session['version']
+    # if version == 1:
+    #     del request.session['adult']
+    #     del request.session['student']
+    #     del request.session['child']
+    #     del request.session['version']
+    #     del request.session['showing_id']
+    # elif version == 2:
+    #     del request.session['cr']
+    #     del request.session['version']
+    #     del request.session['showing_id']
+    # elif version == 3:
+    #     del request.session['version']
         
-    elif version == 4:
-        del request.session['adult']
-        del request.session['version']
-        del request.session['showing_info']
+    # elif version == 4:
+    #     del request.session['adult']
+    #     del request.session['version']
+    #     del request.session['showing_info']
 
-    elif version == 5:
+    # elif version == 5:
 
-        del request.session['adult']
-        del request.session['child']
-        del request.session['version']
-        del request.session['showing_info']
+    #     del request.session['adult']
+    #     del request.session['child']
+    #     del request.session['version']
+    #     del request.session['showing_info']
     
 
    
