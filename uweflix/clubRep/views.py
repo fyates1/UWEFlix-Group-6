@@ -3,8 +3,12 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 import re
 
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Club, Transaction
+from .models import Club
+from accounts.models import Transaction
 from .forms import clubRegister, settle_accounts
+from accounts.models import User
+import requests
+from django.contrib import messages
 
 # can be used to authenticate users
 # from django.contrib.auth.decorators import login_required
@@ -48,21 +52,24 @@ def view_club(response, club_id):
 
 
 def settle(request):
-    club = Club.objects.first()
+    #club = Club.objects.first()
+    user_id = int(request.session['id'])
+    user = User.objects.get(id=user_id)
+
     request.session['version']= 3
     if request.method == 'POST':
-        form = settle_accounts(request.POST, instance=club)
+        form = settle_accounts(request.POST, instance=user)
         if form.is_valid():
             form.save()
             return redirect('clubRep:settle')
     else:
-        form = settle_accounts(instance=club)
+        form = settle_accounts(instance=user)
         #request.session['version']= 3
         #return redirect('customer:checkout')
     # Get transaction history for the club
-    transactions = Transaction.objects.filter(club=club)
+    #transactions = Transaction.objects.filter(user=user)
 
-    return render(request, 'clubRep/settle.html', {'form': form, 'transactions': transactions})
+    return render(request, 'clubRep/settle.html', {'form': form,}) #'transactions': transactions})
 
 # def settling_balance(request, showing_id):
 #     #showing = CinemaManager.get_showing(showing_id)

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-import re
-from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from . import models
 from accounts.models import User
 from .forms import BookingForm
@@ -11,6 +11,10 @@ from django.contrib.sessions.models import Session
 from cinema.views import CinemaManager
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
+from django.http import JsonResponse
+import json
+import os
+import requests
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -72,6 +76,23 @@ def sucess(request):
         user = User.objects.get(id=request.session['id'])
         booking = Booking.objects.create(showing=showing, cr_tickets=cr, user=user)
         request.session['boooking_id'] = str(booking.bookingID)
+        del request.session['version']
+    elif version ==3 :
+
+        #amount = request.session['amount']
+        amount = request.GET.get('amount')
+    
+        if amount is not None:
+            amount = int(amount)
+            print('amountssss', amount)
+        
+        
+        # retrieving the user id that is logged in 
+        user = User.objects.get(id=request.session['id'])
+        print("amountttt",amount)
+        user.balance+=amount
+        user.save()
+        
         del request.session['version']
     elif version == 4:
         # getting form information
@@ -151,9 +172,10 @@ def pay(request):
     version = request.session['version']
     #id = 1
     #user_id= request.session['id']
-    showing_id = request.session['showing_info']
+    # showing_id = request.session['showing_info']
 
     if version == 1:
+        showing_id = request.session['showing_info']
         user_id= request.session['id']
         adults = request.session['adult']
         student = request.session['student']
@@ -197,6 +219,7 @@ def pay(request):
 
     ############## club rep version #####################
     elif version == 2:
+        showing_id = request.session['showing_info']
         user_id= request.session['id']
         cr = request.session['cr']
         items=[]
@@ -219,6 +242,7 @@ def pay(request):
     
     ########### guest version ###############
     elif version == 4:
+        showing_id = request.session['showing_info']
         adults = request.session['adult']
         child = request.session['child']
         items=[]
@@ -244,6 +268,7 @@ def pay(request):
         return redirect(checkout_session.url)
 
     elif version == 5:
+        showing_id = request.session['showing_info']
         user_id= request.session['id']
         adults = request.session['adult']
         child = request.session['child']
@@ -269,28 +294,114 @@ def pay(request):
             )
         return redirect(checkout_session.url)
 
-    else:
+    elif version == 3:
 
         #cr = request.session['cr']
         user_id= request.session['id']
         items=[]
-
+        amount =int(request.POST.get('amount', 0))# int(request.POST.get('amount', 0))
         
         items+= [{
             "price": "price_1MwospKummhyRPIWFz1IxOIy",
             "quantity": 1,
             }]
 
+        #items[0]['price'] = amount
+        #stripe.treasury.Transaction.retrieve("trxn_1N31ucKummhyRPIWXU5VNG2c",)
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'], 
             line_items=items,   
             mode='payment',
-            success_url= 'http://127.0.0.1:8000/customer/sucess/', # will be changed later to proper url
+            success_url= f'http://127.0.0.1:8000/customer/sucess/?amount={amount}&version={version}', # will be changed later to proper url
             cancel_url= 'http://127.0.0.1:8000/customer/cancel/',
             
             )
         return redirect(checkout_session.url)
 
+# def secret():
+#   intent = # ... Create or retrieve the PaymentIntent
+#   return jsonify(client_secret=intent.client_secret)
+
+@csrf_exempt
+def charge(request):
+
+    amount = 5 
+    if request.method == 'POST':
+        print('Data:', request.POST)
+    return render(reverse('success', args=[amount]))
+
+    # if request.method == 'POST':
+    #     # Retrieve the donation amount from the form
+    #     amount = int(request.POST['amount'])
+
+    #     # Create a Stripe PaymentIntent
+    #     intent = stripe.PaymentIntent.create(
+    #         amount=amount * 100,  # Stripe requires the amount in cents
+    #         currency='usd',      # Change currency as needed
+    #         payment_method_types=['card'],
+    #     )
+    #     return render(request, 'donate.html', {
+    #                 'client_secret': intent.client_secret,
+    #                 'publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
+    #                 'amount': amount
+    #             })
+
+    #         # Render the donation form
+    # return render(request, 'donation_form.html')
+
+
+
+def successMsg(request,args):
+    amount = args
+    return render(request, 'customer/succ.html', {'amount':amount})
+
+@csrf_exempt
+def donation_form(request):
+    
+    #amount = 1
+
+    # intent = stripe.PaymentIntent.create(
+    #     amount=1099,
+    #     currency='gbp',
+    #     # Verify your integration in this guide by including this parameter
+    #     metadata={'integration_check': 'accept_a_payment'},
+    #     )
+    
+    # r= requests.post('http://127.0.0.1:8000/customer/settle/', data=request.POST)
+    # data = r.json()
+    # Create a PaymentIntent with the order amount and currency
+    # intent = stripe.PaymentIntent.create(
+    #     amount=5,
+    #     currency='gbp',
+    #     automatic_payment_methods={
+    #         'enabled': True,
+    #     },
+    # )
+    return render(request, 'customer/handling.html')#, client_secret=intent.client_secret)
+
+def process_donation(request):
+    if request.method == 'POST':
+        amount = float(request.POST.get('amount'))
+        
+        try:
+            # Create a charge
+            charge = stripe.Charge.create(
+                amount=int(amount * 100),  # Stripe expects the amount in cents
+                currency='usd',
+                source=request.POST.get('stripeToken'),
+                description='Donation',
+            )
+            
+            # Process the charge and perform other actions as needed
+            # For example, you can save the donation details to your database
+
+            return JsonResponse({'message': 'Donation processed successfully'})
+        except stripe.error.CardError as e:
+            return JsonResponse({'error': str(e)}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 #testing card details for stripe
 #number : 4242 4242 4242 4242
 # 04/23 
