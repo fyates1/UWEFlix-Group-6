@@ -78,6 +78,7 @@
                                             <li><a href="{% url 'cinema:list_showings' %}">View showings</a></li>
                                             <li><a href="{% url 'cinema:add_screen' %}">Add Screens</a></li>
                                             <li><a href="{% url 'cinema:list_screens' %}">View Screens</a></li>
+                                            <li><a href="{% url 'cinema:list_screens' %}">View Screens</a></li>
                                         </ul>
                                     </li>
                                     {% endif %}
@@ -88,7 +89,7 @@
                                             <li><a href="{% url 'accounts:createUser' %}">Add User</a></li>
                                             <li><a href="{% url 'accounts:index' %}">View User</a></li>
                                             <li><a href="{% url 'clubRep:addClub' %}">Add Club</a></li>
-                                            <li><a href="{% url 'clubRep:view' %}">View Clubs</a></li>
+                                            <li><a href="{% url 'clubRep:activate_accounts_default' %}">View Unactivated Accounts</a></li>
                                         </ul>
                                     </li>
                                     
