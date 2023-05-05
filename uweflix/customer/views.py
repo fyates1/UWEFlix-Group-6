@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from . import models
 from accounts.models import User
-from .forms import BookingForm, handling
+from .forms import BookingForm
 import stripe
 from django.conf import settings
 from cinema.models import Booking
@@ -102,11 +102,12 @@ def sucess(request):
 
         child_tickets = int(request.GET['child'])
         showing_id = int(request.GET['showing_id'])
-        id = int(request.GET['id'])
+        x = int (request.GET['x'])
         # getting showing 
         showing = CinemaManager.get_showing(showing_id)
         # retrieving the user id that is logged in 
-        if id != None:
+        if x == 1:
+            id = int(request.session['id'])
             user = User.objects.get(id=id)
             booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
             booking.save()
@@ -114,7 +115,7 @@ def sucess(request):
             booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
             booking.save()
         # for emailing ticket
-        request.session['boooking_id'] = str(booking.bookingID)
+        request.session['booking_id'] = str(booking.bookingID)
         # deleting booking version
         del request.session['version']
 
@@ -132,7 +133,7 @@ def sucess(request):
             booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
             booking.save()
             # for emailing ticket
-            request.session['boooking_id'] = str(booking.bookingID)
+            request.session['booking_id'] = str(booking.bookingID)
             # deleting booking version
             del request.session['version']
     else:
@@ -144,7 +145,10 @@ def sucess(request):
 
 @csrf_exempt
 def sendmaill(request):
-    send_mail("Booking Confirmation","Hello,\n\nThank you for your booking. \nThe confirmation ID is: "+request.session.get('boooking_id')+".\n\nKind regards,\nUWEFlix Team.","uweflix6@gmail.com",[request.POST.get('email')], fail_silently=False)
+    booking_id = request.session['booking_id']
+    print(booking_id)
+    print(request.POST.get('email'))
+    send_mail("Booking Confirmation","Hello,\n\nThank you for your booking. \nThe confirmation ID is: "+booking_id+".\n\nKind regards,\nUWEFlix Team.","uweflix6@gmail.com",str(request.POST.get('email')), fail_silently=False)
     return redirect('home')
 
 # cancel page
@@ -156,9 +160,26 @@ def cancel(request):
         del request.session['student']
         del request.session['child']
         del request.session['version']
-    else:
+        del request.session['showing_id']
+    elif version == 2:
         del request.session['cr']
-        del request.session['version'] # version of booking 
+        del request.session['version']
+        del request.session['showing_id']
+    elif version == 3:
+        del request.session['version']
+        
+    elif version == 4:
+        del request.session['adult']
+        del request.session['version']
+        del request.session['showing_info']
+
+    elif version == 5:
+
+        del request.session['adult']
+        del request.session['child']
+        del request.session['version']
+        del request.session['showing_info']
+    
 
    
     
@@ -245,6 +266,18 @@ def pay(request):
         showing_id = request.session['showing_info']
         adults = request.session['adult']
         child = request.session['child']
+        try:
+            user_id= int(request.session['id'])
+            x=1
+            # if user_id == None:
+            #     # if it is a guest x =0
+            #     x=1
+            # else:
+            #     # then it is a customer
+            #     x=2
+        except:
+            print('its a guest')
+            x=2
         items=[]
         if(adults > 0):
             items += [{
@@ -261,7 +294,7 @@ def pay(request):
             payment_method_types=['card'], 
             line_items=items,   
             mode='payment',
-            success_url= f'http://127.0.0.1:8000/customer/sucess/?version={version}&adult={adults}&child={child}&showing_id={showing_id}', 
+            success_url= f'http://127.0.0.1:8000/customer/sucess/?version={version}&adult={adults}&child={child}&showing_id={showing_id}&x={x}', 
             cancel_url= 'http://127.0.0.1:8000/customer/cancel/',
             
             )
@@ -326,6 +359,8 @@ def charge(request):
     amount = int(request.POST.get('amount'))
     
     token = request.POST.get('stripeToken')
+    if amount < 1:
+        return render(request, 'customer/account_settling.html')
     #user = request.user
     print('amounttt',amount)
     if request.method == 'POST':

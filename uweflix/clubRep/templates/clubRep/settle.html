@@ -14,12 +14,12 @@ Settle balance
         {% csrf_token %}
         {{ form.as_p }}
         
-        <button type="submit" class="btn btn-success">Settle</button>
+        <!-- <button type="submit" class="btn btn-success">Settle</button> -->
       </form>
       
       <br/>
 
-      <a href="{% url 'customer:checkout' %}" class="btn btn-success">settle Balance</a>
+      <a href="{% url 'customer:settle' %}" class="btn btn-success">settle Balance</a>
 
       <h1>Transaction History</h1>
 
