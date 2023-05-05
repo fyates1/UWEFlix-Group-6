@@ -260,9 +260,20 @@ def display_films(request):
 
 # Film details when clicking
 def film_showing(request, _id):
+    current_time = timezone.now()
     film_showings = film.objects.get(id=_id)
     showings = showing.objects.filter(Q(date__gte=datetime.today()))
-    return render(request,"cinema/film_showing.html",{"film_showings":showings})
+    filtered_showings = []
+    for x in showings:
+        if x.date == datetime.today() and x.film == film_showings:
+            if x.time < current_time:
+                filtered_showings.append(x)
+        elif x.film == film_showings:
+            filtered_showings.append(x)
+
+            
+
+    return render(request,"cinema/film_showing.html",{"film_showings":filtered_showings})
 
 # Booking 
 def booking_sheet(request):
