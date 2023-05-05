@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from . import models
 from accounts.models import User
-from .forms import BookingForm
+from .forms import BookingForm, handling
 import stripe
 from django.conf import settings
 from cinema.models import Booking
@@ -318,90 +318,49 @@ def pay(request):
             )
         return redirect(checkout_session.url)
 
-# def secret():
-#   intent = # ... Create or retrieve the PaymentIntent
-#   return jsonify(client_secret=intent.client_secret)
 
+# function that process the payment
 @csrf_exempt
 def charge(request):
-
-    amount = 5 
+    
+    amount = int(request.POST.get('amount'))
+    
+    token = request.POST.get('stripeToken')
+    #user = request.user
+    print('amounttt',amount)
     if request.method == 'POST':
-        print('Data:', request.POST)
-    return render(reverse('success', args=[amount]))
+        
+        charge = stripe.Charge.create(
+            amount=amount*100,
+            currency='gbp',
+            description = 'Settling accounts',
+            source=token,
+        )
+        user = User.objects.get(id=request.session['id'])
+        print("amountttt",amount)
+        user.balance+=int(amount)
+        user.save()
 
-    # if request.method == 'POST':
-    #     # Retrieve the donation amount from the form
-    #     amount = int(request.POST['amount'])
-
-    #     # Create a Stripe PaymentIntent
-    #     intent = stripe.PaymentIntent.create(
-    #         amount=amount * 100,  # Stripe requires the amount in cents
-    #         currency='usd',      # Change currency as needed
-    #         payment_method_types=['card'],
-    #     )
-    #     return render(request, 'donate.html', {
-    #                 'client_secret': intent.client_secret,
-    #                 'publishable_key': settings.STRIPE_PUBLISHABLE_KEY,
-    #                 'amount': amount
-    #             })
-
-    #         # Render the donation form
-    # return render(request, 'donation_form.html')
+    return redirect(reverse('customer:success', args=[amount]))
 
 
 
+# success message for account settling 
 def successMsg(request,args):
     amount = args
     return render(request, 'customer/succ.html', {'amount':amount})
 
+# account settling form
 @csrf_exempt
 def donation_form(request):
-    
-    #amount = 1
-
-    # intent = stripe.PaymentIntent.create(
-    #     amount=1099,
-    #     currency='gbp',
-    #     # Verify your integration in this guide by including this parameter
-    #     metadata={'integration_check': 'accept_a_payment'},
-    #     )
-    
-    # r= requests.post('http://127.0.0.1:8000/customer/settle/', data=request.POST)
-    # data = r.json()
-    # Create a PaymentIntent with the order amount and currency
-    # intent = stripe.PaymentIntent.create(
-    #     amount=5,
-    #     currency='gbp',
-    #     automatic_payment_methods={
-    #         'enabled': True,
-    #     },
-    # )
-    return render(request, 'customer/handling.html')#, client_secret=intent.client_secret)
-
-def process_donation(request):
+    #form = handling()
+    print(request.method)
     if request.method == 'POST':
-        amount = float(request.POST.get('amount'))
-        
-        try:
-            # Create a charge
-            charge = stripe.Charge.create(
-                amount=int(amount * 100),  # Stripe expects the amount in cents
-                currency='usd',
-                source=request.POST.get('stripeToken'),
-                description='Donation',
-            )
-            
-            # Process the charge and perform other actions as needed
-            # For example, you can save the donation details to your database
+        print('Data:', request.POST)
+        redirect('cinema:charge')
 
-            return JsonResponse({'message': 'Donation processed successfully'})
-        except stripe.error.CardError as e:
-            return JsonResponse({'error': str(e)}, status=400)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+    return render(request, 'customer/account_settling.html')#, {form:'form'})
 
-    return JsonResponse({'error': 'Invalid request'}, status=400)
 #testing card details for stripe
 #number : 4242 4242 4242 4242
 # 04/23 
