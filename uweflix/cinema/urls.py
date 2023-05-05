@@ -58,16 +58,20 @@ urlpatterns = [
     path("film_showing/<_id>",views.film_showing,name="film_showing"),
     path("delete_showing/<showing_id>",views.delete_showing,name="delete_showing"),
     path("update_showing/<showing_id>",views.update_showing,name="update_showing"),
-    
 
-    # booking 
+
+    # booking
     path("booking_film/",views.booking_sheet,name="booking_sheet"),
-    path("booking_film/<showing_id>",views.book_showing,name="create_booking"), # student 
-    path("booking_film_cr/<showing_id>",views.book_showing_cr,name="create_booking_cr"), # club rep 
+    path("booking_film/<showing_id>",views.book_showing,name="create_booking"), # student
+    path("booking_film_cr/<showing_id>",views.book_showing_cr,name="create_booking_cr"), # club rep
     path("settling_balance",views.settling_balance,name="settling_balance"), # settling balance
-    path("booking_film_guest/<showing_id>",views.book_showing_guest,name="create_booking_guest"), # guest 
+    path("booking_film_guest/<showing_id>",views.book_showing_guest,name="create_booking_guest"), # guest
     path("booking_film_AM_CM/<showing_id>",views.book_showing_AM_CM,name="create_booking_AM_CM"),
 
+    # Activating Accounts
+    path("activate", views.activate_accounts, name="activate_accounts_default"),
+    path("activate/", views.activate_accounts, name="activate_accounts_default"),
+    path("activate/<int:userID>", views.activate_accounts, name="activate_accounts"),
 ]
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

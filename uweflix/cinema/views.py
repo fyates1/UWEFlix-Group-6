@@ -1,14 +1,14 @@
 from django.shortcuts import render,redirect
+from django.urls import reverse
 #from .forms import ScreenForm,RowForm,SeatForm,FilmForm,ShowingForm,BookingForm, BookingForm_cr
 from django.contrib import messages
 from .forms import *
 from .models import screen,row,film,showing,Booking
-from accounts.models import User
+from accounts.models import User, UserForm
 from django.http import HttpResponseRedirect
 from django.db.models.deletion import RestrictedError
 from django.shortcuts import get_list_or_404, get_object_or_404
 import requests
-import json
 from json import JSONDecodeError
 import pandas as pd
 from datetime import datetime, timedelta
@@ -37,6 +37,39 @@ class CinemaManager():
     #Get a showing from ID
     def get_showing(id):
         return showing.objects.get(pk=id)
+
+# Function to authenticate new registrations
+def activate_accounts(request, userID = None):
+    # Gets all unactivated accounts
+    unactivatedAccounts = User.objects.filter(activated=False)
+    message = request.GET.get('message')
+
+    if userID != None:
+        user = User.objects.get(id=userID)
+        userForm = UserForm(request.POST or None, instance=user)
+    else:
+        # This will be none when no account is selected because the form wont even be visible at that time
+        user = None
+        userForm = None # TODO Check if this can be called like a form without erroring OTHERWISE this will get a blank form
+
+    context = {
+        'accounts': unactivatedAccounts,
+        'message': message,
+        'user': user,
+        'userForm': userForm
+    }
+
+    if request.method != 'POST':
+        return render(request, "cinema/unactivated_accounts.html", context)
+
+    if request.POST.get('deny', False): # If the  button is pressed
+        user.delete()
+        return redirect(reverse('cinema:activate_accounts_default') + '?message=User Deleted')
+
+    elif request.POST.get('approve', False): # If the submit button is pressed
+        user.activated = True
+        user.save()
+        return redirect(reverse('cinema:activate_accounts_default') + '?message=User Account Activated')
 
 #Function to add a screen to the system
 def add_screen(request):
