@@ -37,7 +37,7 @@ def contact_us(request):
 
 def view_bookings(request):
     search_query = ""
-    
+
     if request.GET.get('search_query'):
         search_query = request.GET.get('search_query')
 
@@ -64,10 +64,9 @@ def cancel_bookings(request, pk):
 
 
 def my_tickets(request):
-#def my_tickets(request):
     user = User.objects.get(id=request.session['id'])
     data = Booking.objects.filter(user=user)
-    
+
     #data  = Booking.objects.get(user = user)
     context = {
         'data' : data
@@ -128,6 +127,10 @@ def login(request):
         # user = authenticate(request, username=username, password=password)
         user = custom_authenticate(username=username, password=password)
 
+        if user.activated == False:
+            # Redirect to home and say the account needs to be activated
+            return redirect(reverse("login") + f'?message=Account has not been activated')
+
         if user is not None:
             # Convert the User object to a dictionary
             user_dict = model_to_dict(user)
@@ -137,19 +140,6 @@ def login(request):
             for key, value in user_dict.items():
                 request.session[key] = json.dumps(value, cls=CustomJSONEncoder)
                 # request.session[key] = str(value)
-
-            # Redirects to pages based on user type
-            # TODO Make this redirect to pages based on the logged in user
-            # if userType == "AM":
-            #     return redirect(reverse("accountManager"))
-            # elif userType == "CR":
-            #     return redirect('clubRepresentative')
-            # elif userType == "S":
-            #     return redirect('customer')
-            # elif  userType == "CM":
-            #     return redirect('cinemaManager')
-            # else:
-            #     return redirect(reverse("login") + f'?message=Unkown User Type [{userType}]')
 
             return redirect(reverse('home') + f'?message={user_dict["firstName"]} {user_dict["lastName"]} is now logged in')
         else:

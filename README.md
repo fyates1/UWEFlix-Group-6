@@ -1,15 +1,31 @@
 # UWEFlix-Group-6
 
-Shuaib: Account Manager
+Building a cinema website that has different user types and accepts payments.
 
-Haroun: Club Rep
+Repository link: https://github.com/fyates1/UWEFlix-Group-6 
 
-Lewis: Club Rep
+To run this website through docker please use: docker-compose up --build
 
-Greg: Customer
+Otherwise in the terminal type the following: pip install -r requirements.txt
 
-Finlay: Cinema Manager
+Some Login details:
+for cinema manager:
+Username: CM
+password: am
 
-Katie: back-end database models, login, base html layout, docker
+for account manager:
+Username: AM
+password: am
 
-All planning information can be found on ClickUp
+for student:
+Username: S
+password: s
+
+for club rep:
+Username: CR
+password: cr
+
+testing card details for stripe
+number : 4242 4242 4242 4242
+expiry: 04/24 
+cvc: 123
