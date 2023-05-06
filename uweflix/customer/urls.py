@@ -29,6 +29,7 @@ urlpatterns = [
     path('sucess/',views.sucess, name="sucess"),
     path('cancel/',views.cancel, name="cancel"),
     path('sendmaill/',views.sendmaill, name="sendmaill"),
+    path('send/',views.send, name="send"),
     path('settle/', views.donation_form, name="settle"),
     path('charge/', views.charge, name = "charge"),
     path('successMsg/<str:args>', views.successMsg, name = "success")

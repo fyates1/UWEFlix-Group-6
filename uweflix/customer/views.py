@@ -11,6 +11,7 @@ from django.contrib.sessions.models import Session
 from cinema.views import CinemaManager
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
+from django.core.mail import send_mail as send_mai
 from django.http import JsonResponse
 import json
 import os
@@ -149,6 +150,15 @@ def sendmaill(request):
     print(booking_id)
     print(request.POST.get('email'))
     send_mail("Booking Confirmation","Hello,\n\nThank you for your booking. \nThe confirmation ID is: "+booking_id+".\n\nKind regards,\nUWEFlix Team.","uweflix6@gmail.com",[request.POST.get('email')], fail_silently=False)
+    return redirect('home')
+
+@csrf_exempt
+def send(request,args):
+    amount = args
+    payment_id = request.session['amount':amount]
+    print(payment_id)
+    print(request.POST.get('email'))
+    send_mai("Payment Confirmation","Hello,\n\nThank you for your payment. \nThe payment amount is: "+payment_id+".\n\nKind regards,\nUWEFlix Team.","uweflix6@gmail.com",[request.POST.get('email')], fail_silently=False)
     return redirect('home')
 
 # cancel page
