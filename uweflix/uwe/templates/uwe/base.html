@@ -187,14 +187,10 @@
 </header>
 <!-- Main Nav bar for anyone open the website  -->
 <main>
-<!--    {% if message %}-->
-<!--    <div class="alert">{{ message }}</div>-->
-<!--    {% endif %}-->
-
     {% block content %}
-    
+
     {% if message %}
-    <div class="alert">{{ message }}</div>
+    <div class="alert">{{ message }} 1</div>
     {% endif %}
 
     {% endblock %}
