@@ -2,6 +2,7 @@ from django.urls import path
 from uwe import views
 from accounts import views as AMViews
 from cinema import views as CViews
+from accounts.models import User
 
 urlpatterns = [
     # Home Page
@@ -13,7 +14,7 @@ urlpatterns = [
     path('superuser', views.superuser, name='superuser'),
     # path('create/',views.addClub, name="create"),
 
-    path('accounts', AMViews.index, name='accountManager'),
+    path('accounts', AMViews.index, {'user_required': True, 'user_type_required': User.UserType.ACCOUNTSMANAGER}, name='accountManager'),
     # TODO THE FOLLOWING NEEDS TO BE CHANGED BSAED ON THE HOME PAGES FOR EACH ROLE
     path('clubRepresentative', views.clubRepresentative, name='clubRepresentative'),
     path('customer', views.customer, name='customer'),
