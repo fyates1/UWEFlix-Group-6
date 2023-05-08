@@ -3,7 +3,7 @@ from django.urls import reverse
 from .models import *
 
 # Create your views here.
-def index(request, user_required=True, user_types_required=(User.UserType.ACCOUNTSMANAGER)):
+def index(request, user_required=True, user_types_required=(User.UserType.CINEMAMANAGER)):
     userList = User.objects.all() # List of all Users
     message = request.GET.get('message') # Get any message from previous pages
 
@@ -14,7 +14,7 @@ def index(request, user_required=True, user_types_required=(User.UserType.ACCOUN
 
     return render(request, 'accounts/index.html', context)
 
-def manageUser(request, userID, user_required=True, user_types_required=(User.UserType.ACCOUNTSMANAGER)):
+def manageUser(request, userID, user_required=True, user_types_required=(User.UserType.CINEMAMANAGER)):
     user = get_object_or_404(User, pk=userID)
     userForm = UserForm(request.POST or None, instance=user)
 
@@ -39,7 +39,7 @@ def manageUser(request, userID, user_required=True, user_types_required=(User.Us
         user.delete()
         return redirect(reverse('accounts:index') + '?message=Entry Deleted')
 
-def createUser(request, user_required=True, user_types_required=(User.UserType.ACCOUNTSMANAGER)):
+def createUser(request, user_required=True, user_types_required=(User.UserType.CINEMAMANAGER)):
     userForm = UserForm(request.POST or None)
 
     context = {
