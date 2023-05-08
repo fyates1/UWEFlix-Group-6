@@ -127,11 +127,12 @@ def login(request):
         # user = authenticate(request, username=username, password=password)
         user = custom_authenticate(username=username, password=password)
 
-        if user.activated == False:
-            # Redirect to home and say the account needs to be activated
-            return redirect(reverse("login") + f'?message=Account has not been activated')
-
         if user is not None:
+            # Checks if the user's account has been activated
+            if user.activated == False:
+                # Redirect to home and say the account needs to be activated
+                return redirect(reverse("login") + f'?message=Account has not been activated')
+
             # Convert the User object to a dictionary
             user_dict = model_to_dict(user)
             # user_json = json.dumps(user_dict, cls=CustomJSONEncoder)
