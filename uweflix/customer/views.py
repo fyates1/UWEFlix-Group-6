@@ -54,13 +54,14 @@ def sucess(request):
         student_tickets = int(request.GET['student'])
         child_tickets = int(request.GET['child'])
         showing_id = int(request.GET['showing_id'])
+        cr_tickets = 0
         id = int(request.GET['id'])
         print(version, adult_tickets,child_tickets,showing_id)
         # getting showing 
         showing = CinemaManager.get_showing(showing_id)
         # retrieving the user id that is logged in 
         user = User.objects.get(id=id)
-        booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
+        booking = Booking(showing=showing, student_tickets=student_tickets, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user,cr_tickets=cr_tickets) #, total_price=total_price)
         booking.save()
         # for emailing ticket
         request.session['boooking_id'] = str(booking.bookingID)
@@ -109,36 +110,38 @@ def sucess(request):
         # retrieving the user id that is logged in 
         if x == 1:
             id = int(request.session['id'])
+            cr_tickets = 0
             user = User.objects.get(id=id)
-            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
+            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user,cr_tickets = cr_tickets) #, total_price=total_price)
             booking.save()
         else:
-            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
+            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,cr_tickets = cr_tickets) #, total_price=total_price)
             booking.save()
         # for emailing ticket
         request.session['booking_id'] = str(booking.bookingID)
         # deleting booking version
         #del request.session['version']
 
-        if version == 5:
-            # getting form information
-            adult_tickets = int(request.GET['adult'])
-            child_tickets = int(request.GET['child'])
-            showing_id = int(request.GET['showing_id'])
-            id = int(request.GET['id'])
-            print(version, adult_tickets,child_tickets,showing_id)
-            # getting showing 
-            showing = CinemaManager.get_showing(showing_id)
-            # retrieving the user id that is logged in 
-            user = User.objects.get(id=id)
-            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
-            booking.save()
-            # for emailing ticket
-            request.session['booking_id'] = str(booking.bookingID)
-            # deleting booking version
-            #del request.session['version']
+    elif version == 5:
+        # getting form information
+        adult_tickets = int(request.GET['adult'])
+        child_tickets = int(request.GET['child'])
+        showing_id = int(request.GET['showing_id'])
+        id = int(request.GET['id'])
+        print(version, adult_tickets,child_tickets,showing_id)
+        # getting showing 
+        showing = CinemaManager.get_showing(showing_id)
+        # retrieving the user id that is logged in 
+        user = User.objects.get(id=id)
+        booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user) #, total_price=total_price)
+        booking.save()
+        # for emailing ticket
+        request.session['booking_id'] = str(booking.bookingID)
+        # deleting booking version
+        #del request.session['version']
     else:
         # to save the settling payment information
+        print('pastttt u dumy')
         pass
         #return view balance.
 
@@ -279,6 +282,7 @@ def pay(request):
         try:
             user_id= int(request.session['id'])
             x=1
+            print('its a CMAM')
             # if user_id == None:
             #     # if it is a guest x =0
             #     x=1

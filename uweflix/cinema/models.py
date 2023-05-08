@@ -4,7 +4,10 @@ from datetime import date
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from accounts.models import User
-
+adult_ticket_price = 8
+student_ticket_price = 8
+child_ticket_price = 5
+cr_ticket_price = 6.8
 class screen(models.Model):
     name= models.CharField(max_length=256)
     capacity= models.PositiveIntegerField()
@@ -85,9 +88,21 @@ class Booking(models.Model):
     student_tickets = models.PositiveIntegerField(default=0)
     child_tickets = models.PositiveIntegerField(default=0)
     adult_tickets = models.PositiveIntegerField(default=0)
-    cr_tickets = models.PositiveIntegerField(default=10, validators=[MinValueValidator(10)])
+    cr_tickets = models.PositiveIntegerField(default=0)
     total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     purchase_date = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
         return f"{self.bookingID},{self.showing},{self.student_tickets},{self.child_tickets},{self.adult_tickets},{self.total_price},{self.cr_tickets}"
+
+    def get_price(self):
+        total = 0
+        total += (self.student_tickets * student_ticket_price)+(self.adult_tickets*adult_ticket_price)+(self.child_tickets*child_ticket_price)+(self.cr_tickets*cr_ticket_price)
+        return total
+
+    def save(self,*args,**kwargs):
+        self.total_price = self.get_price()
+        super(Booking,self).save(*args,**kwargs)
+
+
+

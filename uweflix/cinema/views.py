@@ -346,7 +346,7 @@ def book_showing_cr(request, showing_id, user_required = True , user_types_requi
         if forms.is_valid():
             
             cr_tickets = forms.cleaned_data.get('cr_tickets')
-            if showing.booking_is_valid(cr_tickets=cr_tickets):
+            if showing.booking_is_valid(cr_tickets=cr_tickets) and cr_tickets>=10:
                 user_id = int(request.session['id'])
                 user = User.objects.get(id=user_id)
                 balance = user.balance
@@ -366,7 +366,7 @@ def book_showing_cr(request, showing_id, user_required = True , user_types_requi
                     return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
             else:
                 forms = BookingForm_cr()
-                messages.error(request,"There aren't that many seats availible sorry!")
+                messages.error(request,"There aren't that many seats availible or you didn't select 10 tickets!")
                 return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
             return redirect('cinema:list_films')
         else:
