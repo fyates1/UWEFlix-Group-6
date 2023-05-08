@@ -22,7 +22,7 @@ def view_transactions(request):
     return render(request, 'clubRep/view_transactions.html', {'transactions': transactions})
 
 
-def addClub(response,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+def addClub(response, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     #response.user
     submitted = False
     if response.method == "POST":
@@ -41,7 +41,7 @@ def addClub(response,user_required = True , user_types_required=(User.UserType.C
             submitted = True
         return render(response, "clubRep/registerClub.html", {'form':form, 'submitted':submitted})
 
-def view_clubs(response,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+def view_clubs(response, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     clubs_view = Club.objects.all()
     return render(response, "clubRep/view.html", {"clubs_view":clubs_view})
 
@@ -51,7 +51,7 @@ def view_club(response, club_id,user_required = True , user_types_required=(User
     return render(response,"clubRep/view_club.html", {"club":club} )
 
 
-def settle(request,user_required = True , user_types_required=(User.UserType.CLUBREP,User.UserType.STUDENT)):
+def settle(request, user_required = True , user_types_required=(User.UserType.CLUBREP,User.UserType.STUDENT)):
     #club = Club.objects.first()
     user_id = int(request.session['id'])
     user = User.objects.get(id=user_id)

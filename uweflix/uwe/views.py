@@ -35,7 +35,7 @@ class CustomJSONEncoder(json.JSONEncoder):
 def contact_us(request):
     return render(request, 'uwe/contact_us.html')
 
-def view_bookings(request):
+def view_bookings(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     search_query = ""
 
     if request.GET.get('search_query'):
@@ -51,7 +51,7 @@ def view_bookings(request):
     }
     return render(request, 'uwe/view_bookings.html', context)
 
-def cancel_bookings(request, pk):
+def cancel_bookings(request, pk, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     data = Booking.objects.get(bookingID=pk)
 
     if request.method == 'POST':
