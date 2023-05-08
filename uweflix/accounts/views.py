@@ -55,5 +55,5 @@ def createUser(request, user_required=True, user_types_required=(User.UserType.C
     else:
         return render(request, 'accounts/createUser.html', context)
 
-def getPaymentHistory(request, timeFrom = None, userFilter = None):
+def getPaymentHistory(request, timeFrom = None, userFilter = None, user_required=True, user_types_required=(User.UserType.CINEMAMANAGER)):
     pass
