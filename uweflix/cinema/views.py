@@ -73,6 +73,7 @@ def activate_accounts(request, userID = None, user_required = True , user_types_
 
 #Function to add a screen to the system
 def add_screen(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+
         submitted = False
         if request.method == "POST":
             form = ScreenForm(request.POST)

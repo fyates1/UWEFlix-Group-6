@@ -4,6 +4,8 @@ from datetime import date
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from accounts.models import User
+from faker import Faker
+from datetime import datetime, timedelta
 adult_ticket_price = 8
 student_ticket_price = 8
 child_ticket_price = 5
@@ -99,6 +101,7 @@ class Booking(models.Model):
         total = 0
         total += (self.student_tickets * student_ticket_price)+(self.adult_tickets*adult_ticket_price)+(self.child_tickets*child_ticket_price)+(self.cr_tickets*cr_ticket_price)
         return total
+    
 
     def save(self,*args,**kwargs):
         self.total_price = self.get_price()
