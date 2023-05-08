@@ -4,26 +4,26 @@
 {% endblock %}
     {% load static %}
 {% block content %}
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
 
-    <br><br>
-    <div class="alert alert-danger" role="alert">
-        Are you sure you want to cancel this booking?
-    </div>
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}" style="background-image: url('/static/uwe/img/bg/contact_bg.jpg');">
     
-    <p>
-        <a href="{% url 'view_bookings' %}"> <-- Go back</a>
-    </p>
+    <div class="container">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
 
-    <p>
-        <input class="btn btn-danger" type="submit" value="Confirm">
-    </p>
-</form>
+            <br><br>
+            <!-- <div class="alert alert-danger" role="alert">
+                Are you sure you want to cancel this booking?
+            </div> -->
+            <h3>Are you sure you want to cancel this booking?</h3>
+
+            <br>
+            <br>
+            <p>
+                <input class="btn btn-danger" type="submit" value="Confirm">
+                <input class="btn btn-danger" type="submit" href="{% url 'view_bookings' %}" value="Cancel">
+            </p>
+        </form>
+    </div>
+</section>
 {% endblock %}
