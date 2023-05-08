@@ -18,35 +18,36 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from accounts.models import User
 
 app_name="cinema"
 urlpatterns = [
     # screen
-    path("add_screen",views.add_screen,name='add_screen'),
-    path("list_screens",views.list_screens,name='list_screens'),
-    path("show_screen/<screen_id>",views.show_screen,name="show_screen"),
-    path("update_screen/<screen_id>",views.update_screen,name="update_screen"),
-    path("delete_screen/<screen_id>",views.delete_screen,name="delete_screen"),
+    path("add_screen",views.add_screen, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name='add_screen'),
+    path("list_screens",views.list_screens, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name='list_screens'),
+    path("show_screen/<screen_id>",views.show_screen, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="show_screen"),
+    path("update_screen/<screen_id>",views.update_screen, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="update_screen"),
+    path("delete_screen/<screen_id>",views.delete_screen, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="delete_screen"),
 
     # rows
-    path("add_row",views.add_row,name='add_row'),
-    path("list_rows",views.list_rows,name='list_rows'),
-    path("show_row/<row_id>",views.show_row,name="show_row"),
-    path("update_row/<row_id>",views.update_row,name="update_row"),
-    path("delete_row/<row_id>",views.delete_row,name="delete_row"),
+    path("add_row",views.add_row, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name='add_row'),
+    path("list_rows",views.list_rows, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name='list_rows'),
+    path("show_row/<row_id>",views.show_row, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="show_row"),
+    path("update_row/<row_id>",views.update_row, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="update_row"),
+    path("delete_row/<row_id>",views.delete_row, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="delete_row"),
 
     # seats
-    path("add_seat",views.add_seat,name='add_seat'),
+    path("add_seat",views.add_seat, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name='add_seat'),
 
     # Films
-    path("list_films",views.list_films,name='film_listing'), # Update to table
-    path("add_film",views.add_film,name='add_film'),
-    path("update_film/<film_id>",views.update_film,name='update_film'),
-    path("delete_film/<film_id>",views.delete_film,name="delete_film"),
+    path("list_films",views.list_films, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name='film_listing'), # Update to table
+    path("add_film",views.add_film, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name='add_film'),
+    path("update_film/<film_id>",views.update_film, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name='update_film'),
+    path("delete_film/<film_id>",views.delete_film, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="delete_film"),
 
     # Showings
-    path("add_showing",views.add_showing,name="add_showing"),
-    path("list_showings",views.list_showings,name="list_showings"),
+    path("add_showing",views.add_showing, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="add_showing"),
+    path("list_showings",views.list_showings, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)},name="list_showings"),
 
     # Display
 
@@ -62,16 +63,16 @@ urlpatterns = [
 
     # booking
     path("booking_film/",views.booking_sheet,name="booking_sheet"),
-    path("booking_film/<showing_id>",views.book_showing,name="create_booking"), # student
-    path("booking_film_cr/<showing_id>",views.book_showing_cr,name="create_booking_cr"), # club rep
-    path("settling_balance",views.settling_balance,name="settling_balance"), # settling balance
+    path("booking_film/<showing_id>",views.book_showing,{'user_required': True, 'user_types_required': (User.UserType.STUDENT)},name="create_booking"), # student
+    path("booking_film_cr/<showing_id>",views.book_showing_cr,{'user_required': True, 'user_types_required': (User.UserType.CLUBREP)},name="create_booking_cr"), # club rep
+    path("settling_balance",views.settling_balance,{'user_required': True, 'user_types_required': (User.UserType.STUDENT,User.UserType.CLUBREP)},name="settling_balance"), # settling balance
     path("booking_film_guest/<showing_id>",views.book_showing_guest,name="create_booking_guest"), # guest
-    path("booking_film_AM_CM/<showing_id>",views.book_showing_AM_CM,name="create_booking_AM_CM"),
+    path("booking_film_AM_CM/<showing_id>",views.book_showing_AM_CM,{'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER,User.UserType.ACCOUNTSMANAGER)},name="create_booking_AM_CM"),
 
     # Activating Accounts
-    path("activate", views.activate_accounts, name="activate_accounts_default"),
-    path("activate/", views.activate_accounts, name="activate_accounts_default"),
-    path("activate/<int:userID>", views.activate_accounts, name="activate_accounts"),
+    path("activate", views.activate_accounts, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="activate_accounts_default"),
+    path("activate/", views.activate_accounts, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="activate_accounts_default"),
+    path("activate/<int:userID>", views.activate_accounts, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="activate_accounts"),
 ]
 if settings.DEBUG:
     urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
