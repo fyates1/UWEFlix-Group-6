@@ -64,7 +64,7 @@ def activate_accounts(request, userID = None, user_required = True , user_types_
 
     if request.POST.get('deny', False): # If the  button is pressed
         user.delete()
-        return redirect(reverse('cinema:activate_accounts_default') + '?message=User Deleted')
+        return redirect(reverse('cinema:activate_accounts_default') + '?message=User has been rejected!')
 
     elif request.POST.get('approve', False): # If the submit button is pressed
         user.activated = True
@@ -73,18 +73,18 @@ def activate_accounts(request, userID = None, user_required = True , user_types_
 
 #Function to add a screen to the system
 def add_screen(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
-
+        message = request.GET.get('message')
         submitted = False
         if request.method == "POST":
             form = ScreenForm(request.POST)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect("/cinema/add_screen?submitted=True")
+                return HttpResponseRedirect("/cinema/add_screen?message=The screen was added successfully!")
         else:
             form = ScreenForm
             if "submitted" in request.GET:
                 submitted = True
-        return render(request,"cinema/add_screen.html",{"form":form ,"submitted":submitted})
+        return render(request,"cinema/add_screen.html",{"form":form ,"submitted":submitted, "message":message})
 
 #Function to add a row to a screen 
 def add_row(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
@@ -101,9 +101,10 @@ def add_row(request, user_required = True , user_types_required=(User.UserType.C
         return render(request,"cinema/add_row.html",{"form":form ,"submitted":submitted})
 
 #Function to display film list
-def list_screens(request):
+def list_screens(request, user_required: True, user_types_required: (User.UserType.CINEMAMANAGER)):
+    message = request.GET.get('message')
     screen_list = CinemaManager.get_screenList()
-    return render(request,"cinema/screens.html",{"screen_list":screen_list,})
+    return render(request,"cinema/screens.html",{"screen_list":screen_list, "message":message})
 
 #Function to display row list
 def list_rows(request):
@@ -126,7 +127,7 @@ def update_screen(request, screen_id, user_required = True , user_types_required
     form = ScreenForm(request.POST or None,instance=Screen)
     if form.is_valid():
             form.save()
-            return redirect('list_screens')
+            return redirect(reverse('cinema:list_screens') + '?message=The screen was updated successfully!')
     return render(request,"cinema/update_screen.html",{"screen":Screen, "form":form})
 
 #Function to update a row through a form
@@ -142,7 +143,7 @@ def update_row(request, row_id, user_required = True , user_types_required=(User
 def delete_screen(request,screen_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Screen = CinemaManager.get_screen(screen_id)
     Screen.delete()
-    return redirect("list_screens")
+    return redirect(reverse('cinema:list_screens') + '?message=The screen was deleted successfully!')
 
 #Function to delete a row through a form
 def delete_row(request,row_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
@@ -166,6 +167,7 @@ def add_seat(request, user_required = True , user_types_required=(User.UserType.
 
 #Function to add a film through a form
 def add_film(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+        message = request.GET.get('message')
         submitted = False
         page=1
         movies= movie_api_request(page) # Gets most popular movies via api request
@@ -173,17 +175,20 @@ def add_film(request, user_required = True , user_types_required=(User.UserType.
             form = FilmForm(request.POST,request.FILES)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect("/cinema/add_film?submitted=True")
+                return redirect(reverse('cinema:add_film') + '?message=The film was added successfully!')
+                # return render(request,"cinema/add_film.html",{"message":message})
+                # return HttpResponseRedirect("/cinema/add_film?submitted=True")
         else:
             form = FilmForm
             if "submitted" in request.GET:
                 submitted = True
-        return render(request,"cinema/add_film.html",{"form":form ,"submitted":submitted,"movies":movies})
+        return render(request,"cinema/add_film.html",{"form":form ,"submitted":submitted,"movies":movies, "message":message})
 
 #Lists films in our cinema
-def list_films(request):
+def list_films(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+    message = request.GET.get('message')
     film_listing = film.objects.all()
-    return render(request,"cinema/films.html",{"film_listing":film_listing})
+    return render(request,"cinema/films.html",{"film_listing":film_listing, "message":message})
 
 #Shows data stored about a film
 def show_film(request,film_id):
@@ -192,19 +197,22 @@ def show_film(request,film_id):
 
 #Function to update film data through a form
 def update_film(request, film_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+    message = request.GET.get('message')
     Film = CinemaManager.get_film(film_id)
     form = FilmForm(request.POST or None,instance=Film)
     if form.is_valid():
             form.save()
-            return redirect('cinema:list_films')
-    return render(request,"cinema/update_film.html",{"film":Film, "form":form})
+            # return redirect(reverse('cinema:list_films') + '?message=The film was updated successful!')
+            return HttpResponseRedirect("/cinema/list_films?message=The film was updated successful!")
+    return render(request,"cinema/update_film.html",{"film":Film, "form":form, "message":message})
 
 #Function to delete a film
 def delete_film(request,film_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Film= CinemaManager.get_film(film_id)
     try:
         Film.delete()
-        return redirect("cinema:list_films")
+        # return redirect(reverse("cinema:list_films") + '?message=The film was deleted successful!')
+        return HttpResponseRedirect("/cinema/list_films?message=The film was deleted successfully!")
     except RestrictedError:
         message = "Sorry cant delete a film that has shwoings!"
         film_listing = film.objects.all()
@@ -212,31 +220,34 @@ def delete_film(request,film_id, user_required = True , user_types_required=(Use
 
 #Function to add a showing via form
 def add_showing(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+        message = request.GET.get('message')
         submitted = False
         if request.method == "POST":
             form = ShowingForm(request.POST,request.FILES)
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect("/cinema/add_showing?submitted=True")
+                return redirect(reverse('cinema:add_showing') + '?message=The showing was added successfully!')
+                # return HttpResponseRedirect("/cinema/add_showing?submitted=True")
         else:
             form = ShowingForm
             if "submitted" in request.GET:
                 submitted = True
-        return render(request,"cinema/add_showing.html",{"form":form ,"submitted":submitted})
+        return render(request,"cinema/add_showing.html",{"form":form ,"submitted":submitted, "message":message})
 
 
 # Showing display for cinema manager to add crud to 
 def list_showings(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+    message = request.GET.get('message')
     startdate= datetime.today()
     enddate = startdate + timedelta(days=365)
     showing_list = showing.objects.filter(date__range=[startdate, enddate])
-    return render(request,"cinema/showings.html",{"showing_list":showing_list})
+    return render(request,"cinema/showings.html",{"showing_list":showing_list, "message":message})
 
 #Form to delete a showing
 def delete_showing(request,showing_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Showing = CinemaManager.get_showing(showing_id)
     Showing.delete()
-    return redirect("cinema:list_showings")
+    return redirect(reverse("cinema:list_showings") + '?message=The showing was deleted successfully!')
 
 #Form to update a showing
 def update_showing(request, showing_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
@@ -244,7 +255,7 @@ def update_showing(request, showing_id, user_required = True , user_types_requir
     form = ShowingForm(request.POST or None,instance=Showing)
     if form.is_valid():
             form.save()
-            return redirect('cinema:list_showings')
+            return redirect(reverse("cinema:list_showings") + '?message=The showing was updated successfully!')
     return render(request,"cinema/update_showing.html",{"showing":Showing, "form":form})
 
 # Not used currently. Although keep

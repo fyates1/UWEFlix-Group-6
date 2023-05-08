@@ -55,7 +55,7 @@ class film(models.Model):
         return self.title 
 
 class showing(models.Model):
-    date= models.DateField("Date of showing (yyyy/mm/dd)")
+    date= models.DateField("Date of showing (mm/dd/yyyy)")
     startTime=models.TimeField("Time of showing (HH:MM)")
     numberOfSales = models.PositiveIntegerField(blank=True, null=True)
     film=models.ForeignKey(film, on_delete=models.RESTRICT, null=True)

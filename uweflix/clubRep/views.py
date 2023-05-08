@@ -33,7 +33,7 @@ def addClub(response,user_required = True , user_types_required=(User.UserType.C
             #t.save()
             form.save()
             #response.user.clubname.add(t)
-            return redirect('clubRep:view')
+            return redirect(reverse('clubRep:view') + '?message=Club successfully created!')
     else:
         form = clubRegister()
 
@@ -41,9 +41,10 @@ def addClub(response,user_required = True , user_types_required=(User.UserType.C
             submitted = True
         return render(response, "clubRep/registerClub.html", {'form':form, 'submitted':submitted})
 
-def view_clubs(response,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+def view_clubs(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
+    message = request.GET.get('message') # Get any message from previous pages
     clubs_view = Club.objects.all()
-    return render(response, "clubRep/view.html", {"clubs_view":clubs_view})
+    return render(request, "clubRep/view.html", {"clubs_view":clubs_view, "message":message})
 
 def view_club(response, club_id,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     club= Club.objects.get(pk=club_id)
@@ -82,12 +83,12 @@ def settle(request,user_required = True , user_types_required=(User.UserType.CLU
 def delete_club(response, club_id,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     club = Club.objects.get(pk=club_id)
     club.delete()
-    return redirect('clubRep:view')
+    return redirect(reverse('clubRep:view') + f'?message=The club {club} was deleted successfully!')
 
 def update_club(request, club_id,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     club = Club.objects.get(pk=club_id)
     form = clubRegister(request.POST or None,instance=club)
     if form.is_valid():
             form.save()
-            return redirect('clubRep:view')
+            return redirect(reverse('clubRep:view') + f'?message=The club {club} was updated successfully!')
     return render(request,"clubRep/update_club.html",{"club":club, "form":form})
