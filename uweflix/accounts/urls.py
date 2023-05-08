@@ -31,4 +31,7 @@ urlpatterns = [
 
     # User Manage page
     path('user/<int:userID>/', views.manageUser, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="manageUser"),
+
+    # Payment History Page
+    path('payments/', views.getPaymentHistory, {'user_required': True, 'user_types_required': (User.UserType.ACCOUNTSMANAGER)}, name='getPaymentHistory')
 ]

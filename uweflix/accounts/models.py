@@ -79,6 +79,9 @@ class User(models.Model):
     def __str__(self):
         return f"{self.username} ({self.firstName} {self.lastName})"
 
+class UserFilterForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=User.objects.all(), required=False, label='Filter by user')
+
 class UserForm(forms.ModelForm):
     # Form for User model
     class Meta:
