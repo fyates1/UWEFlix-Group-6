@@ -4,53 +4,49 @@
 {% endblock %}
     {% load static %}
 {% block content %}
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <div class="center-form" style="display: flex; justify-content: center;">
-        <form action="{% url 'view_bookings' %}" method="GET" style="width: 500px;">
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Search by booking ID" aria-label="" aria-describedby="basic-addon1" style="margin-right: 10px;"
-              name="search_query" value="{{ search_query }}"/>
-    
-              <input class="btn btn-success" type="submit" value="Search"/>
-            </div>
-        </form>
-    </div>
-    <br>
-    <br>
-    <br>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Bookings ID</th>
-                <th scope="'col">Showing</th>
-                <th scope="'col">Student Tickets</th>
-                <th scope="'col">Child Tickets</th>
-                <th scope="'col">Adult Tickets</th>
-                <th scope="'col">CR Tickets</th>
-                <th scope="'col">Total Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for data in data %}
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}" style="background-image: url('/static/uwe/img/bg/contact_bg.jpg');">
+    <div class="container">
+        <div class="center-form" style="display: flex; justify-content: center;">
+            <form action="{% url 'view_bookings' %}" method="GET" style="width: 500px;">
+                <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search by booking ID" aria-label="" aria-describedby="basic-addon1" style="margin-right: 10px;" name="search_query" value="{{ search_query }}"/>
+        
+                <input class="btn btn-success" type="submit" value="Search"/>
+                </div>
+            </form>
+        </div>
+        <br>
+        <br>
+        <br>
+        <table class="table table-striped text-light">
+            <thead>
                 <tr>
-                    <td scope="row"><a>{{ data.bookingID }}</a></td>
-                    <td scope="row"><a>{{ data.showing }}</a></td>
-                    <td scope="row"><a>{{ data.student_tickets }}</a></td>
-                    <td scope="row"><a>{{ data.child_tickets }}</a></td>
-                    <td scope="row"><a>{{ data.adult_tickets }}</a></td>
-                    <td scope="row"><a>{{ data.cr_tickets }}</a></td>
-                    <td scope="row"><a>{{ data.total_price }}</a></td>
-                    <td>
-                        <a href="{% url 'cancel_bookings' data.bookingID %}">Remove</a>
-                    </td>
+                    <th scope="col">Bookings ID</th>
+                    <th scope="'col">Showing</th>
+                    <th scope="'col">Student Tickets</th>
+                    <th scope="'col">Child Tickets</th>
+                    <th scope="'col">Adult Tickets</th>
+                    <th scope="'col">CR Tickets</th>
+                    <th scope="'col">Total Price</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for data in data %}
+                    <tr>
+                        <td scope="row"><a>{{ data.bookingID }}</a></td>
+                        <td scope="row"><a>{{ data.showing }}</a></td>
+                        <td scope="row"><a>{{ data.student_tickets }}</a></td>
+                        <td scope="row"><a>{{ data.child_tickets }}</a></td>
+                        <td scope="row"><a>{{ data.adult_tickets }}</a></td>
+                        <td scope="row"><a>{{ data.cr_tickets }}</a></td>
+                        <td scope="row"><a>{{ data.total_price }}</a></td>
+                        <td>
+                            <a href="{% url 'cancel_bookings' data.bookingID %}">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
 {% endblock %}
