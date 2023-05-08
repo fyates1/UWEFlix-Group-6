@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from datetime import date
+from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from accounts.models import User
 
@@ -86,7 +87,7 @@ class Booking(models.Model):
     adult_tickets = models.PositiveIntegerField(default=0)
     cr_tickets = models.PositiveIntegerField(default=10, validators=[MinValueValidator(10)])
     total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
-    # created_at = models.DateTimeField(auto_now_add=True)
+    purchase_date = models.DateTimeField(default=timezone.now)
     
     def __str__(self):
         return f"{self.bookingID},{self.showing},{self.student_tickets},{self.child_tickets},{self.adult_tickets},{self.total_price},{self.cr_tickets}"

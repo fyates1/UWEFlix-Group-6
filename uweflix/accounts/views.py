@@ -54,3 +54,6 @@ def createUser(request, user_required=True, user_types_required=(User.UserType.C
         return redirect(reverse('accounts:index') + '?message=New User Created')
     else:
         return render(request, 'accounts/createUser.html', context)
+
+def getPaymentHistory(request, timeFrom = None, userFilter = None):
+    pass
