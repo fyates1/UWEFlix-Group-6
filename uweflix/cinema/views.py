@@ -39,7 +39,7 @@ class CinemaManager():
         return showing.objects.get(pk=id)
 
 # Function to authenticate new registrations
-def activate_accounts(request, userID = None):
+def activate_accounts(request, userID = None, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     # Gets all unactivated accounts
     unactivatedAccounts = User.objects.filter(activated=False)
     message = request.GET.get('message')
@@ -72,7 +72,7 @@ def activate_accounts(request, userID = None):
         return redirect(reverse('cinema:activate_accounts_default') + '?message=User Account Activated')
 
 #Function to add a screen to the system
-def add_screen(request):
+def add_screen(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
         submitted = False
         if request.method == "POST":
             form = ScreenForm(request.POST)
@@ -86,7 +86,7 @@ def add_screen(request):
         return render(request,"cinema/add_screen.html",{"form":form ,"submitted":submitted})
 
 #Function to add a row to a screen 
-def add_row(request):
+def add_row(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
         submitted = False
         if request.method == "POST":
             form = RowForm(request.POST)
@@ -110,17 +110,17 @@ def list_rows(request):
     return render(request,"cinema/rows.html",{"row_list":row_list,})
 
 #Function to display data on a screen
-def show_screen(request,screen_id):
+def show_screen(request,screen_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Screen = CinemaManager.get_screen(screen_id)
     return render(request,"cinema/show_screen.html",{"screen":Screen})
 
 #Function to show data of a row
-def show_row(request,row_id):
+def show_row(request,row_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Row = CinemaManager.get_row(row_id)
     return render(request,"cinema/show_row.html",{"row":Row})
 
 #Function to update a screen through a form
-def update_screen(request, screen_id):
+def update_screen(request, screen_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Screen = CinemaManager.get_screen(screen_id)
     form = ScreenForm(request.POST or None,instance=Screen)
     if form.is_valid():
@@ -129,7 +129,7 @@ def update_screen(request, screen_id):
     return render(request,"cinema/update_screen.html",{"screen":Screen, "form":form})
 
 #Function to update a row through a form
-def update_row(request, row_id):
+def update_row(request, row_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Row = CinemaManager.get_row(row_id)
     form = RowForm(request.POST or None,instance=Row)
     if form.is_valid():
@@ -138,19 +138,19 @@ def update_row(request, row_id):
     return render(request,"cinema/update_row.html",{"row":Row, "form":form})
 
 #Function to delete a screen through a form
-def delete_screen(request,screen_id):
+def delete_screen(request,screen_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Screen = CinemaManager.get_screen(screen_id)
     Screen.delete()
     return redirect("list_screens")
 
 #Function to delete a row through a form
-def delete_row(request,row_id):
+def delete_row(request,row_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Row = CinemaManager.get_row(row_id)
     Row.delete()
     return redirect("list_rows")
 
 #Function to add a seat through a form
-def add_seat(request):
+def add_seat(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
         submitted = False
         if request.method == "POST":
             form = SeatForm(request.POST)
@@ -164,7 +164,7 @@ def add_seat(request):
         return render(request,"cinema/add_seat.html",{"form":form ,"submitted":submitted})
 
 #Function to add a film through a form
-def add_film(request):
+def add_film(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
         submitted = False
         page=1
         movies= movie_api_request(page) # Gets most popular movies via api request
@@ -190,7 +190,7 @@ def show_film(request,film_id):
     return render(request,"cinema/show_film.html",{"film":film})
 
 #Function to update film data through a form
-def update_film(request, film_id):
+def update_film(request, film_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Film = CinemaManager.get_film(film_id)
     form = FilmForm(request.POST or None,instance=Film)
     if form.is_valid():
@@ -199,7 +199,7 @@ def update_film(request, film_id):
     return render(request,"cinema/update_film.html",{"film":Film, "form":form})
 
 #Function to delete a film
-def delete_film(request,film_id):
+def delete_film(request,film_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Film= CinemaManager.get_film(film_id)
     try:
         Film.delete()
@@ -210,7 +210,7 @@ def delete_film(request,film_id):
         return render(request,"cinema/films.html",{"film_listing":film_listing,"message":message})
 
 #Function to add a showing via form
-def add_showing(request):
+def add_showing(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
         submitted = False
         if request.method == "POST":
             form = ShowingForm(request.POST,request.FILES)
@@ -225,20 +225,20 @@ def add_showing(request):
 
 
 # Showing display for cinema manager to add crud to 
-def list_showings(request):
+def list_showings(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     startdate= datetime.today()
     enddate = startdate + timedelta(days=365)
     showing_list = showing.objects.filter(date__range=[startdate, enddate])
     return render(request,"cinema/showings.html",{"showing_list":showing_list})
 
 #Form to delete a showing
-def delete_showing(request,showing_id):
+def delete_showing(request,showing_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Showing = CinemaManager.get_showing(showing_id)
     Showing.delete()
     return redirect("cinema:list_showings")
 
 #Form to update a showing
-def update_showing(request, showing_id):
+def update_showing(request, showing_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     Showing = CinemaManager.get_showing(showing_id)
     form = ShowingForm(request.POST or None,instance=Showing)
     if form.is_valid():
@@ -287,9 +287,9 @@ student_ticket_price = 8
 child_ticket_price = 5
 cr_ticket_price = 6.8
 
-# booking for guest 
+# booking for Student
 
-def book_showing(request, showing_id):
+def book_showing(request, showing_id, user_required = True , user_types_required=(User.UserType.STUDENT)):
     showing = CinemaManager.get_showing(showing_id)
 
 
@@ -310,7 +310,7 @@ def book_showing(request, showing_id):
                 user = User.objects.get(id=user_id)
                 balance = user.balance
                 print("your balance",balance)
-                total_price = (student_tickets * student_ticket_price )+ (child_tickets * child_ticket_price)+ (student_tickets)
+                total_price = (student_tickets * student_ticket_price )+ (child_tickets * child_ticket_price)+ (adult_tickets *adult_ticket_price)
                 print("total price ",total_price)
                 new_balance = balance - total_price
                 if new_balance > -150:
@@ -335,7 +335,7 @@ def book_showing(request, showing_id):
     #return render(request,'customer/booking.html', {'form': form })
 
 # club rep paying directly
-def book_showing_cr(request, showing_id):
+def book_showing_cr(request, showing_id, user_required = True , user_types_required=(User.UserType.CLUBREP)):
     showing = CinemaManager.get_showing(showing_id)
     # for key,value in request.session.items():
     #     print ('{} =>{}'.format(key,value))
@@ -378,7 +378,7 @@ def book_showing_cr(request, showing_id):
 
 
 
-def settling_balance(request, showing_id):
+def settling_balance(request, showing_id, user_required = True , user_types_required=(User.UserType.STUDENT,User.UserType.CLUBREP)):
     #showing = CinemaManager.get_showing(showing_id)
     
     if request.method == 'POST':
@@ -417,7 +417,7 @@ def book_showing_guest(request, showing_id):
         return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
 
 # booking for AM CM
-def book_showing_AM_CM(request, showing_id):
+def book_showing_AM_CM(request, showing_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER,User.UserType.ACCOUNTSMANAGER)):
     showing = CinemaManager.get_showing(showing_id)
 
 
