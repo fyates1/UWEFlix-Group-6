@@ -22,7 +22,7 @@ def view_transactions(request):
     return render(request, 'clubRep/view_transactions.html', {'transactions': transactions})
 
 
-def addClub(response):
+def addClub(response,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     #response.user
     submitted = False
     if response.method == "POST":
@@ -41,17 +41,17 @@ def addClub(response):
             submitted = True
         return render(response, "clubRep/registerClub.html", {'form':form, 'submitted':submitted})
 
-def view_clubs(response):
+def view_clubs(response,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     clubs_view = Club.objects.all()
     return render(response, "clubRep/view.html", {"clubs_view":clubs_view})
 
-def view_club(response, club_id):
+def view_club(response, club_id,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     club= Club.objects.get(pk=club_id)
 
     return render(response,"clubRep/view_club.html", {"club":club} )
 
 
-def settle(request):
+def settle(request,user_required = True , user_types_required=(User.UserType.CLUBREP,User.UserType.STUDENT)):
     #club = Club.objects.first()
     user_id = int(request.session['id'])
     user = User.objects.get(id=user_id)
@@ -79,12 +79,12 @@ def settle(request):
 #         return redirect('customer:checkout')
 
 
-def delete_club(response, club_id):
+def delete_club(response, club_id,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     club = Club.objects.get(pk=club_id)
     club.delete()
     return redirect('clubRep:view')
 
-def update_club(request, club_id):
+def update_club(request, club_id,user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
     club = Club.objects.get(pk=club_id)
     form = clubRegister(request.POST or None,instance=club)
     if form.is_valid():
