@@ -1,38 +1,53 @@
-<h1>Payment History</h1>
+{% extends "uwe/base.html" %}
+{% load static %}
+{% block content %}
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <label for="timeFrom">Time From:</label>
-  <input type="date" id="timeFrom" name="timeFrom">
-  <button type="submit">Filter</button>
-</form>
+<!--<title>Create new user</title>-->
 
-<table>
-  <thead>
-    <tr>
-      <th>Booking ID</th>
-      <th>User</th>
-      <th>Showing</th>
-      <th>Student Tickets</th>
-      <th>Child Tickets</th>
-      <th>Adult Tickets</th>
-      <th>Total Price</th>
-      <th>Club Rep Tickets</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for booking in paymentList %}
-    <tr>
-      <td>{{ booking.bookingID }}</td>
-      <td>{{ booking.user }}</td>
-      <td>{{ booking.showing }}</td>
-      <td>{{ booking.student_tickets }}</td>
-      <td>{{ booking.child_tickets }}</td>
-      <td>{{ booking.adult_tickets }}</td>
-      <td>{{ booking.total_price }}</td>
-      <td>{{ booking.cr_tickets }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}">
+  
+  <div class="container">
+    <br>
+    <h1>Payment History</h1>
+    <br>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <label for="timeFrom">Time From:</label>
+      <input type="date" id="timeFrom" name="timeFrom">
+      <button type="submit">Filter</button>
+    </form>
+    <br>
+
+    <table class="table table-striped text-light">
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>User</th>
+          <th>Showing</th>
+          <th>Student Tickets</th>
+          <th>Child Tickets</th>
+          <th>Adult Tickets</th>
+          <th>Total Price</th>
+          <th>Club Rep Tickets</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in paymentList %}
+        <tr>
+          <td>{{ booking.bookingID }}</td>
+          <td>{{ booking.user }}</td>
+          <td>{{ booking.showing }}</td>
+          <td>{{ booking.student_tickets }}</td>
+          <td>{{ booking.child_tickets }}</td>
+          <td>{{ booking.adult_tickets }}</td>
+          <td>{{ booking.total_price }}</td>
+          <td>{{ booking.cr_tickets }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
+
