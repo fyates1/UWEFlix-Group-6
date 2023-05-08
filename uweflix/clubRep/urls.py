@@ -21,13 +21,13 @@ from accounts.models import User
 app_name = "clubRep"
 
 urlpatterns = [
-    path('addClub',views.addClub, {'user_required': True, 'user_types_required': User.UserType.CINEMAMANAGER}, name="addClub"),
-    path("view",views.view_clubs, {'user_required': True, 'user_types_required': User.UserType.CINEMAMANAGER}, name="view"),
-    path("show_club/<club_id>",views.view_club, {'user_required': True, 'user_types_required': User.UserType.CINEMAMANAGER}, name="showClub"),
-    path("delete_club/<club_id>",views.delete_club, {'user_required': True, 'user_types_required': User.UserType.CINEMAMANAGER}, name="deleteClub"),
-    path("update_club/<club_id>",views.update_club, {'user_required': True, 'user_types_required': User.UserType.CINEMAMANAGER}, name="updateClub"),
-    path("settle",views.settle, {'user_required': True, 'user_types_required': User.UserType.CLUBREP,}, name="settle"),
-    path('view/', views.view_clubs, {'user_required': True, 'user_types_required': User.UserType.CINEMAMANAGER}, name='view_clubs'),
+    path('addClub',views.addClub, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="addClub"),
+    path("view",views.view_clubs, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="view"),
+    path("show_club/<club_id>",views.view_club, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="showClub"),
+    path("delete_club/<club_id>",views.delete_club, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="deleteClub"),
+    path("update_club/<club_id>",views.update_club, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="updateClub"),
+    path("settle",views.settle, {'user_required': True, 'user_types_required': (User.UserType.CLUBREP,User.UserType.STUDENT)}, name="settle"),
+    path('view/', views.view_clubs, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name='view_clubs'),
 
     #path("delete_club/<club_id>",views.delete_club, name="deleteClub"),
     #path("show_club/<club_id>",views.show_club, name="showClub"),
