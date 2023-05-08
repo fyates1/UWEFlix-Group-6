@@ -13,14 +13,14 @@ class UserTypeMiddleware:
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         user_required = view_kwargs.get('user_required', None)
-        user_type_required = view_kwargs.get('user_type_required', None)
+        user_types_required = view_kwargs.get('user_types_required', None)
 
-        if user_required or user_type_required:
+        if user_required or user_types_required:
             user = self.get_authenticated_user(request)
             if not user:
                 return redirect(reverse('login') + '?message=Login Required')
 
-            if user_type_required and user.userType != user_type_required:
+            if user_types_required and user.userType not in user_types_required:
                 return redirect(reverse('home') + '?message=You do not have the relevant permissions')
 
     @staticmethod

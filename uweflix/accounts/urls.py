@@ -24,11 +24,11 @@ app_name = "accounts"
 
 urlpatterns = [
     # Accounts Index
-    path('', views.index, {'user_required': True, 'user_type_required': User.UserType.ACCOUNTSMANAGER}, name='index'),
+    path('', views.index, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name='index'),
 
     # User Creation Page
-    path('user/create/', views.createUser, {'user_required': True, 'user_type_required': User.UserType.ACCOUNTSMANAGER}, name="createUser"),
+    path('user/create/', views.createUser, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="createUser"),
 
     # User Manage page
-    path('user/<int:userID>/', views.manageUser, {'user_required': True, 'user_type_required': User.UserType.ACCOUNTSMANAGER}, name="manageUser"),
+    path('user/<int:userID>/', views.manageUser, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name="manageUser"),
 ]

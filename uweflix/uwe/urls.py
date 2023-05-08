@@ -14,11 +14,7 @@ urlpatterns = [
     path('superuser', views.superuser, name='superuser'),
     # path('create/',views.addClub, name="create"),
 
-    path('accounts', AMViews.index, {'user_required': True, 'user_type_required': User.UserType.ACCOUNTSMANAGER}, name='accountManager'),
-    # TODO THE FOLLOWING NEEDS TO BE CHANGED BSAED ON THE HOME PAGES FOR EACH ROLE
-    path('clubRepresentative', views.clubRepresentative, name='clubRepresentative'),
-    path('customer', views.customer, name='customer'),
-    path('cinemaManager', views.cinemaManager, name='cinemaManager'),
+    path('accounts', AMViews.index, {'user_required': True, 'user_types_required': (User.UserType.CINEMAMANAGER)}, name='accountManager'),
     
     path('contact_us', views.contact_us, name='contact_us'),
     path('my_tickets', views.my_tickets, name='my_tickets'),
