@@ -24,14 +24,10 @@
                     <th scope="col"><p>Film Name:<a href="{% url 'cinema:show_film' film.id %}">{{film.title}}</a></p>
                     </th>
                     <th scope="col">
-                        <button type="submit" onclick="window.location.href='{% url 'cinema:update_film' film.id %}'"
-                                class="btn btn-primary btn-sm">Update
-                        </button>
+                        <a href="{% url 'cinema:update_film' film.id %}" class="btn">Update</button>
                     </th>
                     <th scope="col">
-                        <button onclick="window.location.href='{% url 'cinema:delete_film' film.id %}'" type="button"
-                                class="btn btn-danger btn-sm">Delete
-                        </button>
+                        <a href="{% url 'cinema:delete_film' film.id %}" class="btn">Delete</button>
                     </th>
                 </tr>
                 {%endfor%}
