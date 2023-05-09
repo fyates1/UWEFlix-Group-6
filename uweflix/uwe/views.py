@@ -35,7 +35,7 @@ class CustomJSONEncoder(json.JSONEncoder):
 def contact_us(request):
     return render(request, 'uwe/contact_us.html')
 
-def view_bookings(request):
+def view_bookings(request, user_required: True, user_types_required: (User.UserType.CINEMAMANAGER)):
     message = request.GET.get('message')
     search_query = ""
 

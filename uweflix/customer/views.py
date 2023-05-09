@@ -32,8 +32,9 @@ def StudentBooking(response):
     else:
         form = BookingForm()
         if 'submitted' in response.GET:
+            message='Your booking was successful!'
             submitted = True
-        return render(response, "customer/booking.html", {'form':form, 'submitted':submitted})
+        return render(response, "customer/booking.html", {'form':form, 'submitted':submitted, 'message':message})
 
 
 # checkout rendering
