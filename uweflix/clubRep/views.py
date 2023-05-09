@@ -43,7 +43,7 @@ def addClub(response, user_required = True , user_types_required=(User.UserType.
 
 
 def view_clubs(request, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER)):
-    message = request.GET.get('message') # Get any message from previous pages
+    #message = request.GET.get('message') # Get any message from previous pages
     clubs_view = Club.objects.all()
     return render(request, "clubRep/view.html", {"clubs_view":clubs_view, "message":message})
 
