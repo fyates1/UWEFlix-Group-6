@@ -116,7 +116,7 @@ def sucess(request):
             booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,user=user,cr_tickets = cr_tickets) #, total_price=total_price)
             booking.save()
         else:
-            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets,cr_tickets = cr_tickets) #, total_price=total_price)
+            booking = Booking(showing=showing, child_tickets=child_tickets, adult_tickets=adult_tickets) #, total_price=total_price)
             booking.save()
         # for emailing ticket
         request.session['booking_id'] = str(booking.bookingID)

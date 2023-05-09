@@ -4,7 +4,6 @@ from datetime import date
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from accounts.models import User
-from faker import Faker
 from datetime import datetime, timedelta
 adult_ticket_price = 8
 student_ticket_price = 8
