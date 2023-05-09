@@ -51,10 +51,9 @@
                                             Showings</a>
                                     </li>
                                     <li><a href="{% url 'contact_us' %}">contacts</a></li>
-                                    {% if request.session.id != None %}
+                                    <!-- {% if request.session.id != None %}
 
-                                    {% endif %}
-
+                                    {% endif %} -->
 
                                     
                                     {% if request.session.userType == '"CM"' %}
@@ -149,6 +148,23 @@
                         </div>
                         <div class="menu-outer">
                             <!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+                            <div class="navbar-wrap main-menu d-none d-lg-flex">
+                                <ul class="navigation">
+                                    {% if request.session.id is None %}
+                                    <li class="menu-item">
+                                        <a class="navbar-brand" href="{% url 'login' %}">Sign In</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a class="navbar-brand" href="{% url 'register' %}">Register</a>
+                                    </li>
+
+                                    {% else %}
+                                    <li class="menu-item">
+                                        <a class="navbar-brand" href="{% url 'logout' %}">Log out</a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
                         </div>
                         <div class="social-links">
                             <ul class="clearfix">

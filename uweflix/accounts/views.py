@@ -32,14 +32,14 @@ def manageUser(request, userID, user_required=True, user_types_required=(User.Us
     if request.POST.get('submit', False):# If the update button is pressed
         if userForm.is_valid():
             userForm.save()
-            return redirect(reverse('accounts:index') + '?message=Update Successful')
+            return redirect(reverse('accounts:index') + '?message=User updated successfully!')
 
         else:
             return render(request, 'accounts/manageUser.html', context)
 
     elif request.POST.get('delete', False): # If the delete button is pressed
         user.delete()
-        return redirect(reverse('accounts:index') + '?message=Entry Deleted')
+        return redirect(reverse('accounts:index') + '?message=User deleted successfully!')
 
 def createUser(request, user_required=True, user_types_required=(User.UserType.CINEMAMANAGER)):
     userForm = UserForm(request.POST or None)

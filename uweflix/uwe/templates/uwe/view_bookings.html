@@ -6,6 +6,11 @@
 {% block content %}
 <section class="contact-area contact-bg" data-background="{% static 'uwe/img/bg/contact_bg.jpg' %}" style="background-image: url('/static/uwe/img/bg/contact_bg.jpg');">
     <div class="container">
+        <div class="section-title text-center text-lg-left">
+            {% if message %}
+            <h5 class="alert" id="alert" style="width: 25%;border: 2px solid rgb(62, 62, 62); background-color: rgb(62, 62, 62); color: white;">{{ message }}</h5>
+            {% endif %}
+        </div>
         <div class="center-form" style="display: flex; justify-content: center;">
             <form action="{% url 'view_bookings' %}" method="GET" style="width: 500px;">
                 <div class="input-group mb-3">
@@ -49,4 +54,13 @@
         </table>
     </div>
 </section>
+<script>
+    // Get a reference to the div element
+    var myDiv = document.getElementById("alert");
+    
+    // Set a timeout to hide the div after 30 seconds
+    setTimeout(function() {
+    myDiv.style.display = "none";
+    }, 10000); // 10 seconds in milliseconds
+</script>
 {% endblock %}

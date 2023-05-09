@@ -15,8 +15,9 @@
                         <div class="col-lg-6">
                             <div class="section-title text-center text-lg-left">
                                 {% if message %}
-                                <h5 class="alert" style="width: 60%;border: 2px solid rgb(62, 62, 62); background-color: rgb(62, 62, 62); color: white;">{{ message }}</h5>
+                                <h5 class="alert" id="alert" style="width: 60%;border: 2px solid rgb(62, 62, 62); background-color: rgb(62, 62, 62); color: white;">{{ message }}</h5>
                                 {% endif %}
+
                                 <h2 class="title">Upcoming Movies</h2>
                             </div>
                         </div>
@@ -67,4 +68,13 @@
                     </div>
                 </div>
             </section>
+<script>
+    // Get a reference to the div element
+    var myDiv = document.getElementById("alert");
+    
+    // Set a timeout to hide the div after 30 seconds
+    setTimeout(function() {
+    myDiv.style.display = "none";
+    }, 10000); // 10 seconds in milliseconds
+</script>
 {%endblock%}
