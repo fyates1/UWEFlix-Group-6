@@ -289,8 +289,9 @@ def film_showing(request, _id):
 
 # Booking 
 def booking_sheet(request):
+    message = request.GET.get('message')
     form = BookingForm()
-    return render(request,'cinema/film_showing.html', {'form': form })
+    return render(request,'cinema/film_showing.html', {'form': form, 'message':message})
 
 
 # TICKET PRICES 
@@ -303,7 +304,7 @@ cr_ticket_price = 6.8
 
 def book_showing(request, showing_id, user_required = True , user_types_required=(User.UserType.STUDENT)):
     showing = CinemaManager.get_showing(showing_id)
-
+    message = request.GET.get('message')
 
     # for key,value in request.session.items():
     #     print ('{} =>{}'.format(key,value))
@@ -333,21 +334,23 @@ def book_showing(request, showing_id, user_required = True , user_types_required
                 else:
                     forms = BookingForm()
                     messages.error(request,"Insufficient Funds! Please top up your account!")
-                    return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+                    return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
             else:
                 messages.error(request,"There aren't that many seats availible sorry!")
-                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
-            return redirect('cinema:list_films')
+                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form, 'message':message})
+            return redirect(reverse('cinema:list_films') + '?message=Your booking was successful!')
         else:
             forms = BookingForm()
-            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
     else:
         form = BookingForm()
-        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
+        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form, 'message':message})
     #return render(request,'customer/booking.html', {'form': form })
 
 # club rep paying directly
 def book_showing_cr(request, showing_id, user_required = True , user_types_required=(User.UserType.CLUBREP)):
+    message = request.GET.get('message')
+
     showing = CinemaManager.get_showing(showing_id)
     # for key,value in request.session.items():
     #     print ('{} =>{}'.format(key,value))
@@ -375,22 +378,23 @@ def book_showing_cr(request, showing_id, user_required = True , user_types_requi
                 else:
                     forms = BookingForm_cr()
                     messages.error(request,"Insufficient Funds! Please top up your account!")
-                    return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+                    return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
             else:
                 forms = BookingForm_cr()
                 messages.error(request,"There aren't that many seats availible or you didn't select 10 tickets!")
-                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
-            return redirect('cinema:list_films')
+                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
+            return redirect(reverse('cinema:list_films') + '?message=Your booking was successful!')
         else:
             forms = BookingForm_cr()
-            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
     else:
         forms = BookingForm_cr()
-        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
 
 
 
 def settling_balance(request, showing_id, user_required = True , user_types_required=(User.UserType.STUDENT,User.UserType.CLUBREP)):
+    
     #showing = CinemaManager.get_showing(showing_id)
     
     if request.method == 'POST':
@@ -399,6 +403,8 @@ def settling_balance(request, showing_id, user_required = True , user_types_requ
 
 # booking for guest
 def book_showing_guest(request, showing_id):
+    message = request.GET.get('message')
+
     showing = CinemaManager.get_showing(showing_id)
 
 
@@ -416,20 +422,22 @@ def book_showing_guest(request, showing_id):
                 request.session['adult']= adult_tickets
                 request.session['showing_info'] = showing_id 
 
-                return redirect('customer:checkout')
+                return redirect(reverse('customer:checkout') + '?message=Your booking was successful!')
             else:
                 forms = BookingForm_g()
                 messages.error(request,"Form invalid")
-                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
         else:
             forms = BookingForm_g()
-            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
     else:
         form = BookingForm_g()
-        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
+        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form, 'message':message})
 
 # booking for AM CM
 def book_showing_AM_CM(request, showing_id, user_required = True , user_types_required=(User.UserType.CINEMAMANAGER,User.UserType.ACCOUNTSMANAGER)):
+    message = request.GET.get('message')
+
     showing = CinemaManager.get_showing(showing_id)
 
 
@@ -448,18 +456,18 @@ def book_showing_AM_CM(request, showing_id, user_required = True , user_types_re
                 request.session['adult']= adult_tickets
                 request.session['showing_info'] = showing_id 
 
-                return redirect('customer:checkout')
+                return redirect(reverse('customer:checkout') + '?message=Your booking was successful!')
             else:
                 forms = BookingForm_g()
                 messages.error(request,"There aren't that many seats sorry")
-                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+                return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
 
         else:
             forms = BookingForm_g()
-            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms})
+            return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': forms, 'message':message})
     else:
         form = BookingForm_g()
-        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form})
+        return render(request, 'cinema/booking_film.html', {'showing': showing, 'form': form, 'message':message})
 
 
 
